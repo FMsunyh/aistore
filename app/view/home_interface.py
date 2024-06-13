@@ -38,7 +38,7 @@ class BannerWidget(QWidget):
         )
 
         self.linkCardView.addCard(
-            FluentIcon.GITHUB,
+            ':/gallery/images/h100.png',
             self.tr('GPULab算力云'),
             self.tr(
                 'The latest fluent design controls and styles for your applications.'),

@@ -23,11 +23,11 @@ class SampleCard(CardWidget):
         self.hBoxLayout = QHBoxLayout(self)
         self.vBoxLayout = QVBoxLayout()
 
-        self.setFixedSize(360, 90)
+        self.setFixedSize(500, 90)
         self.iconWidget.setFixedSize(48, 48)
 
         self.hBoxLayout.setSpacing(28)
-        self.hBoxLayout.setContentsMargins(20, 0, 0, 0)
+        self.hBoxLayout.setContentsMargins(20, 0, 0, 20)
         self.vBoxLayout.setSpacing(2)
         self.vBoxLayout.setContentsMargins(0, 0, 0, 0)
         self.vBoxLayout.setAlignment(Qt.AlignVCenter)
