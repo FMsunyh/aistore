@@ -100,14 +100,15 @@ class MainWindow(FluentWindow):
         #     tooltip=t.price,
         #     position=NavigationItemPosition.BOTTOM
         # )
-        # self.addSubInterface(
-        #     self.settingInterface, FIF.SETTING, self.tr('Settings'), NavigationItemPosition.BOTTOM)
+        self.addSubInterface(
+            self.settingInterface, FIF.SETTING, self.tr('Settings'), NavigationItemPosition.BOTTOM)
 
     def initWindow(self):
-        self.resize(960, 780)
-        self.setMinimumWidth(760)
+        self.resize(1200, 960)
+        self.setMinimumHeight(960)
+        self.setMinimumWidth(1200)
         self.setWindowIcon(QIcon(':/gallery/images/logo.png'))
-        self.setWindowTitle('众聚AI软件中心')
+        self.setWindowTitle('AI Store')
 
         self.setMicaEffectEnabled(cfg.get(cfg.micaEnabled))
 

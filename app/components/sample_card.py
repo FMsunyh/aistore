@@ -5,6 +5,8 @@ from PyQt5.QtWidgets import QWidget, QFrame, QLabel, QVBoxLayout, QHBoxLayout
 from qfluentwidgets import IconWidget, TextWrap, FlowLayout, CardWidget,PushButton
 from ..common.signal_bus import signalBus
 from ..common.style_sheet import StyleSheet
+import importlib
+
 
 class SampleCard(CardWidget):
     """ Sample card """
@@ -25,9 +27,10 @@ class SampleCard(CardWidget):
 
         self.setFixedSize(500, 90)
         self.iconWidget.setFixedSize(48, 48)
+        self.btn.setFixedSize(100, 30)
 
         self.hBoxLayout.setSpacing(28)
-        self.hBoxLayout.setContentsMargins(20, 0, 0, 20)
+        self.hBoxLayout.setContentsMargins(20, 0, 20, 0)
         self.vBoxLayout.setSpacing(2)
         self.vBoxLayout.setContentsMargins(0, 0, 0, 0)
         self.vBoxLayout.setAlignment(Qt.AlignVCenter)
@@ -49,10 +52,12 @@ class SampleCard(CardWidget):
 
     def openDir(self):
         print("Hello World")
+        installer_module = importlib.import_module('app.installer.'+ self.routekey)
+        installer_module.pre_check()
 
-    def mouseReleaseEvent(self, e):
-        super().mouseReleaseEvent(e)
-        signalBus.switchToSampleCard.emit(self.routekey, self.index)
+    # def mouseReleaseEvent(self, e):
+    #     super().mouseReleaseEvent(e)
+    #     signalBus.switchToSampleCard.emit(self.routekey, self.index)
 
 
 class SampleCardView(QWidget):

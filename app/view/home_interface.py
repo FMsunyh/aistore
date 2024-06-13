@@ -19,7 +19,7 @@ class BannerWidget(QWidget):
         self.setFixedHeight(336)
 
         self.vBoxLayout = QVBoxLayout(self)
-        self.galleryLabel = QLabel('众聚AI软件中心', self)
+        self.galleryLabel = QLabel('AI Store', self)
         self.banner = QPixmap(':/gallery/images/header1.png')
         self.linkCardView = LinkCardView(self)
 
@@ -39,7 +39,7 @@ class BannerWidget(QWidget):
 
         self.linkCardView.addCard(
             ':/gallery/images/h100.png',
-            self.tr('GPULab算力云'),
+            self.tr('GPU Lab'),
             self.tr(
                 'The latest fluent design controls and styles for your applications.'),
             REPO_URL
@@ -123,38 +123,67 @@ class HomeInterface(ScrollArea):
 
     def loadSamples(self):
         """ load samples """
-        # basic input samples
+
+        # Popular Tools
+        menuView = SampleCardView(self.tr('Popular Tools'), self.view)
+        menuView.addSampleCard(
+            icon=":/gallery/images/controls/MenuFlyout.png",
+            title="RoundMenu",
+            content=self.tr(
+                "Shows a contextual list of simple commands or options."),
+            routeKey="menuInterface",
+            index=0
+        )
+        menuView.addSampleCard(
+            icon=":/gallery/images/controls/CommandBar.png",
+            title="CommandBar",
+            content=self.tr(
+                "Shows a contextual list of simple commands or options."),
+            routeKey="menuInterface",
+            index=2
+        )
+        menuView.addSampleCard(
+            icon=":/gallery/images/controls/CommandBarFlyout.png",
+            title="CommandBarFlyout",
+            content=self.tr(
+                "A mini-toolbar displaying proactive commands, and an optional menu of commands."),
+            routeKey="menuInterface",
+            index=3
+        )
+        self.vBoxLayout.addWidget(menuView)
+
+        # AI Image Tools
         basicInputView = SampleCardView(
-            self.tr("Basic input samples"), self.view)
+            self.tr("AI Image Tools"), self.view)
         basicInputView.addSampleCard(
             icon=":/gallery/images/controls/Button.png",
-            title="Button",
+            title="Stable diffusion WebUI",
             content=self.tr(
                 "A control that responds to user input and emit clicked signal."),
-            routeKey="basicInputInterface",
+            routeKey="sd_webui",
             index=0
         )
         basicInputView.addSampleCard(
             icon=":/gallery/images/controls/Checkbox.png",
-            title="CheckBox",
+            title="FaceFusion",
             content=self.tr("A control that a user can select or clear."),
-            routeKey="basicInputInterface",
+            routeKey="facefusion",
             index=8
         )
         basicInputView.addSampleCard(
             icon=":/gallery/images/controls/ComboBox.png",
-            title="ComboBox",
+            title="Kohya_ss GUI",
             content=self.tr(
                 "A drop-down list of items a user can select from."),
-            routeKey="basicInputInterface",
+            routeKey="kohya_ss",
             index=10
         )
         basicInputView.addSampleCard(
             icon=":/gallery/images/controls/DropDownButton.png",
-            title="DropDownButton",
+            title="ananconda",
             content=self.tr(
                 "A button that displays a flyout of choices when clicked."),
-            routeKey="basicInputInterface",
+            routeKey="ananconda",
             index=12
         )
         basicInputView.addSampleCard(
@@ -207,8 +236,8 @@ class HomeInterface(ScrollArea):
         )
         self.vBoxLayout.addWidget(basicInputView)
 
-        # date time samples
-        dateTimeView = SampleCardView(self.tr('Date & time samples'), self.view)
+        # AI Video Tools
+        dateTimeView = SampleCardView(self.tr('AI Video Tools'), self.view)
         dateTimeView.addSampleCard(
             icon=":/gallery/images/controls/CalendarDatePicker.png",
             title="CalendarPicker",
@@ -233,8 +262,8 @@ class HomeInterface(ScrollArea):
         )
         self.vBoxLayout.addWidget(dateTimeView)
 
-        # dialog samples
-        dialogView = SampleCardView(self.tr('Dialog samples'), self.view)
+        # AI Audio Tools
+        dialogView = SampleCardView(self.tr('AI Audio Tools'), self.view)
         dialogView.addSampleCard(
             icon=":/gallery/images/controls/Flyout.png",
             title="Dialog",
@@ -272,8 +301,8 @@ class HomeInterface(ScrollArea):
         )
         self.vBoxLayout.addWidget(dialogView)
 
-        # layout samples
-        layoutView = SampleCardView(self.tr('Layout samples'), self.view)
+        # AI Chat Tools
+        layoutView = SampleCardView(self.tr('AI Chat Tools'), self.view)
         layoutView.addSampleCard(
             icon=":/gallery/images/controls/Grid.png",
             title="FlowLayout",
@@ -284,8 +313,8 @@ class HomeInterface(ScrollArea):
         )
         self.vBoxLayout.addWidget(layoutView)
 
-        # material samples
-        materialView = SampleCardView(self.tr('Material samples'), self.view)
+        # AI Programming Tools
+        materialView = SampleCardView(self.tr('AI Programming Tools'), self.view)
         materialView.addSampleCard(
             icon=":/gallery/images/controls/Acrylic.png",
             title="AcrylicLabel",
@@ -296,200 +325,200 @@ class HomeInterface(ScrollArea):
         )
         self.vBoxLayout.addWidget(materialView)
 
-        # menu samples
-        menuView = SampleCardView(self.tr('Menu & toolbars samples'), self.view)
-        menuView.addSampleCard(
-            icon=":/gallery/images/controls/MenuFlyout.png",
-            title="RoundMenu",
-            content=self.tr(
-                "Shows a contextual list of simple commands or options."),
-            routeKey="menuInterface",
-            index=0
-        )
-        menuView.addSampleCard(
-            icon=":/gallery/images/controls/CommandBar.png",
-            title="CommandBar",
-            content=self.tr(
-                "Shows a contextual list of simple commands or options."),
-            routeKey="menuInterface",
-            index=2
-        )
-        menuView.addSampleCard(
-            icon=":/gallery/images/controls/CommandBarFlyout.png",
-            title="CommandBarFlyout",
-            content=self.tr(
-                "A mini-toolbar displaying proactive commands, and an optional menu of commands."),
-            routeKey="menuInterface",
-            index=3
-        )
-        self.vBoxLayout.addWidget(menuView)
+        # # menu samples
+        # menuView = SampleCardView(self.tr('Menu & toolbars samples'), self.view)
+        # menuView.addSampleCard(
+        #     icon=":/gallery/images/controls/MenuFlyout.png",
+        #     title="RoundMenu",
+        #     content=self.tr(
+        #         "Shows a contextual list of simple commands or options."),
+        #     routeKey="menuInterface",
+        #     index=0
+        # )
+        # menuView.addSampleCard(
+        #     icon=":/gallery/images/controls/CommandBar.png",
+        #     title="CommandBar",
+        #     content=self.tr(
+        #         "Shows a contextual list of simple commands or options."),
+        #     routeKey="menuInterface",
+        #     index=2
+        # )
+        # menuView.addSampleCard(
+        #     icon=":/gallery/images/controls/CommandBarFlyout.png",
+        #     title="CommandBarFlyout",
+        #     content=self.tr(
+        #         "A mini-toolbar displaying proactive commands, and an optional menu of commands."),
+        #     routeKey="menuInterface",
+        #     index=3
+        # )
+        # self.vBoxLayout.addWidget(menuView)
 
-        # navigation
-        navigationView = SampleCardView(self.tr('Navigation'), self.view)
-        navigationView.addSampleCard(
-            icon=":/gallery/images/controls/BreadcrumbBar.png",
-            title="BreadcrumbBar",
-            content=self.tr(
-                "Shows the trail of navigation taken to the current location."),
-            routeKey="navigationViewInterface",
-            index=0
-        )
-        navigationView.addSampleCard(
-            icon=":/gallery/images/controls/Pivot.png",
-            title="Pivot",
-            content=self.tr(
-                "Presents information from different sources in a tabbed view."),
-            routeKey="navigationViewInterface",
-            index=1
-        )
-        navigationView.addSampleCard(
-            icon=":/gallery/images/controls/TabView.png",
-            title="TabView",
-            content=self.tr(
-                "Presents information from different sources in a tabbed view."),
-            routeKey="navigationViewInterface",
-            index=3
-        )
-        self.vBoxLayout.addWidget(navigationView)
+        # # navigation
+        # navigationView = SampleCardView(self.tr('Navigation'), self.view)
+        # navigationView.addSampleCard(
+        #     icon=":/gallery/images/controls/BreadcrumbBar.png",
+        #     title="BreadcrumbBar",
+        #     content=self.tr(
+        #         "Shows the trail of navigation taken to the current location."),
+        #     routeKey="navigationViewInterface",
+        #     index=0
+        # )
+        # navigationView.addSampleCard(
+        #     icon=":/gallery/images/controls/Pivot.png",
+        #     title="Pivot",
+        #     content=self.tr(
+        #         "Presents information from different sources in a tabbed view."),
+        #     routeKey="navigationViewInterface",
+        #     index=1
+        # )
+        # navigationView.addSampleCard(
+        #     icon=":/gallery/images/controls/TabView.png",
+        #     title="TabView",
+        #     content=self.tr(
+        #         "Presents information from different sources in a tabbed view."),
+        #     routeKey="navigationViewInterface",
+        #     index=3
+        # )
+        # self.vBoxLayout.addWidget(navigationView)
 
-        # scroll samples
-        scrollView = SampleCardView(self.tr('Scrolling samples'), self.view)
-        scrollView.addSampleCard(
-            icon=":/gallery/images/controls/ScrollViewer.png",
-            title="ScrollArea",
-            content=self.tr(
-                "A container control that lets the user pan and zoom its content smoothly."),
-            routeKey="scrollInterface",
-            index=0
-        )
-        scrollView.addSampleCard(
-            icon=":/gallery/images/controls/PipsPager.png",
-            title="PipsPager",
-            content=self.tr(
-                "A control to let the user navigate through a paginated collection when the page numbers do not need to be visually known."),
-            routeKey="scrollInterface",
-            index=3
-        )
-        self.vBoxLayout.addWidget(scrollView)
+        # # scroll samples
+        # scrollView = SampleCardView(self.tr('Scrolling samples'), self.view)
+        # scrollView.addSampleCard(
+        #     icon=":/gallery/images/controls/ScrollViewer.png",
+        #     title="ScrollArea",
+        #     content=self.tr(
+        #         "A container control that lets the user pan and zoom its content smoothly."),
+        #     routeKey="scrollInterface",
+        #     index=0
+        # )
+        # scrollView.addSampleCard(
+        #     icon=":/gallery/images/controls/PipsPager.png",
+        #     title="PipsPager",
+        #     content=self.tr(
+        #         "A control to let the user navigate through a paginated collection when the page numbers do not need to be visually known."),
+        #     routeKey="scrollInterface",
+        #     index=3
+        # )
+        # self.vBoxLayout.addWidget(scrollView)
 
-        # state info samples
-        stateInfoView = SampleCardView(self.tr('Status & info samples'), self.view)
-        stateInfoView.addSampleCard(
-            icon=":/gallery/images/controls/ProgressRing.png",
-            title="StateToolTip",
-            content=self.tr(
-                "Shows the apps progress on a task, or that the app is performing ongoing work that does block user interaction."),
-            routeKey="statusInfoInterface",
-            index=0
-        )
-        stateInfoView.addSampleCard(
-            icon=":/gallery/images/controls/InfoBadge.png",
-            title="InfoBadge",
-            content=self.tr(
-                "An non-intrusive Ul to display notifications or bring focus to an area."),
-            routeKey="statusInfoInterface",
-            index=3
-        )
-        stateInfoView.addSampleCard(
-            icon=":/gallery/images/controls/InfoBar.png",
-            title="InfoBar",
-            content=self.tr(
-                "An inline message to display app-wide status change information."),
-            routeKey="statusInfoInterface",
-            index=4
-        )
-        stateInfoView.addSampleCard(
-            icon=":/gallery/images/controls/ProgressBar.png",
-            title="ProgressBar",
-            content=self.tr(
-                "Shows the apps progress on a task, or that the app is performing ongoing work that doesn't block user interaction."),
-            routeKey="statusInfoInterface",
-            index=8
-        )
-        stateInfoView.addSampleCard(
-            icon=":/gallery/images/controls/ProgressRing.png",
-            title="ProgressRing",
-            content=self.tr(
-                "Shows the apps progress on a task, or that the app is performing ongoing work that doesn't block user interaction."),
-            routeKey="statusInfoInterface",
-            index=10
-        )
-        stateInfoView.addSampleCard(
-            icon=":/gallery/images/controls/ToolTip.png",
-            title="ToolTip",
-            content=self.tr(
-                "Displays information for an element in a pop-up window."),
-            routeKey="statusInfoInterface",
-            index=1
-        )
-        self.vBoxLayout.addWidget(stateInfoView)
+        # # state info samples
+        # stateInfoView = SampleCardView(self.tr('Status & info samples'), self.view)
+        # stateInfoView.addSampleCard(
+        #     icon=":/gallery/images/controls/ProgressRing.png",
+        #     title="StateToolTip",
+        #     content=self.tr(
+        #         "Shows the apps progress on a task, or that the app is performing ongoing work that does block user interaction."),
+        #     routeKey="statusInfoInterface",
+        #     index=0
+        # )
+        # stateInfoView.addSampleCard(
+        #     icon=":/gallery/images/controls/InfoBadge.png",
+        #     title="InfoBadge",
+        #     content=self.tr(
+        #         "An non-intrusive Ul to display notifications or bring focus to an area."),
+        #     routeKey="statusInfoInterface",
+        #     index=3
+        # )
+        # stateInfoView.addSampleCard(
+        #     icon=":/gallery/images/controls/InfoBar.png",
+        #     title="InfoBar",
+        #     content=self.tr(
+        #         "An inline message to display app-wide status change information."),
+        #     routeKey="statusInfoInterface",
+        #     index=4
+        # )
+        # stateInfoView.addSampleCard(
+        #     icon=":/gallery/images/controls/ProgressBar.png",
+        #     title="ProgressBar",
+        #     content=self.tr(
+        #         "Shows the apps progress on a task, or that the app is performing ongoing work that doesn't block user interaction."),
+        #     routeKey="statusInfoInterface",
+        #     index=8
+        # )
+        # stateInfoView.addSampleCard(
+        #     icon=":/gallery/images/controls/ProgressRing.png",
+        #     title="ProgressRing",
+        #     content=self.tr(
+        #         "Shows the apps progress on a task, or that the app is performing ongoing work that doesn't block user interaction."),
+        #     routeKey="statusInfoInterface",
+        #     index=10
+        # )
+        # stateInfoView.addSampleCard(
+        #     icon=":/gallery/images/controls/ToolTip.png",
+        #     title="ToolTip",
+        #     content=self.tr(
+        #         "Displays information for an element in a pop-up window."),
+        #     routeKey="statusInfoInterface",
+        #     index=1
+        # )
+        # self.vBoxLayout.addWidget(stateInfoView)
 
-        # text samples
-        textView = SampleCardView(self.tr('Text samples'), self.view)
-        textView.addSampleCard(
-            icon=":/gallery/images/controls/TextBox.png",
-            title="LineEdit",
-            content=self.tr("A single-line plain text field."),
-            routeKey="textInterface",
-            index=0
-        )
-        textView.addSampleCard(
-            icon=":/gallery/images/controls/PasswordBox.png",
-            title="PasswordLineEdit",
-            content=self.tr("A control for entering passwords."),
-            routeKey="textInterface",
-            index=2
-        )
-        textView.addSampleCard(
-            icon=":/gallery/images/controls/NumberBox.png",
-            title="SpinBox",
-            content=self.tr(
-                "A text control used for numeric input and evaluation of algebraic equations."),
-            routeKey="textInterface",
-            index=3
-        )
-        textView.addSampleCard(
-            icon=":/gallery/images/controls/RichEditBox.png",
-            title="TextEdit",
-            content=self.tr(
-                "A rich text editing control that supports formatted text, hyperlinks, and other rich content."),
-            routeKey="textInterface",
-            index=8
-        )
-        self.vBoxLayout.addWidget(textView)
+        # # text samples
+        # textView = SampleCardView(self.tr('Text samples'), self.view)
+        # textView.addSampleCard(
+        #     icon=":/gallery/images/controls/TextBox.png",
+        #     title="LineEdit",
+        #     content=self.tr("A single-line plain text field."),
+        #     routeKey="textInterface",
+        #     index=0
+        # )
+        # textView.addSampleCard(
+        #     icon=":/gallery/images/controls/PasswordBox.png",
+        #     title="PasswordLineEdit",
+        #     content=self.tr("A control for entering passwords."),
+        #     routeKey="textInterface",
+        #     index=2
+        # )
+        # textView.addSampleCard(
+        #     icon=":/gallery/images/controls/NumberBox.png",
+        #     title="SpinBox",
+        #     content=self.tr(
+        #         "A text control used for numeric input and evaluation of algebraic equations."),
+        #     routeKey="textInterface",
+        #     index=3
+        # )
+        # textView.addSampleCard(
+        #     icon=":/gallery/images/controls/RichEditBox.png",
+        #     title="TextEdit",
+        #     content=self.tr(
+        #         "A rich text editing control that supports formatted text, hyperlinks, and other rich content."),
+        #     routeKey="textInterface",
+        #     index=8
+        # )
+        # self.vBoxLayout.addWidget(textView)
 
-        # view samples
-        collectionView = SampleCardView(self.tr('View samples'), self.view)
-        collectionView.addSampleCard(
-            icon=":/gallery/images/controls/ListView.png",
-            title="ListView",
-            content=self.tr(
-                "A control that presents a collection of items in a vertical list."),
-            routeKey="viewInterface",
-            index=0
-        )
-        collectionView.addSampleCard(
-            icon=":/gallery/images/controls/DataGrid.png",
-            title="TableView",
-            content=self.tr(
-                "The DataGrid control provides a flexible way to display a collection of data in rows and columns."),
-            routeKey="viewInterface",
-            index=1
-        )
-        collectionView.addSampleCard(
-            icon=":/gallery/images/controls/TreeView.png",
-            title="TreeView",
-            content=self.tr(
-                "The TreeView control is a hierarchical list pattern with expanding and collapsing nodes that contain nested items."),
-            routeKey="viewInterface",
-            index=2
-        )
-        collectionView.addSampleCard(
-            icon=":/gallery/images/controls/FlipView.png",
-            title="FlipView",
-            content=self.tr(
-                "Presents a collection of items that the user can flip through,one item at a time."),
-            routeKey="viewInterface",
-            index=4
-        )
-        self.vBoxLayout.addWidget(collectionView)
+        # # view samples
+        # collectionView = SampleCardView(self.tr('View samples'), self.view)
+        # collectionView.addSampleCard(
+        #     icon=":/gallery/images/controls/ListView.png",
+        #     title="ListView",
+        #     content=self.tr(
+        #         "A control that presents a collection of items in a vertical list."),
+        #     routeKey="viewInterface",
+        #     index=0
+        # )
+        # collectionView.addSampleCard(
+        #     icon=":/gallery/images/controls/DataGrid.png",
+        #     title="TableView",
+        #     content=self.tr(
+        #         "The DataGrid control provides a flexible way to display a collection of data in rows and columns."),
+        #     routeKey="viewInterface",
+        #     index=1
+        # )
+        # collectionView.addSampleCard(
+        #     icon=":/gallery/images/controls/TreeView.png",
+        #     title="TreeView",
+        #     content=self.tr(
+        #         "The TreeView control is a hierarchical list pattern with expanding and collapsing nodes that contain nested items."),
+        #     routeKey="viewInterface",
+        #     index=2
+        # )
+        # collectionView.addSampleCard(
+        #     icon=":/gallery/images/controls/FlipView.png",
+        #     title="FlipView",
+        #     content=self.tr(
+        #         "Presents a collection of items that the user can flip through,one item at a time."),
+        #     routeKey="viewInterface",
+        #     index=4
+        # )
+        # self.vBoxLayout.addWidget(collectionView)
