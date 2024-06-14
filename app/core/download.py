@@ -11,6 +11,10 @@ import app.core.wording
 from app.core.common_helper import is_macos
 from app.core.filesystem import get_file_size, is_file
 
+import sys
+import os.path
+import zipfile
+
 if is_macos():
 	ssl._create_default_https_context = ssl._create_unverified_context
 
@@ -46,3 +50,20 @@ def is_download_done(url : str, file_path : str) -> bool:
 	if is_file(file_path):
 		return get_download_size(url) == get_file_size(file_path)
 	return False
+
+
+def unzipfile():
+	target_dir = os.path.join('./tmp', 'unpacked')
+	target_zipfile = os.path.join('./tmp', 'aideskv2.zip')
+
+	assert zipfile.is_zipfile(target_zipfile), 'The given file %s is corrupted!' %(target_zipfile)
+
+	try:
+		with zipfile.ZipFile(target_zipfile, 'r') as zip_ref:
+			zip_ref.extractall(target_dir, members=None,)
+	except zipfile.BadZipFile:
+		print('Not a zip file or a corrupted zip file')
+
+	# Output:
+	# 'Not a zip file or a corrupted zip file'
+

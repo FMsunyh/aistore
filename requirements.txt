@@ -1,2 +1,3 @@
 filetype
 tqdm
+winshell
