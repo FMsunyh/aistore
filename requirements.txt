@@ -1,3 +1,4 @@
 filetype
 tqdm
 winshell
+PyQt-Fluent-Widgets
