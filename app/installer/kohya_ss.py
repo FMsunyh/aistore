@@ -6,6 +6,7 @@ import app.core.globals
 import winshell
 import platform
 import os
+import sys
 
 
 def pre_check() -> bool:
@@ -24,19 +25,15 @@ def pre_check() -> bool:
     
 def process():
     _create_shortcut()
-    
+
 def _create_shortcut():
 	if platform.system().lower() == 'windows':
-		desktop_path = winshell.desktop()
-		shortcut = winshell.shortcut()
-		shortcut.path="/home/syh/workspace/aistore/tmp" # 设置谈捷方式的目标路径
-			
-		shortcut.write(os.path.join( desktop_path+"shortcut.lnk")) # 将诀捷方式保存劉泉面
-		shortcut.icon_location="/home/syh/workspace/aistore/tmp/unpacked/aideskv2/bin/facefusion.ico" # 设置快捷方式的留标路径
-		shortcut.target_path="/home/syh/workspace/aistore/tmp/unpacked/aideskv2/bin/aidesk.exe" # 设置块捷方式的目标路径
-		# shortcut.arguments="-arg1 value1 -arg2 value2"
-
-		shortcut.description="My Shortcut" 
-		shortcut.save() 
+		link_filepath = os.path.join(winshell.desktop(), "aistore.lnk")
+		with winshell.shortcut(link_filepath) as link:
+			link.path = r"D:\aistore\tmp\unpacked\aideskv2\bin\aidesk.exe"
+			link.description = "Shortcut to python"
+			# link.arguments = "-m winshell"
+			link.icon_location=(r"D:/aistore/tmp/unpacked/aideskv2/bin/facefusion.ico", 0)
+			link.working_directory = r"D:/aistore/tmp/unpacked/aideskv2/bin/"
 	else:
 		print("Linux is not support")

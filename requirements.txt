@@ -1,4 +1,6 @@
 filetype
 tqdm
 winshell
+pyinstaller
 PyQt-Fluent-Widgets
+requests

@@ -10,6 +10,7 @@ from qfluentwidgets import FluentTranslator
 from app.common.config import cfg
 from app.view.main_window import MainWindow
 
+from app.core.update import UpdateManager
 
 # enable dpi scale
 if cfg.get(cfg.dpiScale) == "Auto":
@@ -35,8 +36,12 @@ galleryTranslator.load(locale, "gallery", ".", ":/gallery/i18n")
 app.installTranslator(translator)
 app.installTranslator(galleryTranslator)
 
+
 # create main window
 w = MainWindow()
 w.show()
+
+update_manager = UpdateManager()
+update_manager.check_for_updates()
 
 app.exec_()
