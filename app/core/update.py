@@ -35,8 +35,10 @@ class UpdateManager(QObject):
     update_error = pyqtSignal(str)
     update_downloaded = pyqtSignal(str)
 
-    def __init__(self):
+    def __init__(self, main_window):
         super().__init__()
+
+        self.main_window = main_window
         self.update_checker = UpdateChecker()
         self.update_checker.update_found.connect(self.update_available.emit)
         self.update_checker.no_update_found.connect(self.no_update_available.emit)
@@ -52,6 +54,9 @@ class UpdateManager(QObject):
         self.update_checker.start()
 
     def download_and_install_update(self, download_url, latest_version):
+        self.main_window.close()
+
+        # sleep(1000)
         try:
             # Download the update file
             response = requests.get(download_url, stream=True)
@@ -72,7 +77,7 @@ class UpdateManager(QObject):
                 subprocess.Popen([current_executable])
                 
                 # Close the current application
-                QApplication.quit()
+                # QApplication.quit()
             else:
                 self.update_error.emit(f"Failed to download update: {response.status_code}")
         except Exception as e:

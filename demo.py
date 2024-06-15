@@ -41,7 +41,6 @@ app.installTranslator(galleryTranslator)
 w = MainWindow()
 w.show()
 
-update_manager = UpdateManager()
+update_manager = UpdateManager(w)
 update_manager.check_for_updates()
-
 app.exec_()
