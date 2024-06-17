@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QApplication, QMessageBox
 from qfluentwidgets import MessageBox
                             
 CURRENT_VERSION = "1.1.0"
-UPDATE_INFO_URL = "http://172.30.9.84/chfs/shared/latest_version_info.txt"  # Replace with your URL
+UPDATE_INFO_URL = "http://172.30.9.84:7860/chfs/shared/latest_version_info.txt"  # Replace with your URL
 
 class UpdateChecker(QThread):
     update_found = pyqtSignal(dict)
@@ -20,7 +20,6 @@ class UpdateChecker(QThread):
     def run(self):
         try:
             response = requests.get(UPDATE_INFO_URL)
-            print(response)
             if response.status_code == 200:
                 latest_version_info = response.json()
                 latest_version = latest_version_info['version']

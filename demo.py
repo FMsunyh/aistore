@@ -41,6 +41,9 @@ app.installTranslator(galleryTranslator)
 w = MainWindow()
 w.show()
 
-update_manager = UpdateManager(w)
-update_manager.check_for_updates()
+on_update = cfg.get(cfg.checkUpdateAtStartUp)
+if on_update:
+    update_manager = UpdateManager(w)
+    update_manager.check_for_updates()
+    
 app.exec_()

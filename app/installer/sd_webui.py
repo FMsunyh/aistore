@@ -15,3 +15,7 @@ def pre_check() -> bool:
 	# 	process_manager.end()
 	# return is_file(model_path)
     print("Hello World, sd webui")
+    
+def process():
+	print("Start install process")
+    # _create_shortcut()

@@ -24,7 +24,8 @@ def pre_check() -> bool:
     _create_shortcut()
     
 def process():
-    _create_shortcut()
+	print("Start install process")
+    # _create_shortcut()
 
 def _create_shortcut():
 	if platform.system().lower() == 'windows':
