@@ -176,7 +176,7 @@ class DialogInterface(GalleryInterface):
         Flyout.make(view, self.complexFlyoutButton, self.window(), FlyoutAnimationType.SLIDE_RIGHT)
 
 
-class CustomMessageBox(MessageBoxBase):
+class CustomMessageBox2(MessageBoxBase):
     """ Custom message box """
 
     def __init__(self, parent=None):
@@ -201,3 +201,4 @@ class CustomMessageBox(MessageBoxBase):
 
     def _validateUrl(self, text):
         self.yesButton.setEnabled(QUrl(text).isValid())
+

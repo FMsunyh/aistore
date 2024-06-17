@@ -14,13 +14,17 @@ from ..common.config import cfg, HELP_URL, FEEDBACK_URL, AUTHOR, VERSION, YEAR, 
 from ..common.signal_bus import signalBus
 from ..common.style_sheet import StyleSheet
 
+from app.core.update import UpdateManager
 
 class SettingInterface(ScrollArea):
     """ Setting interface """
 
     def __init__(self, parent=None):
         super().__init__(parent=parent)
+        
         self.scrollWidget = QWidget()
+        self.update_manager = UpdateManager(self.scrollWidget)
+
         self.expandLayout = ExpandLayout(self.scrollWidget)
 
         # setting label
@@ -211,6 +215,9 @@ class SettingInterface(ScrollArea):
         cfg.set(cfg.downloadFolder, folder)
         self.downloadFolderCard.setContent(folder)
 
+    def _aboutCardClick(self):
+        self.update_manager.check_for_updates()
+
     def __connectSignalToSlot(self):
         """ connect signal to slot """
         cfg.appRestartSig.connect(self.__showRestartTooltip)
@@ -227,3 +234,6 @@ class SettingInterface(ScrollArea):
         # about
         self.feedbackCard.clicked.connect(
             lambda: QDesktopServices.openUrl(QUrl(FEEDBACK_URL)))
+
+                # about
+        self.aboutCard.clicked.connect(self._aboutCardClick)

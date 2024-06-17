@@ -72,7 +72,7 @@ class MainWindow(FluentWindow):
         # add navigation items
         t = Translator()
         self.addSubInterface(self.homeInterface, FIF.HOME, self.tr('Home'))
-        self.addSubInterface(self.aistoreInterface, Icon.EMOJI_TAB_SYMBOLS, t.icons)
+        # self.addSubInterface(self.aistoreInterface, Icon.EMOJI_TAB_SYMBOLS, t.icons)
         
         # self.addSubInterface(self.iconInterface, Icon.EMOJI_TAB_SYMBOLS, t.icons)
         # self.navigationInterface.addSeparator()

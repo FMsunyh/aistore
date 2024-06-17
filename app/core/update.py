@@ -4,14 +4,18 @@ import os
 import subprocess
 from PyQt5.QtCore import QThread, pyqtSignal, QObject
 from PyQt5.QtWidgets import QApplication, QMessageBox
-
-CURRENT_VERSION = "1.0.0"
+from qfluentwidgets import MessageBox
+                            
+CURRENT_VERSION = "1.1.0"
 UPDATE_INFO_URL = "http://172.30.9.84/chfs/shared/latest_version_info.txt"  # Replace with your URL
 
 class UpdateChecker(QThread):
     update_found = pyqtSignal(dict)
     no_update_found = pyqtSignal()
     error_occurred = pyqtSignal(str)
+
+    def __init__(self, parent: QObject | None = ...) -> None:
+        super().__init__(parent)
 
     def run(self):
         try:
@@ -39,7 +43,7 @@ class UpdateManager(QObject):
         super().__init__()
 
         self.main_window = main_window
-        self.update_checker = UpdateChecker()
+        self.update_checker = UpdateChecker(parent=self)
         self.update_checker.update_found.connect(self.update_available.emit)
         self.update_checker.no_update_found.connect(self.no_update_available.emit)
         self.update_checker.error_occurred.connect(self.update_error.emit)
@@ -54,7 +58,7 @@ class UpdateManager(QObject):
         self.update_checker.start()
 
     def download_and_install_update(self, download_url, latest_version):
-        self.main_window.close()
+        # self.main_window.close()
 
         # sleep(1000)
         try:
@@ -77,7 +81,7 @@ class UpdateManager(QObject):
                 subprocess.Popen([current_executable])
                 
                 # Close the current application
-                # QApplication.quit()
+                QApplication.quit()
             else:
                 self.update_error.emit(f"Failed to download update: {response.status_code}")
         except Exception as e:
@@ -87,21 +91,43 @@ class UpdateManager(QObject):
     def notify_update_found(self, latest_version_info):
         latest_version = latest_version_info['version']
         release_notes = latest_version_info.get('release_notes', 'No release notes available.')
-        reply = QMessageBox.question(
-            None, 'Update Available',
-            f"A new version ({latest_version}) is available.\n\nRelease Notes:\n{release_notes}\n\nDo you want to update?",
-            QMessageBox.Yes | QMessageBox.No, QMessageBox.No
-        )
 
-        if reply == QMessageBox.Yes:
+        title = self.tr('Update Available')
+        content = self.tr(
+            f"A new version ({latest_version}) is available.\n\nRelease Notes:\n{release_notes}\n\nDo you want to update?",)
+        w = MessageBox(title, content, self.main_window)
+
+        # w.setContentCopyable(True)
+        if w.exec():
             download_url = latest_version_info['download_url']
             self.download_and_install_update(download_url, latest_version)
+        else:
+            self.update_checker.quit()
+            self.update_checker.wait()
+            print('Cancel button is pressed')
 
     def notify_no_update_found(self):
-        QMessageBox.information(None, 'No Update', 'You are using the latest version.')
+        title = self.tr('No Update')
+        content = self.tr(
+            f"You are using the latest version.",)
+        w = MessageBox(title, content, self.main_window)
+        w.hideCancelButton()
+        if w.exec():
+            print('Yes button is pressed')
 
     def notify_error(self, error_message):
-        QMessageBox.critical(None, 'Error', error_message)
+        title = self.tr('Error')
+        content = self.tr(error_message,)
+        w = MessageBox(title, content, self.main_window)
+        w.hideCancelButton()
+        if w.exec():
+            print('Yes button is pressed')
 
     def on_update_downloaded(self, update_file_path):
-        QMessageBox.information(None, 'Update', f"Downloaded and installed update from {update_file_path}. The application will now restart.")
+        title = self.tr('Update')
+        content = self.tr(f"Downloaded and installed update from {update_file_path}. The application will now restart.",)
+        w = MessageBox(title, content, self.main_window)
+        w.hideCancelButton()
+        if w.exec():
+            print('Yes button is pressed')
+        

@@ -26,3 +26,6 @@ source myenv/bin/activate  # On macOS/Linux
 pip install pyinstaller
 
 ```
+
+创建桌面快捷方式
+[python Shortcuts](https://winshell.readthedocs.io/en/latest/shortcuts.html)
