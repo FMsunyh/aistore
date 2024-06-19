@@ -5,7 +5,8 @@ import subprocess
 from PyQt5.QtCore import QThread, pyqtSignal, QObject
 from PyQt5.QtWidgets import QApplication, QMessageBox
 from qfluentwidgets import MessageBox
-                            
+import ptvsd
+
 CURRENT_VERSION = "1.1.0"
 UPDATE_INFO_URL = "http://172.30.9.84:7860/chfs/shared/latest_version_info.txt"  # Replace with your URL
 
@@ -18,6 +19,7 @@ class UpdateChecker(QThread):
         super().__init__(parent)
 
     def run(self):
+        # ptvsd.debug_this_thread()
         try:
             response = requests.get(UPDATE_INFO_URL)
             if response.status_code == 200:

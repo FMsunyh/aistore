@@ -352,5 +352,6 @@ class HomeInterface(ScrollArea):
             installer_name = self.popularView.flowLayout.itemAt(index).widget().name
             installer_module = importlib.import_module('app.installer.'+ installer_name)
             self.popularView.flowLayout.itemAt(index).widget().install_clicked.connect(installer_module.process)
+            # self.popularView.flowLayout.itemAt(index).widget().install_clicked.connect(installer_module.process)
 
         
