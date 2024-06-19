@@ -1,3 +1,4 @@
+import datetime
 import os
 import subprocess
 import ssl
@@ -7,6 +8,7 @@ from functools import lru_cache
 from tqdm import tqdm
 
 import app.core.globals
+from app.core.registry import write_install_info_to_registry
 import app.core.wording
 from app.core.common_helper import is_macos
 from app.core.filesystem import get_file_size, is_file
@@ -38,12 +40,12 @@ class DownloadWorker(QThread):
 		self.ring_value_changed = ring_value_changed
 
 	def run(self):
-		ptvsd.debug_this_thread()
+		# ptvsd.debug_this_thread()
 		# zipfile_path = self.download_file()
 		# output = self.extract_file(zipfile_path, "D:\myapp")
-
 		path = os.path.join(r"D:/myapp/facefusion-2.6.0")
 		self.create_shortcut(path)
+		self.create_registy()
 
 	# def run(self):
 	# 	# 在子线程中运行长时间任务
@@ -119,6 +121,14 @@ class DownloadWorker(QThread):
 		if result.stderr:
 			print("Error:", result.stderr)
 
+	def create_registy(self):
+		software_name, software_version = os.path.basename(self.url).split('-')
+
+		reg_path = os.path.join(r"Software\aistore", software_name)
+		software_publisher = "MyCompany"
+		installation_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+		write_install_info_to_registry(reg_path,software_name, software_version[:-4], software_publisher, installation_date)
+		
 class DownloadManager(QObject):
 	def __init__(self, parent=None):
 		super().__init__(parent)

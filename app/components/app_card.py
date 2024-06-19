@@ -69,6 +69,8 @@ class AppCard(CardWidget):
         self.install_finished.connect(self.on_finished)
         # signalBus.progressSig.connect(self.update_progress_bar)
 
+        signalBus.software_registySig.connect(self.is_install)
+
     def on_button_clicked(self):
         self.button.setVisible(False)
         self.ring.setVisible(True)
@@ -86,7 +88,7 @@ class AppCard(CardWidget):
     def on_finished(self):
         self.ring.setVisible(False)
         self.button_uninstall.setVisible(True)
-        self.button.setEnabled(False)
+        # self.button.setEnabled(False)
 
     def simulate_installation(self):
         # 模拟安装进度
@@ -110,6 +112,15 @@ class AppCard(CardWidget):
     #     super().mouseReleaseEvent(e)
     #     signalBus.switchToSampleCard.emit(self.routeKey, self.index)
 
+    def is_install(self, software_list):
+        for item in software_list:
+            if item['DisplayName'] == self.name:
+                self.ring.setVisible(False)
+                self.button.setVisible(False)
+                self.button_uninstall.setVisible(True)
+                self.button_uninstall.setStyleSheet('background-color: #4CAF50; color: white')
+            else:
+                pass
 
 class AppCardView(QWidget):
     """ Sample card view """

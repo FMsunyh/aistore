@@ -7,6 +7,8 @@ from qfluentwidgets import (NavigationAvatarWidget, NavigationItemPosition, Mess
                             SplashScreen)
 from qfluentwidgets import FluentIcon as FIF
 
+from app.core.registry import read_all_installed_software_from_registry
+
 from .gallery_interface import GalleryInterface
 from .home_interface import HomeInterface
 from .basic_input_interface import BasicInputInterface
@@ -62,6 +64,8 @@ class MainWindow(FluentWindow):
         # add items to navigation interface
         self.initNavigation()
         self.splashScreen.finish()
+
+        self.check_software_registy()
 
     def connectSignalToSlot(self):
         signalBus.micaEnableChanged.connect(self.setMicaEffectEnabled)
@@ -149,3 +153,8 @@ class MainWindow(FluentWindow):
             if w.objectName() == routeKey:
                 self.stackedWidget.setCurrentWidget(w, False)
                 w.scrollToCard(index)
+
+    def check_software_registy(self):
+        reg_path = r"Software\aistore"
+        software_list = read_all_installed_software_from_registry(reg_path)
+        signalBus.software_registySig.emit(software_list)
