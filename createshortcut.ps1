@@ -2,8 +2,8 @@
 $ScriptDirectory = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 
 # 定义快捷方式的路径和目标文件路径
-$ShortcutPath = [System.IO.Path]::Combine([System.Environment]::GetFolderPath('Desktop'), 'FaceFusion.lnk')
-$TargetPath = [System.IO.Path]::Combine($ScriptDirectory, 'run_facefusion.bat')
+$ShortcutPath = [System.IO.Path]::Combine([System.Environment]::GetFolderPath('Desktop'), 'facefusion.lnk')
+$TargetPath = [System.IO.Path]::Combine($ScriptDirectory, 'facefusion.bat')
 $IconPath = [System.IO.Path]::Combine($ScriptDirectory, 'facefusion.ico')
 
 # 创建一个Shell对象

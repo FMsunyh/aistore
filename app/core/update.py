@@ -3,7 +3,7 @@ import requests
 import os
 import subprocess
 from PyQt5.QtCore import QThread, pyqtSignal, QObject
-from PyQt5.QtWidgets import QApplication, QMessageBox
+from PyQt5.QtWidgets import QApplication
 from qfluentwidgets import MessageBox
 import ptvsd
 

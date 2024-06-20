@@ -65,12 +65,14 @@ class MainWindow(FluentWindow):
         self.initNavigation()
         self.splashScreen.finish()
 
+        self.init_data()
         self.check_software_registy()
 
     def connectSignalToSlot(self):
         signalBus.micaEnableChanged.connect(self.setMicaEffectEnabled)
         signalBus.switchToSampleCard.connect(self.switchToSample)
         signalBus.supportSignal.connect(self.onSupport)
+        signalBus.software_uninstallSig.connect(self.software_uninstall)
 
     def initNavigation(self):
         # add navigation items
@@ -78,7 +80,7 @@ class MainWindow(FluentWindow):
         self.addSubInterface(self.homeInterface, FIF.HOME, self.tr('Home'))
 
 
-
+        """
         self.addSubInterface(self.aistoreInterface, Icon.EMOJI_TAB_SYMBOLS, t.icons)
         
         self.addSubInterface(self.iconInterface, Icon.EMOJI_TAB_SYMBOLS, t.icons)
@@ -107,7 +109,7 @@ class MainWindow(FluentWindow):
             tooltip=t.price,
             position=NavigationItemPosition.BOTTOM
         )
-
+        """
 
 
 
@@ -134,6 +136,10 @@ class MainWindow(FluentWindow):
         self.show()
         QApplication.processEvents()
 
+    def init_data(self):
+        reg_path = r"Software\aistore"
+        self.software_list = read_all_installed_software_from_registry(reg_path)
+    
     def onSupport(self):
         language = cfg.get(cfg.language).value
         if language.name() == "zh_CN":
@@ -155,6 +161,20 @@ class MainWindow(FluentWindow):
                 w.scrollToCard(index)
 
     def check_software_registy(self):
-        reg_path = r"Software\aistore"
-        software_list = read_all_installed_software_from_registry(reg_path)
-        signalBus.software_registySig.emit(software_list)
+        signalBus.software_registySig.emit(self.software_list)
+
+    def software_uninstall(self, app_card):
+        print(app_card.name)
+        title = self.tr('Uninstall ' + app_card.name)
+        content = self.tr(
+            f"Do you want to uninstall {app_card.name} ?)
+        w = MessageBox(title, content, self)
+        if w.exec():
+            
+            for item in self.software_list:
+                if item["DisplayName"] == app_card.name:
+                    self.software_list.remove(item)
+            app_card.refreshSig.emit()
+
+            for item in self.software_list:
+                print(item)
