@@ -2,7 +2,7 @@
  * @Author: Firmin.Sun fmsunyh@gmail.com
  * @Date: 2024-06-14 18:28:18
  * @LastEditors: Firmin.Sun fmsunyh@gmail.com
- * @LastEditTime: 2024-06-20 14:52:36
+ * @LastEditTime: 2024-06-21 11:15:57
  * @FilePath: \aistore\README.md
  * @Description: Content of readme
 -->
@@ -54,3 +54,5 @@ pip install pyinstaller
 [超全的VSCode快捷键，收藏！](https://juejin.cn/post/7258140838139641917)
 - 2024-06-20
     - 卸载功能
+- 2024-06-21
+    - 根据注册表，刷新界面信息

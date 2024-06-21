@@ -1,3 +1,11 @@
+'''
+Author: Firmin.Sun fmsunyh@gmail.com
+Date: 2024-06-14 18:28:18
+LastEditors: Firmin.Sun fmsunyh@gmail.com
+LastEditTime: 2024-06-21 11:17:12
+FilePath: \aistore\app\installer\facefusion.py
+Description: Installer of facefusion
+'''
 
 from pathlib import Path
 import tempfile
@@ -43,14 +51,20 @@ def process(ring_value_changed, finished):
 
 	# finished.emit()
 
-def _create_shortcut(app_path):
-	if platform.system().lower() == 'windows':
-		link_filepath = os.path.join(winshell.desktop(), "facefusion.lnk")
-		with winshell.shortcut(link_filepath) as link:
-			link.path = os.path.join(app_path, "run_facefusion.bat")
-			link.description = "Shortcut to facefusion"
-			# link.arguments = "-m winshell"
-			link.icon_location=(os.path.join(app_path,"facefusion.ico"), 0)
-			link.working_directory = app_path
-	else:
-		print("Linux is not support")
+# def _create_shortcut(app_path):
+# 	if platform.system().lower() == 'windows':
+# 		link_filepath = os.path.join(winshell.desktop(), "facefusion.lnk")
+# 		with winshell.shortcut(link_filepath) as link:
+# 			link.path = os.path.join(app_path, "run_facefusion.bat")
+# 			link.description = "Shortcut to facefusion"
+# 			# link.arguments = "-m winshell"
+# 			link.icon_location=(os.path.join(app_path,"facefusion.ico"), 0)
+# 			link.working_directory = app_path
+# 	else:
+# 		print("Linux is not support")
+
+def uninstall(registy):
+	for item in registy:
+		print(item)
+
+	print("uninstall facefusion") 

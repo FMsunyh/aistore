@@ -21,6 +21,8 @@ class AppCard(CardWidget):
         self.routeKey = routeKey
         self.name = name
 
+        self.install_state = False
+
         self.iconWidget = IconWidget(icon, self)
         self.titleLabel = QLabel(title, self)
         self.contentLabel = QLabel(TextWrap.wrap(content, 45, False)[0], self)
@@ -84,11 +86,10 @@ class AppCard(CardWidget):
         self.button_uninstall.clicked.connect(self.on_button_uninstall_clicked)
 
         self.ring_value_changed.connect(self.update_progress_bar)
-
-        # signalBus.progressSig.connect(self.update_progress_bar)
-
+        self.install_finished.connect(self.on_finished)
 
         signalBus.software_registySig.connect(self.is_install)
+
         self.refreshSig.connect(self.refresh)
 
     def on_button_clicked(self):
@@ -113,11 +114,20 @@ class AppCard(CardWidget):
         self.button_uninstall.setVisible(True)
         # self.button.setEnabled(False)
 
+    def set_install_state(self, state : bool):
+        self.install_state = state
+
     def refresh(self):
-        self.button.setVisible(True)
-        self.ring.setVisible(False)
-        self.button_run.setVisible(False)
-        self.button_uninstall.setVisible(False)
+        if self.install_state:
+            self.button.setVisible(False)
+            self.ring.setVisible(False)
+            self.button_run.setVisible(True)
+            self.button_uninstall.setVisible(True)
+        else:
+            self.button.setVisible(True)
+            self.ring.setVisible(False)
+            self.button_run.setVisible(False)
+            self.button_uninstall.setVisible(False)
 
     # def mouseReleaseEvent(self, e):
     #     super().mouseReleaseEvent(e)
@@ -133,6 +143,19 @@ class AppCard(CardWidget):
             else:
                 pass
 
+    # def simulate_installation(self):
+    #     # 模拟安装进度
+    #     import time
+    #     from threading import Thread
+
+    #     def run():
+    #         for i in range(101):
+    #             time.sleep(0.05)
+    #             self.ring.setValue(i)
+    #             # 使用线程来模拟进度条的更新
+    #     thread = Thread(target=run)
+    #     thread.start()
+        
 class AppCardView(QWidget):
     """ Sample card view """
 
@@ -158,3 +181,8 @@ class AppCardView(QWidget):
         """ add app card """
         card = AppCard(icon, title, content, routeKey, index, name, self)
         self.flowLayout.addWidget(card)
+
+    def refresh(self):
+        count = self.flowLayout.count()
+        for index in range(count):
+            self.flowLayout.itemAt(index).widget().refresh()

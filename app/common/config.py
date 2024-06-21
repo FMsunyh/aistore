@@ -65,6 +65,7 @@ RELEASE_URL = "https://github.com/zhiyiYo/PyQt-Fluent-Widgets/releases/latest"
 ZH_SUPPORT_URL = "https://qfluentwidgets.com/zh/price/"
 EN_SUPPORT_URL = "https://qfluentwidgets.com/price/"
 
+REGISTY_PATH = r"Software\aistore"
 
 cfg = Config()
 cfg.themeMode.value = Theme.AUTO

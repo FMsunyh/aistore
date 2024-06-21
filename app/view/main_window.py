@@ -1,3 +1,11 @@
+'''
+Author: Firmin.Sun fmsunyh@gmail.com
+Date: 2024-06-16 05:28:37
+LastEditors: Firmin.Sun fmsunyh@gmail.com
+LastEditTime: 2024-06-21 10:22:44
+FilePath: \aistore\app\view\main_window.py
+Description: main windows
+'''
 # coding: utf-8
 from PyQt5.QtCore import QUrl, QSize
 from PyQt5.QtGui import QIcon, QDesktopServices, QColor
@@ -25,7 +33,7 @@ from .setting_interface import SettingInterface
 from .text_interface import TextInterface
 from .view_interface import ViewInterface
 from .aistore_interface import AiStoreInterface
-from ..common.config import ZH_SUPPORT_URL, EN_SUPPORT_URL, cfg
+from ..common.config import ZH_SUPPORT_URL, EN_SUPPORT_URL, cfg, REGISTY_PATH
 from ..common.icon import Icon
 from ..common.signal_bus import signalBus
 from ..common.translator import Translator
@@ -66,13 +74,7 @@ class MainWindow(FluentWindow):
         self.splashScreen.finish()
 
         self.init_data()
-        self.check_software_registy()
-
-    def connectSignalToSlot(self):
-        signalBus.micaEnableChanged.connect(self.setMicaEffectEnabled)
-        signalBus.switchToSampleCard.connect(self.switchToSample)
-        signalBus.supportSignal.connect(self.onSupport)
-        signalBus.software_uninstallSig.connect(self.software_uninstall)
+        # self.check_software_registy()
 
     def initNavigation(self):
         # add navigation items
@@ -137,9 +139,16 @@ class MainWindow(FluentWindow):
         QApplication.processEvents()
 
     def init_data(self):
-        reg_path = r"Software\aistore"
-        self.software_list = read_all_installed_software_from_registry(reg_path)
-    
+        self.init_homeInterface()
+
+
+    def init_homeInterface(self):
+        registy = read_all_installed_software_from_registry(REGISTY_PATH)
+        self.homeInterface.set_registy(registy)
+        self.homeInterface.set_apps_state()
+        self.homeInterface.refresh()
+
+
     def onSupport(self):
         language = cfg.get(cfg.language).value
         if language.name() == "zh_CN":
@@ -160,21 +169,26 @@ class MainWindow(FluentWindow):
                 self.stackedWidget.setCurrentWidget(w, False)
                 w.scrollToCard(index)
 
-    def check_software_registy(self):
-        signalBus.software_registySig.emit(self.software_list)
+    # def check_software_registy(self):
+    #     signalBus.software_registySig.emit(self.software_list)
 
-    def software_uninstall(self, app_card):
-        print(app_card.name)
-        title = self.tr('Uninstall ' + app_card.name)
-        content = self.tr(
-            f"Do you want to uninstall {app_card.name} ?)
-        w = MessageBox(title, content, self)
-        if w.exec():
+    # def software_uninstall(self, app_card):
+    #     print(app_card.name)
+    #     title = self.tr('Uninstall ' + app_card.name)
+    #     content = self.tr(f"Do you want to uninstall {app_card.name} ?")
+    #     w = MessageBox(title, content, self)
+    #     if w.exec():
             
-            for item in self.software_list:
-                if item["DisplayName"] == app_card.name:
-                    self.software_list.remove(item)
-            app_card.refreshSig.emit()
+    #         for item in self.software_list:
+    #             if item["DisplayName"] == app_card.name:
+    #                 self.software_list.remove(item)
+    #         app_card.refreshSig.emit()
 
-            for item in self.software_list:
-                print(item)
+    #         for item in self.software_list:
+    #             print(item)
+
+    def connectSignalToSlot(self):
+        signalBus.micaEnableChanged.connect(self.setMicaEffectEnabled)
+        signalBus.switchToSampleCard.connect(self.switchToSample)
+        signalBus.supportSignal.connect(self.onSupport)
+        # signalBus.software_uninstallSig.connect(self.software_uninstall)
