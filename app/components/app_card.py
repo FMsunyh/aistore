@@ -96,6 +96,8 @@ class AppCard(CardWidget):
         self.button.setVisible(False)
         self.ring.setVisible(True)
         self.install_clicked.emit(self.ring_value_changed,self.install_finished)
+
+        signalBus.software_installSig.emit(self)
         # self.simulate_installation()
 
     def on_button_run_clicked(self):

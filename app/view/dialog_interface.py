@@ -176,7 +176,7 @@ class DialogInterface(GalleryInterface):
         Flyout.make(view, self.complexFlyoutButton, self.window(), FlyoutAnimationType.SLIDE_RIGHT)
 
 
-class CustomMessageBox2(MessageBoxBase):
+class CustomMessageBox(MessageBoxBase):
     """ Custom message box """
 
     def __init__(self, parent=None):

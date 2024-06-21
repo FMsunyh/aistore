@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-14 18:28:18
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-20 14:58:53
+LastEditTime: 2024-06-21 15:16:07
 FilePath: \aistore\app\common\signal_bus.py
 Description: Defining global signal(notify)
 '''
@@ -24,7 +24,8 @@ class SignalBus(QObject):
     facefusion_finishedSig = pyqtSignal()
 
     software_registySig = pyqtSignal(list)
-
+    
+    software_installSig = pyqtSignal(object)
     software_uninstallSig = pyqtSignal(object)
 
 signalBus = SignalBus()

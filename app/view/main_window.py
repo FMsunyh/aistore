@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 05:28:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-21 14:34:44
+LastEditTime: 2024-06-21 15:26:08
 FilePath: \aistore\app\view\main_window.py
 Description: main windows
 '''
@@ -82,7 +82,6 @@ class MainWindow(FluentWindow):
         self.addSubInterface(self.homeInterface, FIF.HOME, self.tr('Home'))
 
 
-        """
         self.addSubInterface(self.aistoreInterface, Icon.EMOJI_TAB_SYMBOLS, t.icons)
         
         self.addSubInterface(self.iconInterface, Icon.EMOJI_TAB_SYMBOLS, t.icons)
@@ -111,7 +110,6 @@ class MainWindow(FluentWindow):
             tooltip=t.price,
             position=NavigationItemPosition.BOTTOM
         )
-        """
 
 
 

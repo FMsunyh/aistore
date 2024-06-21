@@ -2,17 +2,20 @@
 import importlib
 from PyQt5.QtCore import Qt, QRectF
 from PyQt5.QtGui import QPixmap, QPainter, QColor, QBrush, QPainterPath, QLinearGradient
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel,QLabel, QVBoxLayout, QHBoxLayout,QFileDialog
 
-from qfluentwidgets import ScrollArea, isDarkTheme, FluentIcon,MessageBox
+from qfluentwidgets import ScrollArea, isDarkTheme, FluentIcon,MessageBox,MessageBoxBase,SubtitleLabel,LineEdit,PushButton,CheckBox,StrongBodyLabel
 
 from app.components.app_card import AppCardView
+from app.core.filesystem import is_directory
 from ..common.config import cfg, HELP_URL, REPO_URL, EXAMPLE_URL, FEEDBACK_URL
 from ..common.icon import Icon, FluentIconBase
 from ..components.link_card import LinkCardView
 from ..components.sample_card import SampleCardView
 from ..common.style_sheet import StyleSheet
 from ..common.signal_bus import signalBus
+
+import os
 
 class BannerWidget(QWidget):
     """ Banner widget """
@@ -195,8 +198,19 @@ class HomeInterface(ScrollArea):
             installer_module = importlib.import_module('app.installer.'+ installer_name)
             self.popularView.flowLayout.itemAt(index).widget().install_clicked.connect(installer_module.process)
 
+        signalBus.software_installSig.connect(self.software_install)
         signalBus.software_uninstallSig.connect(self.software_uninstall)
-            # self.popularView.flowLayout.itemAt(index).widget().install_clicked.connect(installer_module.process)
+
+    def software_install(self, app_card):
+        app_name = app_card.name
+        print(app_card.name)
+
+        title = self.tr('Install ' + app_card.name)
+        # content = self.tr(f"Do you want to uninstall {app_card.name} ?")
+        w = CustomMessageBox(title=title, app_name=app_card.name, parent=self)
+        if w.exec():
+            print("Ok")
+
 
     def software_uninstall(self, app_card):
         app_name = app_card.name
@@ -226,4 +240,60 @@ class HomeInterface(ScrollArea):
         if self.popularView is not None:
             self.popularView.refresh()
         
-            
+
+class CustomMessageBox(MessageBoxBase):
+    """ Custom message box """
+
+    def __init__(self, title, app_name, parent=None):
+        super().__init__(parent)
+        self.titleLabel = SubtitleLabel(self.tr(title), self)
+        self.app_name = app_name
+        # add widget to view layout
+        self.viewLayout.addWidget(self.titleLabel)
+
+        # change the text of button
+        self.yesButton.setText(self.tr('Install'))
+        self.cancelButton.setText(self.tr('Cancel'))
+
+        self.widget.setMinimumWidth(500)
+        # self.yesButton.setDisabled(True)
+
+                # 安装路径部分
+        path_layout = QHBoxLayout()
+        self.path_label = StrongBodyLabel('Select Installation Path:')
+        path_layout.addWidget(self.path_label)
+        self.path_edit = LineEdit(self)
+        # self.path_edit.setPlaceholderText(self.tr('Enter installation path'))
+        defualt_path = os.path.join(r"D:\aistore", self.app_name)
+                                    
+        self.path_edit.setText(defualt_path)
+        # self.path_edit.setClearButtonEnabled(True)
+        self.path_edit.setDisabled(True)
+
+        path_layout.addWidget(self.path_edit)
+        self.browse_button = PushButton('Browse')
+        self.browse_button.clicked.connect(self.browse)
+        # path_layout.addWidget(self.browse_button)
+        self.viewLayout.addLayout(path_layout)
+
+        # 创建桌面快捷方式复选框
+        self.shortcut_checkbox = CheckBox('Create Desktop Shortcut')
+        self.shortcut_checkbox.setChecked(True)
+        self.shortcut_checkbox.setDisabled(True)
+        self.viewLayout.addWidget(self.shortcut_checkbox)
+
+
+        # self.path_edit.textChanged.connect(self._validateUrl)
+        # self.yesButton.setDisabled(True)
+
+    # def _validateUrl(self, text):
+    #     self.yesButton.setEnabled(is_directory(text))
+
+    def browse(self):
+        # 打开文件夹选择对话框
+        options = QFileDialog.Options()
+        options |= QFileDialog.ShowDirsOnly
+        directory = QFileDialog.getExistingDirectory(self, "Select Installation Path", "", options=options)
+        if directory:
+            self.path_edit.setText(directory)
+  
