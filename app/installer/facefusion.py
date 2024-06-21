@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-14 18:28:18
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-21 14:40:53
+LastEditTime: 2024-06-21 18:39:46
 FilePath: \aistore\app\installer\facefusion.py
 Description: Installer of facefusion
 '''
@@ -33,14 +33,14 @@ def pre_check() -> bool:
 	# return is_file(model_path)
     print("Hello World, FaceFusion")
 
-def process(ring_value_changed, finished):
+def process(ring_value_changedSig, finished):
 	app_url = "http://172.30.9.84:7860/chfs/shared/facefusion/facefusion-2.6.0.zip"
 	print("Start install process")
 	temp_directory_path = os.path.join(tempfile.gettempdir(), 'aistore', 'facefusion')
 	Path(temp_directory_path).mkdir(parents = True, exist_ok = True)
 	print(temp_directory_path)
 
-	get_download_manager().start_task(temp_directory_path, app_url,ring_value_changed,finished)
+	get_download_manager().start_task(temp_directory_path, app_url,ring_value_changedSig,finished)
 
 	download_file_path = os.path.join(temp_directory_path, os.path.basename(app_url))
 	
@@ -62,6 +62,16 @@ def process(ring_value_changed, finished):
 # 			link.working_directory = app_path
 # 	else:
 # 		print("Linux is not support")
+
+def install(app_card):
+	print("Start install process (facefusion)")
+
+	app_url = "http://172.30.9.84:7860/chfs/shared/kohya_ss/facefusion-2.6.0.zip"
+	temp_directory_path = os.path.join(tempfile.gettempdir(), 'aistore', 'facefusion')
+	Path(temp_directory_path).mkdir(parents = True, exist_ok = True)
+	print(temp_directory_path)
+
+	get_download_manager().install_task(temp_directory_path, app_url, app_card)
 
 def uninstall(registy_info):
 	get_download_manager().uninstall_task(registy_info)

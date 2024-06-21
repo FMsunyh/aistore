@@ -11,8 +11,8 @@ from qfluentwidgets import MessageBox
 class AppCard(CardWidget):
     """ Sample card """
     install_clicked = pyqtSignal(object,object)
-    ring_value_changed = pyqtSignal(int)
-    install_finished = pyqtSignal()
+    ring_value_changedSig = pyqtSignal(int)
+    install_finishedSig = pyqtSignal()
     refreshSig = pyqtSignal()
 
     def __init__(self, icon, title, content, routeKey, index, name, parent=None):
@@ -85,8 +85,8 @@ class AppCard(CardWidget):
         self.button_run.clicked.connect(self.on_button_run_clicked)
         self.button_uninstall.clicked.connect(self.on_button_uninstall_clicked)
 
-        self.ring_value_changed.connect(self.update_progress_bar)
-        self.install_finished.connect(self.on_finished)
+        self.ring_value_changedSig.connect(self.update_progress_bar)
+        self.install_finishedSig.connect(self.on_finished)
 
         signalBus.software_registySig.connect(self.is_install)
 
@@ -95,7 +95,7 @@ class AppCard(CardWidget):
     def on_button_clicked(self):
         self.button.setVisible(False)
         self.ring.setVisible(True)
-        self.install_clicked.emit(self.ring_value_changed,self.install_finished)
+        self.install_clicked.emit(self.ring_value_changedSig,self.install_finishedSig)
 
         signalBus.software_installSig.emit(self)
         # self.simulate_installation()

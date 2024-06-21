@@ -206,10 +206,14 @@ class HomeInterface(ScrollArea):
         print(app_card.name)
 
         title = self.tr('Install ' + app_card.name)
-        # content = self.tr(f"Do you want to uninstall {app_card.name} ?")
         w = CustomMessageBox(title=title, app_name=app_card.name, parent=self)
         if w.exec():
-            print("Ok")
+            print("Start install {}".format(app_name))
+            installer_module = importlib.import_module('app.installer.'+ app_name)
+            if installer_module is not None:
+                installer_module.install(app_card)
+
+
 
 
     def software_uninstall(self, app_card):

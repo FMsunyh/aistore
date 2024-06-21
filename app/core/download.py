@@ -31,20 +31,20 @@ if is_macos():
 	ssl._create_default_https_context = ssl._create_unverified_context
 
 class DownloadWorker(QThread):
-	process_bar = pyqtSignal(int)  # 自定义信号用于任务完成后传递结果
+	# process_bar = pyqtSignal(int)  # 自定义信号用于任务完成后传递结果
 
-	def __init__(self, download_directory_path : str, url : str, ring_value_changed, parent=None):
+	def __init__(self, download_directory_path : str, url : str, app_card, parent=None):
 		super().__init__(parent)
 		self.download_directory_path = download_directory_path
 		self.url = url
-		self.ring_value_changed = ring_value_changed
+		self.app_card = app_card
 
 	def run(self):
-		# ptvsd.debug_this_thread()
-		# zipfile_path = self.download_file()
-		# output = self.extract_file(zipfile_path, "D:\myapp")
-		path = os.path.join(r"D:/myapp/facefusion-2.6.0")
-		self.create_shortcut(path)
+		ptvsd.debug_this_thread()
+		zipfile_path = self.download_file()
+		output = self.extract_file(zipfile_path, r"D:/aistore app/")
+		# path = os.path.join(r"D:/aistore app/", self.app_card.name)
+		self.create_shortcut(output)
 		self.create_registy()
 
 	# def run(self):
@@ -61,7 +61,7 @@ class DownloadWorker(QThread):
 		download_size = get_download_size(self.url)
 		if initial_size < download_size:
 			with tqdm(total = download_size, initial = initial_size, desc = app.core.wording.get('downloading'), unit = 'B', unit_scale = True, unit_divisor = 1024, ascii = ' =', disable = log_level in [ 'warn', 'error' ]) as progress:
-				process = subprocess.Popen([ 'curl', '--create-dirs', '--silent', '--insecure', '--location', '--continue-at', '-', '--output', download_file_path, url ])
+				process = subprocess.Popen([ 'curl', '--create-dirs', '--silent', '--insecure', '--location', '--continue-at', '-', '--output', download_file_path, self.url ])
 				# stdout, stderr = process.communicate()
 				current_size = initial_size
 				current_bar = 0
@@ -72,11 +72,13 @@ class DownloadWorker(QThread):
 						progress_percentage = int((current_size / download_size) * 50)
 						if current_bar < progress_percentage:
 							current_bar = progress_percentage
-							self.process_bar.emit(progress_percentage) # 任务完成后发射信号
-				
+							# self.process_bar.emit(progress_percentage) # 任务完成后发射信号
+							self.app_card.ring_value_changedSig.emit(progress_percentage)
+
+
 		if download_size and not is_download_done(self.url, download_file_path):
 			os.remove(download_file_path)
-			self.run(self.download_directory_path, self.url, self.ring_value_changed)
+			self.run(self.download_directory_path, self.url, self.app_card)
 
 		return download_file_path
 	
@@ -93,12 +95,16 @@ class DownloadWorker(QThread):
 				for i, file in enumerate(file_list):
 					zip_ref.extract(file, output)
 					progress_percentage = int((i + 1) / total_files * 100) + 50
-					self.process_bar.emit(progress_percentage)
-
+					self.app_card.ring_value_changedSig.emit(progress_percentage)
+					
+					# print(zip_ref.filename)
 		except zipfile.BadZipFile:
 			print('Not a zip file or a corrupted zip file')
 		
-		return output
+		name_version = os.path.basename(zipfile_path)[:-4]
+		app_path = os.path.join(output, self.app_card.name)
+		os.rename(os.path.join(output, name_version), app_path)
+		return app_path
 
 	def create_shortcut(self, target_path):
 
@@ -120,6 +126,7 @@ class DownloadWorker(QThread):
 		print(result.stdout)
 		if result.stderr:
 			print("Error:", result.stderr)
+		
 
 	def create_registy(self):
 		software_name, software_version = os.path.basename(self.url).split('-')
@@ -155,14 +162,22 @@ class DownloadManager(QObject):
 		super().__init__(parent)
 		self.worker = None
 		self.uninstall_worker = None
-		self.ring_value_changed = None
-		self.finished = None
+		self.ring_value_changedSig = None
+		self.install_finishedSig = None
 
-	def start_task(self, download_directory_path, urls, ring_value_changed, finished):
-		self.finished = finished
-		self.worker = DownloadWorker(download_directory_path, urls, ring_value_changed)
-		self.worker.process_bar.connect(self.on_process_bar)
-		self.worker.finished.connect(self.finished.emit)
+	def start_task(self, download_directory_path, urls, ring_value_changedSig, finished):
+		# self.finished = finished
+		# self.worker = DownloadWorker(download_directory_path, urls, ring_value_changedSig)
+		# self.worker.process_bar.connect(self.on_process_bar)
+		# self.worker.finished.connect(self.finished.emit)
+		# self.worker.start()
+		pass
+
+	def install_task(self, download_directory_path, urls, app_card):
+		self.install_finishedSig = app_card.install_finishedSig
+		self.worker = DownloadWorker(download_directory_path, urls, app_card)
+		# self.worker.process_bar.connect(self.on_process_bar)
+		self.worker.finished.connect(self.install_finishedSig.emit)
 		self.worker.start()
 
 		# self.worker.wait()
@@ -172,8 +187,8 @@ class DownloadManager(QObject):
 		self.uninstall_worker.start()
 
 
-	def on_process_bar(self, current_size):
-		self.worker.ring_value_changed.emit(current_size)
+	# def on_process_bar(self, current_size):
+	# 	self.worker.ring_value_changedSig.emit(current_size)
 
 	def wait(self):
 		self.worker.wait()
