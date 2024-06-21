@@ -208,19 +208,22 @@ class HomeInterface(ScrollArea):
 
         if w.exec():
             installer_module = importlib.import_module('app.installer.'+ app_name)
-            installer_module.uninstall(self.registry)
+            installer_module.uninstall(self.registy[0])
 
                         
-            for item in self.registry:
+            for item in self.registy:
                 if item["DisplayName"] == app_card.name:
-                    self.registry.remove(item)
+                    self.registy.remove(item)
             
-            for item in self.registry:
+            for item in self.registy:
                 print(item)
 
+            app_card.set_install_state(False)
             app_card.refreshSig.emit()
 
+
     def refresh(self):
-        self.popularView.refresh()
+        if self.popularView is not None:
+            self.popularView.refresh()
         
             

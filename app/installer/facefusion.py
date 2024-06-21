@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-14 18:28:18
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-21 11:17:12
+LastEditTime: 2024-06-21 14:40:53
 FilePath: \aistore\app\installer\facefusion.py
 Description: Installer of facefusion
 '''
@@ -63,8 +63,9 @@ def process(ring_value_changed, finished):
 # 	else:
 # 		print("Linux is not support")
 
-def uninstall(registy):
-	for item in registy:
-		print(item)
+def uninstall(registy_info):
+	get_download_manager().uninstall_task(registy_info)
+	# for item in registy:
+	# 	print(item)
 
 	print("uninstall facefusion") 

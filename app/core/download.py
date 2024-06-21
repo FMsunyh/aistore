@@ -8,7 +8,7 @@ from functools import lru_cache
 from tqdm import tqdm
 
 import app.core.globals
-from app.core.registry import write_install_info_to_registry
+from app.core.registry import write_install_info_to_registry,delete_software_registry_info
 import app.core.wording
 from app.core.common_helper import is_macos
 from app.core.filesystem import get_file_size, is_file
@@ -128,11 +128,33 @@ class DownloadWorker(QThread):
 		software_publisher = "MyCompany"
 		installation_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 		write_install_info_to_registry(reg_path,software_name, software_version[:-4], software_publisher, installation_date)
+
+class UninstallWorker(QThread):
+	process_bar = pyqtSignal(int)  # 自定义信号用于任务完成后传递结果
+
+	def __init__(self, registy_info, parent=None):
+		super().__init__(parent)
+		self.registy_info = registy_info
+
+
+	def run(self):
+		# ptvsd.debug_this_thread()
+		# zipfile_path = self.download_file()
+		# output = self.extract_file(zipfile_path, "D:\myapp")
+		directory_path = os.path.join(r"D:/myapp/facefusion-2.6.0")
+		if os.path.exists(directory_path):
+			print("delete directory {}".format(directory_path))
+			# os.rmdir(directory_path)
 		
+		software_name = self.registy_info["DisplayName"]
+		reg_path = os.path.join(r"Software\aistore", software_name)
+		delete_software_registry_info(reg_path)
+
 class DownloadManager(QObject):
 	def __init__(self, parent=None):
 		super().__init__(parent)
 		self.worker = None
+		self.uninstall_worker = None
 		self.ring_value_changed = None
 		self.finished = None
 
@@ -144,6 +166,11 @@ class DownloadManager(QObject):
 		self.worker.start()
 
 		# self.worker.wait()
+
+	def uninstall_task(self,registy_info):
+		self.uninstall_worker = UninstallWorker(registy_info=registy_info)
+		self.uninstall_worker.start()
+
 
 	def on_process_bar(self, current_size):
 		self.worker.ring_value_changed.emit(current_size)

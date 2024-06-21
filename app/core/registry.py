@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-19 17:19:07
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-19 18:52:33
+LastEditTime: 2024-06-21 14:22:47
 FilePath: \aistore\app\core\registry.py
 Description: read and write registry
 '''
@@ -87,10 +87,24 @@ def read_all_installed_software_from_registry(reg_path):
         pass  # 到达注册表末尾，结束循环
 
     return software_list
+
+def delete_software_registry_info(reg_path):
+    """
+    删除注册表中的 "FaceFusion" 软件信息
+    """
+    # reg_path = r"Software\MySoftware\FaceFusion"  # 注册表路径
     
+    try:
+        # 打开注册表键以进行删除
+        winreg.DeleteKey(winreg.HKEY_CURRENT_USER, reg_path)
+        print(f"已成功删除 {reg_path} 的注册表信息")
+    except WindowsError as e:
+        print(f"删除注册表时出现错误：{e}")   
+
+
 # if __name__ == "__main__":
 #     # 写入虚构的软件安装信息
-#     software_name = "MySoftware"
+#     software_name = "MySoftware1"
 #     software_version = "1.0"
 #     software_publisher = "MyCompany"
 #     installation_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -112,3 +126,7 @@ def read_all_installed_software_from_registry(reg_path):
 #             print()
 #     else:
 #         print("未找到已安装的软件信息。")
+
+#     # 删除 "FaceFusion" 软件的注册表信息
+#     delete_software_registry_info(reg_path)
+

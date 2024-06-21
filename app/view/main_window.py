@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 05:28:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-21 10:22:44
+LastEditTime: 2024-06-21 14:34:44
 FilePath: \aistore\app\view\main_window.py
 Description: main windows
 '''
@@ -47,7 +47,7 @@ class MainWindow(FluentWindow):
         self.initWindow()
 
         # create sub interface
-        self.homeInterface = HomeInterface(self)
+        self.homeInterface = HomeInterface(parent=self)
         self.iconInterface = IconInterface(self)
         self.basicInputInterface = BasicInputInterface(self)
         self.dateTimeInterface = DateTimeInterface(self)
