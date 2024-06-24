@@ -51,20 +51,20 @@ class BannerWidget(QWidget):
             REPO_URL
         )
 
-        self.linkCardView.addCard(
-            FluentIcon.CODE,
-            self.tr('Code samples'),
-            self.tr(
-                'Find samples that demonstrate specific tasks, features and APIs.'),
-            EXAMPLE_URL
-        )
+        # self.linkCardView.addCard(
+        #     FluentIcon.CODE,
+        #     self.tr('Code samples'),
+        #     self.tr(
+        #         'Find samples that demonstrate specific tasks, features and APIs.'),
+        #     EXAMPLE_URL
+        # )
 
-        self.linkCardView.addCard(
-            FluentIcon.FEEDBACK,
-            self.tr('Send feedback'),
-            self.tr('Help us improve PyQt-Fluent-Widgets by providing feedback.'),
-            FEEDBACK_URL
-        )
+        # self.linkCardView.addCard(
+        #     FluentIcon.FEEDBACK,
+        #     self.tr('Send feedback'),
+        #     self.tr('Help us improve PyQt-Fluent-Widgets by providing feedback.'),
+        #     FEEDBACK_URL
+        # )
 
     def paintEvent(self, e):
         super().paintEvent(e)
@@ -188,18 +188,30 @@ class HomeInterface(ScrollArea):
 
         count =  self.popularView.flowLayout.count()
         print(count)
-        for index in range(count):
+        # for index in range(count):
 
-            print(self.popularView.flowLayout.itemAt(index).widget().routeKey)
-            print(self.popularView.flowLayout.itemAt(index).widget().index)
-            print(self.popularView.flowLayout.itemAt(index).widget().name)
+        #     print(self.popularView.flowLayout.itemAt(index).widget().routeKey)
+        #     print(self.popularView.flowLayout.itemAt(index).widget().index)
+        #     print(self.popularView.flowLayout.itemAt(index).widget().name)
 
-            installer_name = self.popularView.flowLayout.itemAt(index).widget().name
-            installer_module = importlib.import_module('app.installer.'+ installer_name)
-            self.popularView.flowLayout.itemAt(index).widget().install_clicked.connect(installer_module.process)
+        #     installer_name = self.popularView.flowLayout.itemAt(index).widget().name
+            # installer_module = importlib.import_module('app.installer.'+ installer_name)
+            # self.popularView.flowLayout.itemAt(index).widget().install_clicked.connect(installer_module.process)
 
         signalBus.software_installSig.connect(self.software_install)
         signalBus.software_uninstallSig.connect(self.software_uninstall)
+        signalBus.software_runSig.connect(self.software_run)
+
+    def software_run(self, app_card):
+        app_name = app_card.name
+        print(app_card.name)
+
+        title = self.tr('Run ' + app_card.name)
+        content = self.tr(f"Run on desktop shortcut")
+        w = MessageBox(title, content, self)
+
+        if w.exec():
+            print("run")
 
     def software_install(self, app_card):
         app_name = app_card.name
@@ -214,8 +226,6 @@ class HomeInterface(ScrollArea):
                 installer_module.install(app_card)
 
 
-
-
     def software_uninstall(self, app_card):
         app_name = app_card.name
         print(app_card.name)
@@ -226,7 +236,7 @@ class HomeInterface(ScrollArea):
 
         if w.exec():
             installer_module = importlib.import_module('app.installer.'+ app_name)
-            installer_module.uninstall(self.registy[0])
+            installer_module.uninstall(app_name)
 
                         
             for item in self.registy:

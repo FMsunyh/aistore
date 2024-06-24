@@ -2,7 +2,7 @@
  * @Author: Firmin.Sun fmsunyh@gmail.com
  * @Date: 2024-06-14 18:28:18
  * @LastEditors: Firmin.Sun fmsunyh@gmail.com
- * @LastEditTime: 2024-06-21 11:15:57
+ * @LastEditTime: 2024-06-24 09:56:23
  * @FilePath: \aistore\README.md
  * @Description: Content of readme
 -->
@@ -20,13 +20,21 @@ pyrcc5 -o ./app/common/resource.py ./app/resource/resource.qrc
 ## Build
 Build executable file 
 ```
-pyinstaller --onefile  .\demo.py
+pyinstaller --onefile  .\aistore.py
+```
+
+```
+pyinstaller --onefile --additional-hooks-dir=D:\aistore\app\installer .\aistore.py
 ```
 
 OR
 ```
 pyinstaller demo.spec
 ```
+
+
+
+
 
 激活myenv
 ```

@@ -34,7 +34,7 @@ def pre_check() -> bool:
     print("Hello World, FaceFusion")
 
 def process(ring_value_changedSig, finished):
-	app_url = "http://172.30.9.84:7860/chfs/shared/facefusion/facefusion-2.6.0.zip"
+	app_url = "http://183.232.235.52:7860/chfs/shared/facefusion/facefusion-2.6.0.zip"
 	print("Start install process")
 	temp_directory_path = os.path.join(tempfile.gettempdir(), 'aistore', 'facefusion')
 	Path(temp_directory_path).mkdir(parents = True, exist_ok = True)
@@ -66,7 +66,7 @@ def process(ring_value_changedSig, finished):
 def install(app_card):
 	print("Start install process (kohya_ss)")
 
-	app_url = "http://172.30.9.84:7860/chfs/shared/kohya_ss/kohya_ss-1.0.0.zip"
+	app_url = "http://183.232.235.52:7860/chfs/shared/kohya_ss/kohya_ss-1.0.0.zip"
 	temp_directory_path = os.path.join(tempfile.gettempdir(), 'aistore', 'kohya_ss')
 	Path(temp_directory_path).mkdir(parents = True, exist_ok = True)
 	print(temp_directory_path)

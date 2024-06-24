@@ -100,11 +100,12 @@ class AppCard(CardWidget):
         signalBus.software_installSig.emit(self)
         # self.simulate_installation()
 
-    def on_button_run_clicked(self):
-        pass
 
     def on_button_uninstall_clicked(self):
         signalBus.software_uninstallSig.emit(self)
+
+    def on_button_run_clicked(self):
+        signalBus.software_runSig.emit(self)
 
     def update_progress_bar(self, value):
         # 更新进度条

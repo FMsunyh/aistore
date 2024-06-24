@@ -54,8 +54,8 @@ class Config(QConfig):
     checkUpdateAtStartUp = ConfigItem("Update", "CheckUpdateAtStartUp", True, BoolValidator())
 
 
-YEAR = 2023
-AUTHOR = "zhiyiYo"
+YEAR = 2024
+AUTHOR = "Firmin.Sun"
 VERSION = __version__
 HELP_URL = "https://www.zjusmart.com/#/"
 REPO_URL = "https://manage.zjusmart.com/vmt/web/user/login"

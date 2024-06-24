@@ -1,5 +1,6 @@
 import datetime
 import os
+import shutil
 import subprocess
 import ssl
 import urllib.request
@@ -17,7 +18,7 @@ from PyQt5.QtCore import QThread, pyqtSignal, QObject
 import sys
 import os.path
 import zipfile
-import ptvsd
+# import ptvsd
 
 DOWNLOADMANAGER = None
 
@@ -40,7 +41,7 @@ class DownloadWorker(QThread):
 		self.app_card = app_card
 
 	def run(self):
-		ptvsd.debug_this_thread()
+		# ptvsd.debug_this_thread()
 		zipfile_path = self.download_file()
 		output = self.extract_file(zipfile_path, r"D:/aistore app/")
 		# path = os.path.join(r"D:/aistore app/", self.app_card.name)
@@ -139,21 +140,23 @@ class DownloadWorker(QThread):
 class UninstallWorker(QThread):
 	process_bar = pyqtSignal(int)  # 自定义信号用于任务完成后传递结果
 
-	def __init__(self, registy_info, parent=None):
+	def __init__(self, app_name, parent=None):
 		super().__init__(parent)
-		self.registy_info = registy_info
+		self.app_name = app_name
 
 
 	def run(self):
 		# ptvsd.debug_this_thread()
 		# zipfile_path = self.download_file()
 		# output = self.extract_file(zipfile_path, "D:\myapp")
-		directory_path = os.path.join(r"D:/myapp/facefusion-2.6.0")
+		directory_path = os.path.join(r"D:/aistore app",self.app_name )
 		if os.path.exists(directory_path):
 			print("delete directory {}".format(directory_path))
 			# os.rmdir(directory_path)
+			shutil.rmtree(directory_path)
+			# os.removedirs(directory_path)
 		
-		software_name = self.registy_info["DisplayName"]
+		software_name = self.app_name
 		reg_path = os.path.join(r"Software\aistore", software_name)
 		delete_software_registry_info(reg_path)
 
@@ -182,8 +185,8 @@ class DownloadManager(QObject):
 
 		# self.worker.wait()
 
-	def uninstall_task(self,registy_info):
-		self.uninstall_worker = UninstallWorker(registy_info=registy_info)
+	def uninstall_task(self, app_name):
+		self.uninstall_worker = UninstallWorker(app_name=app_name)
 		self.uninstall_worker.start()
 
 
