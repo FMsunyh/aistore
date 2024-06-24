@@ -66,6 +66,8 @@ ZH_SUPPORT_URL = "https://qfluentwidgets.com/zh/price/"
 EN_SUPPORT_URL = "https://qfluentwidgets.com/price/"
 
 REGISTY_PATH = r"Software\aistore"
+SERVER_IP = "183.232.235.52"
+SERVER_PORT = "7860"
 
 cfg = Config()
 cfg.themeMode.value = Theme.AUTO

@@ -18,7 +18,7 @@ from PyQt5.QtCore import QThread, pyqtSignal, QObject
 import sys
 import os.path
 import zipfile
-# import ptvsd
+import ptvsd
 
 DOWNLOADMANAGER = None
 
@@ -55,7 +55,7 @@ class DownloadWorker(QThread):
 	# 	self.finished.emit(stdout.decode(), stderr.decode()) # 任务完成后发射信号
 		
 	def download_file(self):
-		# ptvsd.debug_this_thread()
+		ptvsd.debug_this_thread()
 		log_level = 'error'
 		download_file_path = os.path.join(self.download_directory_path, os.path.basename(self.url))
 		initial_size = get_file_size(download_file_path)
