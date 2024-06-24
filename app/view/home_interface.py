@@ -194,40 +194,27 @@ class HomeInterface(ScrollArea):
 
 
     def __connectSignalToSlot(self):
-
-        count =  self.popularView.flowLayout.count()
-        print(count)
-        # for index in range(count):
-
-        #     print(self.popularView.flowLayout.itemAt(index).widget().routeKey)
-        #     print(self.popularView.flowLayout.itemAt(index).widget().index)
-        #     print(self.popularView.flowLayout.itemAt(index).widget().name)
-
-        #     installer_name = self.popularView.flowLayout.itemAt(index).widget().name
-            # installer_module = importlib.import_module('app.installer.'+ installer_name)
-            # self.popularView.flowLayout.itemAt(index).widget().install_clicked.connect(installer_module.process)
-
         signalBus.software_installSig.connect(self.software_install)
         signalBus.software_uninstallSig.connect(self.software_uninstall)
         signalBus.software_runSig.connect(self.software_run)
 
     def software_run(self, app_card):
-        # app_name = app_card.name
-        # print(app_card.name)
+        app_name = app_card.name
+        print(app_card.name)
 
-        # title = self.tr('Run ' + app_card.name)
-        # content = self.tr(f"Run on desktop shortcut")
-        # w = MessageBox(title, content, self)
+        title = self.tr('Run ' + app_card.name)
+        content = self.tr(f"Run on desktop shortcut")
+        w = MessageBox(title, content, self)
 
-        # if w.exec():
-        #     print("run")
+        if w.exec():
+            print("run")
 
-        command = f"{cfg.get(cfg.install_folder)}/{app_card.name}/run_{app_card.name}.bat"
-        start_directory = f"{cfg.get(cfg.install_folder)}/{app_card.name}"
-        result = subprocess.run(command, shell=True, capture_output=True, text=True, cwd=start_directory)
-        print("Return code:", result.returncode)
-        print("Output:", result.stdout)
-        print("Error:", result.stderr)
+        # command = f"{cfg.get(cfg.install_folder)}/{app_card.name}/run_{app_card.name}.bat"
+        # start_directory = f"{cfg.get(cfg.install_folder)}/{app_card.name}"
+        # result = subprocess.run(command, shell=True, capture_output=True, text=True, cwd=start_directory, encoding='utf-8')
+        # print("Return code:", result.returncode)
+        # print("Output:", result.stdout)
+        # print("Error:", result.stderr)
 
     def software_install(self, app_card):
         def get_url(app_name):
@@ -302,16 +289,24 @@ class HomeInterface(ScrollArea):
         app_card.set_state('install_completed')
         app_card.refreshSig.emit()
 
-        # title = self.tr('Install ' + app_card.name)
-        # content = self.tr(f"Do you want to run {app_card.name} ?")
-        # w = MessageBox(title, content, self)
-        # if w.exec():
-        #     command = f"{cfg.get(cfg.install_folder)}/{app_card.name}/run_{app_card.name}.bat"
-        #     start_directory = f"{cfg.get(cfg.install_folder)}/{app_card.name}"
-        #     result = subprocess.run(command, shell=True, capture_output=True, text=True, cwd=start_directory)
-        #     print("Return code:", result.returncode)
-        #     print("Output:", result.stdout)
-        #     print("Error:", result.stderr)
+        title = self.tr('Install ' + app_card.name)
+        content = self.tr(f"Do you want to run {app_card.name} ?")
+        w = MessageBox(title, content, self)
+        if w.exec():
+            title = self.tr('Run ' + app_card.name)
+            content = self.tr(f"Run on desktop shortcut")
+            w = MessageBox(title, content, self)
+
+            if w.exec():
+                print("run")
+       
+
+            # command = f"{cfg.get(cfg.install_folder)}/{app_card.name}/run_{app_card.name}.bat"
+            # start_directory = f"{cfg.get(cfg.install_folder)}/{app_card.name}"
+            # result = subprocess.run(command, shell=True, capture_output=True, text=True, cwd=start_directory, encoding='utf-8')
+            # print("Return code:", result.returncode)
+            # print("Output:", result.stdout)
+            # print("Error:", result.stderr)
 
 
     def on_uninstall_thread_finished(self, thread, app_card):

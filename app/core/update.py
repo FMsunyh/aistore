@@ -6,9 +6,10 @@ from PyQt5.QtCore import QThread, pyqtSignal, QObject
 from PyQt5.QtWidgets import QApplication
 from qfluentwidgets import MessageBox
 # import ptvsd
+from app.common.config import SERVER_IP,SERVER_PORT
 
 CURRENT_VERSION = "1.1.0"
-UPDATE_INFO_URL = "http://183.232.235.52:7860/chfs/shared/latest_version_info.txt"  # Replace with your URL
+UPDATE_INFO_URL = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/latest_version_info.txt"  # Replace with your URL
 
 class UpdateChecker(QThread):
     update_found = pyqtSignal(dict)

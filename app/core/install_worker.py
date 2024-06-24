@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-24 14:14:17
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-24 17:25:27
+LastEditTime: 2024-06-24 18:39:11
 FilePath: \aistore\app\core\install_worker.py
 Description: install worker
 '''
