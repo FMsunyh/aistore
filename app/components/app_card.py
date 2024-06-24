@@ -8,11 +8,11 @@ from ..common.style_sheet import StyleSheet
 import importlib
 from qfluentwidgets import MessageBox
 
+from app.core.typing import AppState
+
 class AppCard(CardWidget):
     """ Sample card """
     install_clicked = pyqtSignal(object,object)
-    ring_value_changedSig = pyqtSignal(int)
-    install_finishedSig = pyqtSignal()
     refreshSig = pyqtSignal()
 
     def __init__(self, icon, title, content, routeKey, index, name, parent=None):
@@ -21,7 +21,8 @@ class AppCard(CardWidget):
         self.routeKey = routeKey
         self.name = name
 
-        self.install_state = False
+        # self.install_state = False
+        self.state: AppState =  'uninstall'
 
         self.iconWidget = IconWidget(icon, self)
         self.titleLabel = QLabel(title, self)
@@ -43,7 +44,6 @@ class AppCard(CardWidget):
         self.button_uninstall = PushButton(self.tr('Uninstall'), self)
         self.button_uninstall.setVisible(False)
         self.button_uninstall.setFixedSize(100, 30)
-
 
 
         self.hBoxLayout = QHBoxLayout(self)
@@ -85,20 +85,12 @@ class AppCard(CardWidget):
         self.button_run.clicked.connect(self.on_button_run_clicked)
         self.button_uninstall.clicked.connect(self.on_button_uninstall_clicked)
 
-        self.ring_value_changedSig.connect(self.update_progress_bar)
-        self.install_finishedSig.connect(self.on_finished)
-
         signalBus.software_registySig.connect(self.is_install)
 
         self.refreshSig.connect(self.refresh)
 
     def on_button_clicked(self):
-        self.button.setVisible(False)
-        self.ring.setVisible(True)
-        self.install_clicked.emit(self.ring_value_changedSig,self.install_finishedSig)
-
         signalBus.software_installSig.emit(self)
-        # self.simulate_installation()
 
 
     def on_button_uninstall_clicked(self):
@@ -107,30 +99,41 @@ class AppCard(CardWidget):
     def on_button_run_clicked(self):
         signalBus.software_runSig.emit(self)
 
-    def update_progress_bar(self, value):
+    def update_progress_bar(self,file, value):
         # 更新进度条
+        # print(file)
         self.ring.setValue(value)
 
-    def on_finished(self):
-        self.ring.setVisible(False)
-        self.button_run.setVisible(True)
-        self.button_uninstall.setVisible(True)
-        # self.button.setEnabled(False)
-
-    def set_install_state(self, state : bool):
-        self.install_state = state
+    def set_state(self, state : AppState):
+        self.state = state
 
     def refresh(self):
-        if self.install_state:
+        # instlled
+        if self.state == 'installed' or self.state == 'install_completed':
             self.button.setVisible(False)
             self.ring.setVisible(False)
             self.button_run.setVisible(True)
             self.button_uninstall.setVisible(True)
-        else:
+            self.ring.reset()
+
+        elif self.state == 'uninstall' or self.state == 'uninstall_completed':
             self.button.setVisible(True)
             self.ring.setVisible(False)
             self.button_run.setVisible(False)
             self.button_uninstall.setVisible(False)
+            self.ring.reset()
+
+        elif self.state == 'installing':
+            self.button.setVisible(False)
+            self.ring.setVisible(True)
+            self.button_run.setVisible(False)
+            self.button_uninstall.setVisible(False)
+        elif self.state == 'uninstalling':
+            self.button.setVisible(False)
+            self.ring.setVisible(True)
+            self.button_run.setVisible(False)
+            self.button_uninstall.setVisible(False)
+        # elif self.install_state == 'uninstall'
 
     # def mouseReleaseEvent(self, e):
     #     super().mouseReleaseEvent(e)
@@ -145,19 +148,6 @@ class AppCard(CardWidget):
                 self.button_uninstall.setVisible(True)
             else:
                 pass
-
-    # def simulate_installation(self):
-    #     # 模拟安装进度
-    #     import time
-    #     from threading import Thread
-
-    #     def run():
-    #         for i in range(101):
-    #             time.sleep(0.05)
-    #             self.ring.setValue(i)
-    #             # 使用线程来模拟进度条的更新
-    #     thread = Thread(target=run)
-    #     thread.start()
         
 class AppCardView(QWidget):
     """ Sample card view """

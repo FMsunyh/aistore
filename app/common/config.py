@@ -40,6 +40,10 @@ class Config(QConfig):
     downloadFolder = ConfigItem(
         "Folders", "Download", "app/download", FolderValidator())
 
+    install_folder = ConfigItem(
+    "Folders", "Intall", "D:/aistore app/", FolderValidator())
+    
+
     # main window
     micaEnabled = ConfigItem("MainWindow", "MicaEnabled", isWin11(), BoolValidator())
     dpiScale = OptionsConfigItem(

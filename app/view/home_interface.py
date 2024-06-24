@@ -1,20 +1,26 @@
 # coding:utf-8
 import importlib
+from pathlib import Path
+import subprocess
+import tempfile
 from PyQt5.QtCore import Qt, QRectF
 from PyQt5.QtGui import QPixmap, QPainter, QColor, QBrush, QPainterPath, QLinearGradient
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel,QLabel, QVBoxLayout, QHBoxLayout,QFileDialog
 
 from qfluentwidgets import ScrollArea, isDarkTheme, FluentIcon,MessageBox,MessageBoxBase,SubtitleLabel,LineEdit,PushButton,CheckBox,StrongBodyLabel
+import requests
 
 from app.components.app_card import AppCardView
 from app.core.filesystem import is_directory
+from app.core.install_worker import InstallWorker
+from app.core.uninstall_worker import UninstallWorker
 from ..common.config import cfg, HELP_URL, REPO_URL, EXAMPLE_URL, FEEDBACK_URL
 from ..common.icon import Icon, FluentIconBase
 from ..components.link_card import LinkCardView
 from ..components.sample_card import SampleCardView
 from ..common.style_sheet import StyleSheet
 from ..common.signal_bus import signalBus
-
+from app.common.config import SERVER_IP,SERVER_PORT
 import os
 
 class BannerWidget(QWidget):
@@ -109,6 +115,9 @@ class HomeInterface(ScrollArea):
 
         self.registry = registry
 
+        self.install_threads = []
+        self.uninstall_threads = []
+
         self.banner = BannerWidget(self)
         self.view = QWidget(self)
         self.vBoxLayout = QVBoxLayout(self.view)
@@ -177,7 +186,7 @@ class HomeInterface(ScrollArea):
             app_name = self.popularView.flowLayout.itemAt(index).widget().name
             for item in self.registy:
                 if item["DisplayName"] == app_name:
-                    self.popularView.flowLayout.itemAt(index).widget().set_install_state(True)
+                    self.popularView.flowLayout.itemAt(index).widget().set_state('installed')
 
 
     def _aboutCardClick(self):
@@ -203,17 +212,37 @@ class HomeInterface(ScrollArea):
         signalBus.software_runSig.connect(self.software_run)
 
     def software_run(self, app_card):
-        app_name = app_card.name
-        print(app_card.name)
+        # app_name = app_card.name
+        # print(app_card.name)
 
-        title = self.tr('Run ' + app_card.name)
-        content = self.tr(f"Run on desktop shortcut")
-        w = MessageBox(title, content, self)
+        # title = self.tr('Run ' + app_card.name)
+        # content = self.tr(f"Run on desktop shortcut")
+        # w = MessageBox(title, content, self)
 
-        if w.exec():
-            print("run")
+        # if w.exec():
+        #     print("run")
+
+        command = f"{cfg.get(cfg.install_folder)}/{app_card.name}/run_{app_card.name}.bat"
+        start_directory = f"{cfg.get(cfg.install_folder)}/{app_card.name}"
+        result = subprocess.run(command, shell=True, capture_output=True, text=True, cwd=start_directory)
+        print("Return code:", result.returncode)
+        print("Output:", result.stdout)
+        print("Error:", result.stderr)
 
     def software_install(self, app_card):
+        def get_url(app_name):
+            info_url = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/{app_name}/info.txt"
+            response = requests.get(info_url)
+            version = ""
+            if response.status_code == 200:
+                app_info = response.json()
+                version = app_info['version']
+                filename = app_info['filename']
+
+            url = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/{app_name}/{filename}"
+
+            return url, version
+
         app_name = app_card.name
         print(app_card.name)
 
@@ -221,10 +250,30 @@ class HomeInterface(ScrollArea):
         w = CustomMessageBox(title=title, app_name=app_card.name, parent=self)
         if w.exec():
             print("Start install {}".format(app_name))
-            installer_module = importlib.import_module('app.installer.'+ app_name)
-            if installer_module is not None:
-                installer_module.install(app_card)
 
+            url, version = get_url(app_name)
+            print(f"{url}, {version}")
+
+            temp_directory_path = os.path.join(tempfile.gettempdir(), 'aistore', app_name)
+            Path(temp_directory_path).mkdir(parents = True, exist_ok = True)
+            print(temp_directory_path)
+
+            
+            thread = InstallWorker(app_name, version, temp_directory_path, url,  cfg.get(cfg.install_folder))
+
+            thread.download_progress.connect(app_card.update_progress_bar)
+            # thread.download_completed.connect(self.update_completed)
+            thread.unzip_progress.connect(app_card.update_progress_bar)
+            # thread.unzip_completed.connect(self.update_unzip_status)
+            # thread.completed.connect(self.update_unzip_status)
+            
+            
+            thread.finished.connect(lambda t=thread, app_card=app_card: self.on_install_thread_finished(t, app_card))
+            self.install_threads.append(thread)
+            thread.start()
+
+            app_card.set_state('installing')
+            app_card.refreshSig.emit()
 
     def software_uninstall(self, app_card):
         app_name = app_card.name
@@ -235,20 +284,44 @@ class HomeInterface(ScrollArea):
         w = MessageBox(title, content, self)
 
         if w.exec():
-            installer_module = importlib.import_module('app.installer.'+ app_name)
-            installer_module.uninstall(app_name)
+            thread = UninstallWorker(app_name , cfg.get(cfg.install_folder))
+            thread.progress.connect(app_card.update_progress_bar)
+            # thread.completed.connect(self.update_completed)
+            thread.finished.connect(lambda t=thread, app_card=app_card: self.on_uninstall_thread_finished(t, app_card))
+            self.uninstall_threads.append(thread)
+            thread.start()
+            # for item in self.registy:
+            #     print(item)
 
-                        
-            for item in self.registy:
-                if item["DisplayName"] == app_card.name:
-                    self.registy.remove(item)
-            
-            for item in self.registy:
-                print(item)
-
-            app_card.set_install_state(False)
+            app_card.set_state('uninstalling')
             app_card.refreshSig.emit()
 
+    def on_install_thread_finished(self, thread, app_card):
+        self.install_threads.remove(thread)
+
+        app_card.set_state('install_completed')
+        app_card.refreshSig.emit()
+
+        # title = self.tr('Install ' + app_card.name)
+        # content = self.tr(f"Do you want to run {app_card.name} ?")
+        # w = MessageBox(title, content, self)
+        # if w.exec():
+        #     command = f"{cfg.get(cfg.install_folder)}/{app_card.name}/run_{app_card.name}.bat"
+        #     start_directory = f"{cfg.get(cfg.install_folder)}/{app_card.name}"
+        #     result = subprocess.run(command, shell=True, capture_output=True, text=True, cwd=start_directory)
+        #     print("Return code:", result.returncode)
+        #     print("Output:", result.stdout)
+        #     print("Error:", result.stderr)
+
+
+    def on_uninstall_thread_finished(self, thread, app_card):
+        for item in self.registy:
+            if item["DisplayName"] == app_card.name:
+                self.registy.remove(item)
+        self.uninstall_threads.remove(thread)
+
+        app_card.set_state('uninstall_completed')
+        app_card.refreshSig.emit()
 
     def refresh(self):
         if self.popularView is not None:

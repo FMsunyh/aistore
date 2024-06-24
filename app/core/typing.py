@@ -120,3 +120,6 @@ ExecutionDevice = TypedDict('ExecutionDevice',
 	'video_memory' : ExecutionDeviceVideoMemory,
 	'utilization' : ExecutionDeviceUtilization
 })
+
+
+AppState = Literal['installed','installing', 'install_completed', 'uninstall', 'uninstalling', 'uninstall_completed']
