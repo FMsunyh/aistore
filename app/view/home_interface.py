@@ -245,15 +245,12 @@ class HomeInterface(ScrollArea):
             Path(temp_directory_path).mkdir(parents = True, exist_ok = True)
             print(temp_directory_path)
 
-            
             thread = InstallWorker(app_name, version, temp_directory_path, url,  cfg.get(cfg.install_folder))
-
             thread.download_progress.connect(app_card.update_progress_bar)
             # thread.download_completed.connect(self.update_completed)
             thread.unzip_progress.connect(app_card.update_progress_bar)
             # thread.unzip_completed.connect(self.update_unzip_status)
             # thread.completed.connect(self.update_unzip_status)
-            
             
             thread.finished.connect(lambda t=thread, app_card=app_card: self.on_install_thread_finished(t, app_card))
             self.install_threads.append(thread)
@@ -277,9 +274,6 @@ class HomeInterface(ScrollArea):
             thread.finished.connect(lambda t=thread, app_card=app_card: self.on_uninstall_thread_finished(t, app_card))
             self.uninstall_threads.append(thread)
             thread.start()
-            # for item in self.registy:
-            #     print(item)
-
             app_card.set_state('uninstalling')
             app_card.refreshSig.emit()
 

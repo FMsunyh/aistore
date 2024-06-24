@@ -12,7 +12,6 @@ from app.core.typing import AppState
 
 class AppCard(CardWidget):
     """ Sample card """
-    install_clicked = pyqtSignal(object,object)
     refreshSig = pyqtSignal()
 
     def __init__(self, icon, title, content, routeKey, index, name, parent=None):
@@ -21,7 +20,6 @@ class AppCard(CardWidget):
         self.routeKey = routeKey
         self.name = name
 
-        # self.install_state = False
         self.state: AppState =  'uninstall'
 
         self.iconWidget = IconWidget(icon, self)
@@ -92,16 +90,14 @@ class AppCard(CardWidget):
     def on_button_clicked(self):
         signalBus.software_installSig.emit(self)
 
-
     def on_button_uninstall_clicked(self):
         signalBus.software_uninstallSig.emit(self)
 
     def on_button_run_clicked(self):
         signalBus.software_runSig.emit(self)
 
-    def update_progress_bar(self,file, value):
+    def update_progress_bar(self, file, value):
         # 更新进度条
-        # print(file)
         self.ring.setValue(value)
 
     def set_state(self, state : AppState):
