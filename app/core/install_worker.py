@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-24 14:14:17
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-24 18:39:11
+LastEditTime: 2024-06-24 23:22:40
 FilePath: \aistore\app\core\install_worker.py
 Description: install worker
 '''
@@ -107,6 +107,9 @@ class InstallWorker(QThread):
 			print('Not a zip file or a corrupted zip file')
 		
 		app_path = os.path.join(output, self.name)
+		if os.path.exists(app_path):
+			shutil.rmtree(app_path)
+
 		os.rename(os.path.join(output, f"{self.name}-{self.version}"), app_path)
 		return app_path
 
@@ -121,7 +124,7 @@ class InstallWorker(QThread):
 		# 构建PowerShell命令
 		command = ["powershell.exe", "-File", ps_script_path]
 		# 执行PowerShell命令
-		result = subprocess.run(command, capture_output=True, text=True)
+		result = subprocess.run(command, capture_output=True, text=True, encoding='utf-8')
 
 		command = ["powershell.exe", "-Command", "set-executionpolicy restricted -Scope CurrentUser -Force"]
 		result = subprocess.run(command, capture_output=True, text=True)

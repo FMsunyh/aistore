@@ -199,19 +199,19 @@ class HomeInterface(ScrollArea):
         signalBus.software_runSig.connect(self.software_run)
 
     def software_run(self, app_card):
-        app_name = app_card.name
-        print(app_card.name)
+        # app_name = app_card.name
+        # print(app_card.name)
 
-        title = self.tr('Run ' + app_card.name)
-        content = self.tr(f"Run on desktop shortcut")
-        w = MessageBox(title, content, self)
+        # title = self.tr('Run ' + app_card.name)
+        # content = self.tr(f"Run on desktop shortcut")
+        # w = MessageBox(title, content, self)
 
-        if w.exec():
-            print("run")
+        # if w.exec():
+        #     print("run")
 
-        # command = f"{cfg.get(cfg.install_folder)}/{app_card.name}/run_{app_card.name}.bat"
-        # start_directory = f"{cfg.get(cfg.install_folder)}/{app_card.name}"
-        # result = subprocess.run(command, shell=True, capture_output=True, text=True, cwd=start_directory, encoding='utf-8')
+        command = f"{cfg.get(cfg.install_folder)}/{app_card.name}/run_{app_card.name}.bat"
+        start_directory = f"{cfg.get(cfg.install_folder)}/{app_card.name}"
+        result = subprocess.Popen(command, shell=True, text=True, cwd=start_directory, encoding='utf-8')
         # print("Return code:", result.returncode)
         # print("Output:", result.stdout)
         # print("Error:", result.stderr)
@@ -287,20 +287,20 @@ class HomeInterface(ScrollArea):
         content = self.tr(f"Do you want to run {app_card.name} ?")
         w = MessageBox(title, content, self)
         if w.exec():
-            title = self.tr('Run ' + app_card.name)
-            content = self.tr(f"Run on desktop shortcut")
-            w = MessageBox(title, content, self)
+            # title = self.tr('Run ' + app_card.name)
+            # content = self.tr(f"Run on desktop shortcut")
+            # w = MessageBox(title, content, self)
 
-            if w.exec():
-                print("run")
+            # if w.exec():
+            #     print("run")
        
 
-            # command = f"{cfg.get(cfg.install_folder)}/{app_card.name}/run_{app_card.name}.bat"
-            # start_directory = f"{cfg.get(cfg.install_folder)}/{app_card.name}"
-            # result = subprocess.run(command, shell=True, capture_output=True, text=True, cwd=start_directory, encoding='utf-8')
-            # print("Return code:", result.returncode)
-            # print("Output:", result.stdout)
-            # print("Error:", result.stderr)
+            command = f"{cfg.get(cfg.install_folder)}/{app_card.name}/run_{app_card.name}.bat"
+            start_directory = f"{cfg.get(cfg.install_folder)}/{app_card.name}"
+            result = subprocess.Popen(command, shell=True, text=True, cwd=start_directory, encoding='utf-8')
+            print("Return code:", result.returncode)
+            print("Output:", result.stdout)
+            print("Error:", result.stderr)
 
 
     def on_uninstall_thread_finished(self, thread, app_card):

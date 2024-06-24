@@ -110,14 +110,14 @@ class AppCard(CardWidget):
             self.ring.setVisible(False)
             self.button_run.setVisible(True)
             self.button_uninstall.setVisible(True)
-            self.ring.reset()
+            self.ring.setValue(0)
 
         elif self.state == 'uninstall' or self.state == 'uninstall_completed':
             self.button.setVisible(True)
             self.ring.setVisible(False)
             self.button_run.setVisible(False)
             self.button_uninstall.setVisible(False)
-            self.ring.reset()
+            self.ring.setValue(0)
 
         elif self.state == 'installing':
             self.button.setVisible(False)
