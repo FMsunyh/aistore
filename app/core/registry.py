@@ -9,6 +9,7 @@ Description: read and write registry
 import winreg
 import datetime
 import os
+from app.common.logger import logger
 
 def write_install_info_to_registry(reg_path, display_name, display_version, publisher, install_date):
     """
@@ -27,9 +28,9 @@ def write_install_info_to_registry(reg_path, display_name, display_version, publ
         
         # 关闭注册表键
         winreg.CloseKey(key)
-        print(f"软件安装信息已成功写入注册表：{reg_path}")
+        logger.info(f"软件安装信息已成功写入注册表：{reg_path}")
     except Exception as e:
-        print(f"写入注册表时出现错误：{e}")
+        logger.error(f"写入注册表时出现错误：{e}")
 
 def read_installed_software_from_registry(reg_path):
     """
@@ -59,7 +60,7 @@ def read_installed_software_from_registry(reg_path):
         return software_list
         
     except Exception as e:
-        print(f"读取注册表时出现错误：{e}")
+        logger.error(f"读取注册表时出现错误：{e}")
         return software_list
 
 def read_all_installed_software_from_registry(reg_path):
@@ -97,9 +98,9 @@ def delete_software_registry_info(reg_path):
     try:
         # 打开注册表键以进行删除
         winreg.DeleteKey(winreg.HKEY_CURRENT_USER, reg_path)
-        print(f"已成功删除 {reg_path} 的注册表信息")
+        logger.info(f"已成功删除 {reg_path} 的注册表信息")
     except WindowsError as e:
-        print(f"删除注册表时出现错误：{e}")   
+        logger.error(f"删除注册表时出现错误：{e}")   
 
 
 # if __name__ == "__main__":

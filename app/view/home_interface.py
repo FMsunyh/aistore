@@ -23,6 +23,8 @@ from ..common.signal_bus import signalBus
 from app.common.config import SERVER_IP,SERVER_PORT
 import os
 
+from app.common.logger import logger
+
 class BannerWidget(QWidget):
     """ Banner widget """
 
@@ -181,7 +183,6 @@ class HomeInterface(ScrollArea):
 
     def set_apps_state(self):
         count =  self.popularView.flowLayout.count()
-        print(count)
         for index in range(count):
             app_name = self.popularView.flowLayout.itemAt(index).widget().name
             for item in self.registy:
@@ -191,7 +192,6 @@ class HomeInterface(ScrollArea):
 
     def _aboutCardClick(self):
         print("__connectSignalToSlot")
-
 
     def __connectSignalToSlot(self):
         signalBus.software_installSig.connect(self.software_install)
@@ -212,9 +212,9 @@ class HomeInterface(ScrollArea):
         command = f"{cfg.get(cfg.install_folder)}/{app_card.name}/run_{app_card.name}.bat"
         start_directory = f"{cfg.get(cfg.install_folder)}/{app_card.name}"
         result = subprocess.Popen(command, shell=True, text=True, cwd=start_directory, encoding='utf-8')
-        # print("Return code:", result.returncode)
-        # print("Output:", result.stdout)
-        # print("Error:", result.stderr)
+        logger.info("Return code:", result.code)
+        logger.info("Output:", result.stdout)
+        logger.error("Error:", result.stderr)
 
     def software_install(self, app_card):
         def get_url(app_name):
@@ -231,19 +231,19 @@ class HomeInterface(ScrollArea):
             return url, version
 
         app_name = app_card.name
-        print(app_card.name)
+        # logger.info(app_card.name)
 
         title = self.tr('Install ' + app_card.name)
         w = CustomMessageBox(title=title, app_name=app_card.name, parent=self)
         if w.exec():
-            print("Start install {}".format(app_name))
+            logger.info("Start to install {}".format(app_name))
 
             url, version = get_url(app_name)
-            print(f"{url}, {version}")
+            logger.info(f"{url}, {version}")
 
             temp_directory_path = os.path.join(tempfile.gettempdir(), 'aistore', app_name)
             Path(temp_directory_path).mkdir(parents = True, exist_ok = True)
-            print(temp_directory_path)
+            logger.info(f"download folder:{temp_directory_path}")
 
             thread = InstallWorker(app_name, version, temp_directory_path, url,  cfg.get(cfg.install_folder))
             thread.download_progress.connect(app_card.update_progress_bar)
@@ -258,16 +258,18 @@ class HomeInterface(ScrollArea):
 
             app_card.set_state('installing')
             app_card.refreshSig.emit()
+            logger.info("Finished")
 
     def software_uninstall(self, app_card):
         app_name = app_card.name
-        print(app_card.name)
 
         title = self.tr('Uninstall ' + app_card.name)
         content = self.tr(f"Do you want to uninstall {app_card.name} ?")
         w = MessageBox(title, content, self)
 
         if w.exec():
+            logger.info("Start to uninstall {}".format(app_name))
+
             thread = UninstallWorker(app_name , cfg.get(cfg.install_folder))
             thread.progress.connect(app_card.update_progress_bar)
             # thread.completed.connect(self.update_completed)
@@ -276,6 +278,8 @@ class HomeInterface(ScrollArea):
             thread.start()
             app_card.set_state('uninstalling')
             app_card.refreshSig.emit()
+            logger.info("Finished")
+
 
     def on_install_thread_finished(self, thread, app_card):
         self.install_threads.remove(thread)
@@ -298,9 +302,9 @@ class HomeInterface(ScrollArea):
             command = f"{cfg.get(cfg.install_folder)}/{app_card.name}/run_{app_card.name}.bat"
             start_directory = f"{cfg.get(cfg.install_folder)}/{app_card.name}"
             result = subprocess.Popen(command, shell=True, text=True, cwd=start_directory, encoding='utf-8')
-            print("Return code:", result.returncode)
-            print("Output:", result.stdout)
-            print("Error:", result.stderr)
+            logger.info("Return code:", result.code)
+            logger.info("Output:", result.stdout)
+            logger.error("Error:", result.stderr)
 
 
     def on_uninstall_thread_finished(self, thread, app_card):

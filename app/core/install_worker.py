@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-24 14:14:17
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-24 23:22:40
+LastEditTime: 2024-06-25 00:06:57
 FilePath: \aistore\app\core\install_worker.py
 Description: install worker
 '''
@@ -30,6 +30,7 @@ import os.path
 import zipfile
 import ptvsd
 
+from app.common.logger import logger
 class InstallWorker(QThread):
 	# process_bar = pyqtSignal(int)  # 自定义信号用于任务完成后传递结果
 	download_progress = pyqtSignal(str, int)
@@ -89,6 +90,7 @@ class InstallWorker(QThread):
 		self.download_completed.emit(self.filename)
 
 	def _extract_file(self, zipfile_path, output):
+		logger.info(f"Start to unzip file, zipfile_path")
 		assert zipfile.is_zipfile(zipfile_path), 'The given file %s is corrupted!' %(zipfile_path)
 
 		try:
@@ -99,21 +101,25 @@ class InstallWorker(QThread):
 					zip_ref.extract(file, output)
 					progress_percentage = int((i + 1) / total_files * 100) + 50
 					self.unzip_progress.emit(self.filename, progress_percentage)
-					
+
+			logger.info("Finished")		
 			self.unzip_completed.emit(self.filename)
 
 		except zipfile.BadZipFile:
 			self.unzip_progress.emit(self.filename, -1)
-			print('Not a zip file or a corrupted zip file')
+			logger.error("Not a zip file or a corrupted zip file")
+			# print('Not a zip file or a corrupted zip file')
 		
 		app_path = os.path.join(output, self.name)
 		if os.path.exists(app_path):
 			shutil.rmtree(app_path)
+			logger.info(f"Remove old folder {app_path}")	
 
 		os.rename(os.path.join(output, f"{self.name}-{self.version}"), app_path)
 		return app_path
 
 	def _create_shortcut(self, target_path):
+		logger.info(f"Start to create shortcut")
 
 		# PowerShell脚本的路径
 		ps_script_path = os.path.join(target_path,"createshortcut.ps1") 
@@ -125,17 +131,16 @@ class InstallWorker(QThread):
 		command = ["powershell.exe", "-File", ps_script_path]
 		# 执行PowerShell命令
 		result = subprocess.run(command, capture_output=True, text=True, encoding='utf-8')
+		if result.stderr:
+			logger.error("Error: {result.stderr}")
 
 		command = ["powershell.exe", "-Command", "set-executionpolicy restricted -Scope CurrentUser -Force"]
 		result = subprocess.run(command, capture_output=True, text=True)
 
-		# 打印输出
-		print(result.stdout)
-		if result.stderr:
-			print("Error:", result.stderr)
-		
+		logger.info(f"Finished")
 
 	def _create_registy(self):
+		logger.info(f"Start to create registy info")
 		software_name, software_version = os.path.basename(self.url).split('-')
 
 		reg_path = os.path.join(r"Software\aistore", software_name)
@@ -143,6 +148,7 @@ class InstallWorker(QThread):
 		installation_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 		write_install_info_to_registry(reg_path,software_name, software_version[:-4], software_publisher, installation_date)
 
+		logger.info(f"Finished")
 	
 	@lru_cache(maxsize = None)
 	def _get_download_size(self, url : str) -> int:
