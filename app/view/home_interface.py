@@ -211,10 +211,10 @@ class HomeInterface(ScrollArea):
 
         command = f"{cfg.get(cfg.install_folder)}/{app_card.name}/run_{app_card.name}.bat"
         start_directory = f"{cfg.get(cfg.install_folder)}/{app_card.name}"
-        result = subprocess.Popen(command, shell=True, text=True, cwd=start_directory, encoding='utf-8')
-        logger.info("Return code:", result.code)
-        logger.info("Output:", result.stdout)
-        logger.error("Error:", result.stderr)
+        process = subprocess.Popen(command, shell=True, text=True, cwd=start_directory, encoding='utf-8')
+        # logger.info("Return code:", result.code)
+        # logger.info("Output:", result.stdout)
+        # logger.error("Error:", result.stderr)
 
     def software_install(self, app_card):
         def get_url(app_name):
@@ -301,10 +301,10 @@ class HomeInterface(ScrollArea):
 
             command = f"{cfg.get(cfg.install_folder)}/{app_card.name}/run_{app_card.name}.bat"
             start_directory = f"{cfg.get(cfg.install_folder)}/{app_card.name}"
-            result = subprocess.Popen(command, shell=True, text=True, cwd=start_directory, encoding='utf-8')
-            logger.info("Return code:", result.code)
-            logger.info("Output:", result.stdout)
-            logger.error("Error:", result.stderr)
+            process = subprocess.Popen(command, shell=True, text=True, cwd=start_directory, encoding='utf-8')
+            # logger.info("Return code:", result.code)
+            # logger.info("Output:", result.stdout)
+            # logger.error("Error:", result.stderr)
 
 
     def on_uninstall_thread_finished(self, thread, app_card):
