@@ -14,7 +14,7 @@
         <translation>科学计算 大模型训练 图像渲染</translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="58"/>
+        <location filename="../../view/home_interface.py" line="57"/>
         <source>GPU rental, GPU computing center.</source>
         <translation>GPU租赁，GPU算力中心</translation>
     </message>
@@ -318,14 +318,29 @@
     </message>
     <message>
         <location filename="../../view/dialog_interface.py" line="196"/>
-        <location filename="../../view/home_interface.py" line="338"/>
+        <location filename="../../view/home_interface.py" line="334"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="337"/>
+        <location filename="../../view/home_interface.py" line="333"/>
         <source>Install</source>
-        <translation type="unfinished"></translation>
+        <translation>安装</translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="341"/>
+        <source>Select Installation Path:</source>
+        <translation>选择安装路径：</translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="352"/>
+        <source>Browse</source>
+        <translation>浏览目录</translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="358"/>
+        <source>Create Desktop Shortcut</source>
+        <translation>创建桌面快捷方式</translation>
     </message>
 </context>
 <context>
@@ -489,27 +504,27 @@ In that case, I would accept it no matter which side the ball falls on.</source>
 <context>
     <name>HomeInterface</name>
     <message>
-        <location filename="../../view/home_interface.py" line="149"/>
+        <location filename="../../view/home_interface.py" line="148"/>
         <source>Popular Tools</source>
         <translation>最受欢迎</translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="154"/>
+        <location filename="../../view/home_interface.py" line="152"/>
         <source>A web interface for Stable Diffusion WebUI.</source>
         <translation>AI绘画，Stable Diffusion WebUIT具</translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="164"/>
+        <location filename="../../view/home_interface.py" line="161"/>
         <source>A web interface for training stable diffusion model, base model or lora.</source>
         <translation>AI绘画，Kohya_ss GUl工具，大模型和Lora模型训练</translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="174"/>
+        <location filename="../../view/home_interface.py" line="170"/>
         <source>A web interface for FaceFusion.</source>
         <translation>AI换脸，FaceFusion工具，集成多个换脸模型和人脸増强功能</translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="238"/>
+        <location filename="../../view/home_interface.py" line="234"/>
         <source>Install </source>
         <translation>安装</translation>
     </message>
@@ -518,22 +533,22 @@ In that case, I would accept it no matter which side the ball falls on.</source>
         <translation type="vanished">卸载</translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="269"/>
+        <location filename="../../view/home_interface.py" line="265"/>
         <source>Do you want to uninstall </source>
         <translation>您确定要卸载 </translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="269"/>
+        <location filename="../../view/home_interface.py" line="265"/>
         <source>Uninstall</source>
         <translation>卸载</translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="292"/>
+        <location filename="../../view/home_interface.py" line="288"/>
         <source>Successful installation </source>
         <translation>安装成功 </translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="293"/>
+        <location filename="../../view/home_interface.py" line="289"/>
         <source>Do you want to run </source>
         <translation>您确定要立即启动 </translation>
     </message>

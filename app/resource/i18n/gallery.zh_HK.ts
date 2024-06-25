@@ -19,7 +19,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="58"/>
+        <location filename="../../view/home_interface.py" line="57"/>
         <source>GPU rental, GPU computing center.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -318,13 +318,28 @@
     </message>
     <message>
         <location filename="../../view/dialog_interface.py" line="196"/>
-        <location filename="../../view/home_interface.py" line="338"/>
+        <location filename="../../view/home_interface.py" line="334"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="337"/>
+        <location filename="../../view/home_interface.py" line="333"/>
         <source>Install</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="341"/>
+        <source>Select Installation Path:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="352"/>
+        <source>Browse</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="358"/>
+        <source>Create Desktop Shortcut</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -489,47 +504,47 @@ In that case, I would accept it no matter which side the ball falls on.</source>
 <context>
     <name>HomeInterface</name>
     <message>
-        <location filename="../../view/home_interface.py" line="149"/>
+        <location filename="../../view/home_interface.py" line="148"/>
         <source>Popular Tools</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="154"/>
+        <location filename="../../view/home_interface.py" line="152"/>
         <source>A web interface for Stable Diffusion WebUI.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="164"/>
+        <location filename="../../view/home_interface.py" line="161"/>
         <source>A web interface for training stable diffusion model, base model or lora.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="174"/>
+        <location filename="../../view/home_interface.py" line="170"/>
         <source>A web interface for FaceFusion.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="238"/>
+        <location filename="../../view/home_interface.py" line="234"/>
         <source>Install </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="269"/>
+        <location filename="../../view/home_interface.py" line="265"/>
         <source>Do you want to uninstall </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="269"/>
+        <location filename="../../view/home_interface.py" line="265"/>
         <source>Uninstall</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="292"/>
+        <location filename="../../view/home_interface.py" line="288"/>
         <source>Successful installation </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="293"/>
+        <location filename="../../view/home_interface.py" line="289"/>
         <source>Do you want to run </source>
         <translation type="unfinished"></translation>
     </message>

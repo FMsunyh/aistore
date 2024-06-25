@@ -54,8 +54,7 @@ class BannerWidget(QWidget):
         self.linkCardView.addCard(
             ':/gallery/images/h100.png',
             self.tr('GPU Lab'),
-            self.tr(
-                'GPU rental, GPU computing center.'),
+            self.tr('GPU rental, GPU computing center.'),
             REPO_URL
         )
 
@@ -150,8 +149,7 @@ class HomeInterface(ScrollArea):
         self.popularView.addAppCard(
             icon=":/gallery/images/controls/CommandBarFlyout.png",
             title="Stable Diffusion WebUI",
-            content=self.tr(
-                "A web interface for Stable Diffusion WebUI."),
+            content=self.tr("A web interface for Stable Diffusion WebUI."),
             routeKey="menuInterface",
             index=7,
             name="sd_webui"
@@ -160,8 +158,7 @@ class HomeInterface(ScrollArea):
         self.popularView.addAppCard(
             icon=":/gallery/images/controls/CommandBar.png",
             title="Kohya_ss GUI",
-            content=self.tr(
-                "A web interface for training stable diffusion model, base model or lora."),
+            content=self.tr("A web interface for training stable diffusion model, base model or lora."),
             routeKey="menuInterface",
             index=3,
             name="kohya_ss"
@@ -170,8 +167,7 @@ class HomeInterface(ScrollArea):
         self.popularView.addAppCard(
             icon=":/gallery/images/controls/MenuFlyout.png",
             title="FaceFusion",
-            content=self.tr(
-                "A web interface for FaceFusion."),
+            content=self.tr("A web interface for FaceFusion."),
             routeKey="menuInterface",
             index=0,
             name="facefusion"
@@ -342,7 +338,7 @@ class CustomMessageBox(MessageBoxBase):
 
                 # 安装路径部分
         path_layout = QHBoxLayout()
-        self.path_label = StrongBodyLabel('Select Installation Path:')
+        self.path_label = StrongBodyLabel(self.tr('Select Installation Path:'))
         path_layout.addWidget(self.path_label)
         self.path_edit = LineEdit(self)
         # self.path_edit.setPlaceholderText(self.tr('Enter installation path'))
@@ -353,13 +349,13 @@ class CustomMessageBox(MessageBoxBase):
         self.path_edit.setDisabled(True)
 
         path_layout.addWidget(self.path_edit)
-        self.browse_button = PushButton('Browse')
+        self.browse_button = PushButton(self.tr('Browse'))
         self.browse_button.clicked.connect(self.browse)
         # path_layout.addWidget(self.browse_button)
         self.viewLayout.addLayout(path_layout)
 
         # 创建桌面快捷方式复选框
-        self.shortcut_checkbox = CheckBox('Create Desktop Shortcut')
+        self.shortcut_checkbox = CheckBox(self.tr('Create Desktop Shortcut'))
         self.shortcut_checkbox.setChecked(True)
         self.shortcut_checkbox.setDisabled(True)
         self.viewLayout.addWidget(self.shortcut_checkbox)
