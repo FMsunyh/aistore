@@ -2,7 +2,7 @@
  * @Author: Firmin.Sun fmsunyh@gmail.com
  * @Date: 2024-06-14 18:28:18
  * @LastEditors: Firmin.Sun fmsunyh@gmail.com
- * @LastEditTime: 2024-06-24 09:56:23
+ * @LastEditTime: 2024-06-25 14:54:05
  * @FilePath: \aistore\README.md
  * @Description: Content of readme
 -->
@@ -34,8 +34,6 @@ pyinstaller demo.spec
 
 
 
-
-
 激活myenv
 ```
 python -m venv myenv
@@ -44,6 +42,37 @@ source myenv/bin/activate  # On macOS/Linux
 pip install pyinstaller
 
 ```
+
+## 翻译
+```sh
+lupdate .\aistore.pro
+```
+
+```
+linguist app/resource/i18n/gallery.zh_CN.ts
+```
+
+
+```
+lrelease app/resource/i18n/gallery.zh_CN.ts
+```
+
+重新编译资源
+```
+pyrcc5 -o ./app/common/resource.py ./app/resource/resource.qrc
+```
+
+需要下载QT的工具
+
+- 5.14之前的版本，可以用离线安装
+
+    下载  [qt5.14.2](https://download.qt.io/archive/qt/5.14/5.14.2/qt-opensource-windows-x86-5.14.2.exe)
+    [Windows/Linux(命令、安装包和源码安装)平台各个版本QT详细安装教程](https://blog.csdn.net/new9232/article/details/132590691)
+
+
+- 5.15后的版本，没有离线安装包了，都是在线安装包
+
+    [Windows下安装QT，遇到下载组件中没有指定版本(提供解决方式) + 5.15详细安装步骤版](https://blog.csdn.net/qq_38141255/article/details/136968221)
 
 创建桌面快捷方式
 [python Shortcuts](https://winshell.readthedocs.io/en/latest/shortcuts.html)
@@ -64,3 +93,5 @@ pip install pyinstaller
     - 卸载功能
 - 2024-06-21
     - 根据注册表，刷新界面信息
+- 2024-06-24
+    - 重构安装和卸载的程序

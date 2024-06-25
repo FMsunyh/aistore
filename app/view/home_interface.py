@@ -47,7 +47,7 @@ class BannerWidget(QWidget):
         self.linkCardView.addCard(
             ':/gallery/images/logo.png',
             self.tr('Getting started'),
-            self.tr('An overview of app development options and samples.'),
+            self.tr('Scientific computing, large model training, image rendering.'),
             HELP_URL
         )
 
@@ -55,7 +55,7 @@ class BannerWidget(QWidget):
             ':/gallery/images/h100.png',
             self.tr('GPU Lab'),
             self.tr(
-                'The latest fluent design controls and styles for your applications.'),
+                'GPU rental, GPU computing center.'),
             REPO_URL
         )
 

@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 04:58:48
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-20 13:54:19
+LastEditTime: 2024-06-25 15:05:26
 FilePath: \aistore\demo.py
 Description: main
 '''
@@ -17,8 +17,6 @@ from qfluentwidgets import FluentTranslator
 
 from app.common.config import cfg
 from app.view.main_window import MainWindow
-
-from app.core.update import UpdateManager
 
 # enable dpi scale
 if cfg.get(cfg.dpiScale) == "Auto":
@@ -44,15 +42,9 @@ galleryTranslator.load(locale, "gallery", ".", ":/gallery/i18n")
 app.installTranslator(translator)
 app.installTranslator(galleryTranslator)
 
-
 # create main window
 w = MainWindow()
 w.show()
 
-on_update = cfg.get(cfg.checkUpdateAtStartUp)
-if on_update:
-    update_manager = UpdateManager(w)
-    update_manager.check_for_updates()
-    
 # app.exec_()
 sys.exit(app.exec_())

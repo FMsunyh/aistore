@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 05:28:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-21 19:06:33
+LastEditTime: 2024-06-25 15:06:32
 FilePath: \aistore\app\view\main_window.py
 Description: main windows
 '''
@@ -16,6 +16,7 @@ from qfluentwidgets import (NavigationAvatarWidget, NavigationItemPosition, Mess
 from qfluentwidgets import FluentIcon as FIF
 
 from app.core.registry import read_all_installed_software_from_registry
+from app.core.update import UpdateManager
 
 from .gallery_interface import GalleryInterface
 from .home_interface import HomeInterface
@@ -75,6 +76,8 @@ class MainWindow(FluentWindow):
 
         self.init_data()
         # self.check_software_registy()
+
+        self.onInitFinished()
 
     def initNavigation(self):
         # add navigation items
@@ -146,6 +149,10 @@ class MainWindow(FluentWindow):
         self.homeInterface.set_apps_state()
         self.homeInterface.refresh()
 
+    def onInitFinished(self):
+        if cfg.get(cfg.checkUpdateAtStartUp):
+            self.update_manager = UpdateManager(self)
+            self.update_manager.check_for_updates()
 
     def onSupport(self):
         language = cfg.get(cfg.language).value

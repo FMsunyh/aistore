@@ -14,6 +14,8 @@ SOURCES += app/view/main_window.py \
         app/view/view_interface.py \
         app/view/date_time_interface.py \
         app/view/navigation_view_interface.py \
-
+        app/view/home_interface.py \
+       app/core/update.py \
+       
 TRANSLATIONS += app/resource/i18n/gallery.zh_CN.ts \
         app/resource/i18n/gallery.zh_HK.ts
