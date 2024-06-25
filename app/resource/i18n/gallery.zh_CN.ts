@@ -2,6 +2,24 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="zh_CN" sourcelanguage="en_US">
 <context>
+    <name>AppCard</name>
+    <message>
+        <location filename="../../components/app_card.py" line="29"/>
+        <source>Install</source>
+        <translation>安装</translation>
+    </message>
+    <message>
+        <location filename="../../components/app_card.py" line="38"/>
+        <source>Run</source>
+        <translation>运行</translation>
+    </message>
+    <message>
+        <location filename="../../components/app_card.py" line="42"/>
+        <source>Uninstall</source>
+        <translation>卸载</translation>
+    </message>
+</context>
+<context>
     <name>BannerWidget</name>
     <message>
         <location filename="../../view/home_interface.py" line="49"/>
