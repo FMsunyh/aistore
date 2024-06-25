@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-24 14:14:17
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-25 18:32:06
+LastEditTime: 2024-06-25 18:34:16
 FilePath: \aistore\app\core\install_worker.py
 Description: install worker
 '''
@@ -86,7 +86,7 @@ class InstallWorker(QThread):
 
 		if download_size and not self._is_download_done(self.url, self.download_file_path):
 			os.remove(self.download_file_path)
-			self.run(self.download_directory_path, self.url)
+			self._download_file()
 
 		self.download_progress.emit(self.filename, 50)
 		self.download_completed.emit(self.filename)

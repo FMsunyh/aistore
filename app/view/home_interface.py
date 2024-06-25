@@ -289,7 +289,7 @@ class HomeInterface(ScrollArea):
         app_card.set_state('install_completed')
         app_card.refreshSig.emit()
 
-        title = self.tr('Install ' + app_card.name)
+        title = self.tr('Successful installation ') + f"{app_card.name}"
         content = self.tr(f"Do you want to run ") + f"{app_card.name}?"
         w = MessageBox(title, content, self)
         if w.exec():

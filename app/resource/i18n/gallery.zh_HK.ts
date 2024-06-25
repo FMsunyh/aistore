@@ -510,7 +510,6 @@ In that case, I would accept it no matter which side the ball falls on.</source>
     </message>
     <message>
         <location filename="../../view/home_interface.py" line="238"/>
-        <location filename="../../view/home_interface.py" line="292"/>
         <source>Install </source>
         <translation type="unfinished"></translation>
     </message>
@@ -522,6 +521,11 @@ In that case, I would accept it no matter which side the ball falls on.</source>
     <message>
         <location filename="../../view/home_interface.py" line="269"/>
         <source>Uninstall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="292"/>
+        <source>Successful installation </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
