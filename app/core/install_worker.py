@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-24 14:14:17
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-25 00:06:57
+LastEditTime: 2024-06-25 18:32:06
 FilePath: \aistore\app\core\install_worker.py
 Description: install worker
 '''
@@ -28,9 +28,11 @@ from app.common.config import cfg
 import sys
 import os.path
 import zipfile
-import ptvsd
-
+# import ptvsd
 from app.common.logger import logger
+
+CREATE_NO_WINDOW = 0x08000000
+
 class InstallWorker(QThread):
 	# process_bar = pyqtSignal(int)  # 自定义信号用于任务完成后传递结果
 	download_progress = pyqtSignal(str, int)
@@ -55,7 +57,7 @@ class InstallWorker(QThread):
 		self.install_directory = install_directory
 
 	def run(self):
-		ptvsd.debug_this_thread()
+		# ptvsd.debug_this_thread()
 		self._download_file()
 		output = self._extract_file(self.download_file_path, self.install_directory)
 		self._create_shortcut(output)
@@ -64,14 +66,14 @@ class InstallWorker(QThread):
 		self.completed.emit(self.name)
 
 	def _download_file(self):
-		ptvsd.debug_this_thread()
+		# ptvsd.debug_this_thread()
 
 		log_level = 'error'
 		initial_size = get_file_size(self.download_file_path)
 		download_size = self._get_download_size(self.url)
 		if initial_size < download_size:
 			with tqdm(total = download_size, initial = initial_size, desc = app.core.wording.get('downloading'), unit = 'B', unit_scale = True, unit_divisor = 1024, ascii = ' =', disable = log_level in [ 'warn', 'error' ]) as progress:
-				process = subprocess.Popen([ 'curl', '--create-dirs', '--silent', '--insecure', '--location', '--continue-at', '-', '--output', self.download_file_path, self.url ])
+				process = subprocess.Popen([ 'curl', '--create-dirs', '--silent', '--insecure', '--location', '--continue-at', '-', '--output', self.download_file_path, self.url ], creationflags=CREATE_NO_WINDOW)
 				# stdout, stderr = process.communicate()
 				current_size = initial_size
 				while current_size < download_size:
@@ -124,18 +126,18 @@ class InstallWorker(QThread):
 		# PowerShell脚本的路径
 		ps_script_path = os.path.join(target_path,"createshortcut.ps1") 
 
-		command = ["powershell.exe", "-Command"," Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force"]
-		result = subprocess.run(command, capture_output=True, text=True)
+		command = ["powershell.exe","-NoProfile", "-Command"," Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force"]
+		result = subprocess.run(command, capture_output=True, text=True,creationflags=subprocess.CREATE_NO_WINDOW)
 
 		# 构建PowerShell命令
-		command = ["powershell.exe", "-File", ps_script_path]
+		command = ["powershell.exe", "-NoProfile", "-File", ps_script_path]
 		# 执行PowerShell命令
-		result = subprocess.run(command, capture_output=True, text=True, encoding='utf-8')
+		result = subprocess.run(command, capture_output=True, text=True, encoding='utf-8',creationflags=subprocess.CREATE_NO_WINDOW)
 		if result.stderr:
 			logger.error("Error: {result.stderr}")
 
-		command = ["powershell.exe", "-Command", "set-executionpolicy restricted -Scope CurrentUser -Force"]
-		result = subprocess.run(command, capture_output=True, text=True)
+		command = ["powershell.exe", "-NoProfile", "-Command", "set-executionpolicy restricted -Scope CurrentUser -Force"]
+		result = subprocess.run(command, capture_output=True, text=True, creationflags=subprocess.CREATE_NO_WINDOW)
 
 		logger.info(f"Finished")
 

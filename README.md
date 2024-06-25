@@ -2,7 +2,7 @@
  * @Author: Firmin.Sun fmsunyh@gmail.com
  * @Date: 2024-06-14 18:28:18
  * @LastEditors: Firmin.Sun fmsunyh@gmail.com
- * @LastEditTime: 2024-06-25 14:54:05
+ * @LastEditTime: 2024-06-25 17:44:38
  * @FilePath: \aistore\README.md
  * @Description: Content of readme
 -->
@@ -24,12 +24,16 @@ pyinstaller --onefile  .\aistore.py
 ```
 
 ```
+pyinstaller --onefile  --noconsole  --icon=.\aistore.ico .\aistore.py
+```
+
+```
 pyinstaller --onefile --additional-hooks-dir=D:\aistore\app\installer .\aistore.py
 ```
 
 OR
 ```
-pyinstaller demo.spec
+pyinstaller aistore.spec
 ```
 
 

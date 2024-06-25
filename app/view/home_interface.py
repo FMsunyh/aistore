@@ -148,33 +148,35 @@ class HomeInterface(ScrollArea):
         # Popular Tools
         self.popularView = AppCardView(self.tr('Popular Tools'), self.view)
         self.popularView.addAppCard(
-            icon=":/gallery/images/controls/MenuFlyout.png",
-            title="FaceFusion",
-            content=self.tr(
-                "Shows a contextual list of simple commands or options."),
-            routeKey="menuInterface",
-            index=0,
-            name="facefusion"
-        )
-
-        self.popularView.addAppCard(
-            icon=":/gallery/images/controls/CommandBar.png",
-            title="kohya_ss",
-            content=self.tr(
-                "Shows a contextual list of simple commands or options."),
-            routeKey="menuInterface",
-            index=3,
-            name="kohya_ss"
-        )
-        self.popularView.addAppCard(
             icon=":/gallery/images/controls/CommandBarFlyout.png",
-            title="sd_webui",
+            title="Stable Diffusion WebUI",
             content=self.tr(
-                "A mini-toolbar displaying proactive commands, and an optional menu of commands."),
+                "A web interface for Stable Diffusion WebUI."),
             routeKey="menuInterface",
             index=7,
             name="sd_webui"
         )
+
+        self.popularView.addAppCard(
+            icon=":/gallery/images/controls/CommandBar.png",
+            title="Kohya_ss GUI",
+            content=self.tr(
+                "A web interface for training stable diffusion model, base model or lora."),
+            routeKey="menuInterface",
+            index=3,
+            name="kohya_ss"
+        )
+
+        self.popularView.addAppCard(
+            icon=":/gallery/images/controls/MenuFlyout.png",
+            title="FaceFusion",
+            content=self.tr(
+                "A web interface for FaceFusion."),
+            routeKey="menuInterface",
+            index=0,
+            name="facefusion"
+        )
+        
         self.vBoxLayout.addWidget(self.popularView)
 
     def set_registy(self, registy):
@@ -233,7 +235,7 @@ class HomeInterface(ScrollArea):
         app_name = app_card.name
         # logger.info(app_card.name)
 
-        title = self.tr('Install ' + app_card.name)
+        title = self.tr('Install ') + f"{app_card.name}"
         w = CustomMessageBox(title=title, app_name=app_card.name, parent=self)
         if w.exec():
             logger.info("Start to install {}".format(app_name))
@@ -263,8 +265,8 @@ class HomeInterface(ScrollArea):
     def software_uninstall(self, app_card):
         app_name = app_card.name
 
-        title = self.tr('Uninstall ' + app_card.name)
-        content = self.tr(f"Do you want to uninstall {app_card.name} ?")
+        title = self.tr('Uninstall')
+        content = self.tr("Do you want to uninstall ") + f"{app_card.name} ?"
         w = MessageBox(title, content, self)
 
         if w.exec():
@@ -288,7 +290,7 @@ class HomeInterface(ScrollArea):
         app_card.refreshSig.emit()
 
         title = self.tr('Install ' + app_card.name)
-        content = self.tr(f"Do you want to run {app_card.name} ?")
+        content = self.tr(f"Do you want to run ") + f"{app_card.name}?"
         w = MessageBox(title, content, self)
         if w.exec():
             # title = self.tr('Run ' + app_card.name)

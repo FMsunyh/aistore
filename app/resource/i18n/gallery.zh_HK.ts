@@ -318,12 +318,12 @@
     </message>
     <message>
         <location filename="../../view/dialog_interface.py" line="196"/>
-        <location filename="../../view/home_interface.py" line="336"/>
+        <location filename="../../view/home_interface.py" line="338"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="335"/>
+        <location filename="../../view/home_interface.py" line="337"/>
         <source>Install</source>
         <translation type="unfinished"></translation>
     </message>
@@ -495,34 +495,38 @@ In that case, I would accept it no matter which side the ball falls on.</source>
     </message>
     <message>
         <location filename="../../view/home_interface.py" line="154"/>
+        <source>A web interface for Stable Diffusion WebUI.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../../view/home_interface.py" line="164"/>
-        <source>Shows a contextual list of simple commands or options.</source>
+        <source>A web interface for training stable diffusion model, base model or lora.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="173"/>
-        <source>A mini-toolbar displaying proactive commands, and an optional menu of commands.</source>
+        <location filename="../../view/home_interface.py" line="174"/>
+        <source>A web interface for FaceFusion.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="236"/>
-        <location filename="../../view/home_interface.py" line="290"/>
+        <location filename="../../view/home_interface.py" line="238"/>
+        <location filename="../../view/home_interface.py" line="292"/>
         <source>Install </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="266"/>
-        <source>Uninstall </source>
+        <location filename="../../view/home_interface.py" line="269"/>
+        <source>Do you want to uninstall </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="268"/>
-        <source>Do you want to uninstall {app_card.name} ?</source>
+        <location filename="../../view/home_interface.py" line="269"/>
+        <source>Uninstall</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="292"/>
-        <source>Do you want to run {app_card.name} ?</source>
+        <location filename="../../view/home_interface.py" line="293"/>
+        <source>Do you want to run </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1866,23 +1870,31 @@ In that case, I would accept it no matter which side the ball falls on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/update.py" line="100"/>
-        <source>A new version ({latest_version}) is available.
-
-Release Notes:
-{release_notes}
-
-Do you want to update?</source>
+        <location filename="../../core/update.py" line="98"/>
+        <source>A new version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/update.py" line="113"/>
+        <location filename="../../core/update.py" line="98"/>
+        <source>is available. Do you want to download this version? 
+
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../core/update.py" line="98"/>
+        <source>Release notes:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../core/update.py" line="114"/>
         <source>No Update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/update.py" line="115"/>
-        <source>You are using the latest version.</source>
+        <location filename="../../core/update.py" line="114"/>
+        <source>You are using the latest version </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1897,7 +1909,7 @@ Do you want to update?</source>
     </message>
     <message>
         <location filename="../../core/update.py" line="131"/>
-        <source>Downloaded and installed update from {update_file_path}. The application will now restart.</source>
+        <source>Downloaded and installed update, the application will now restart.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

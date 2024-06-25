@@ -8,7 +8,7 @@ from qfluentwidgets import MessageBox
 # import ptvsd
 from app.common.config import SERVER_IP,SERVER_PORT
 
-CURRENT_VERSION = "1.0.0"
+CURRENT_VERSION = "1.1.0"
 UPDATE_INFO_URL = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/latest_version_info.txt"  # Replace with your URL
 
 class UpdateChecker(QThread):
@@ -95,8 +95,9 @@ class UpdateManager(QObject):
         release_notes = latest_version_info.get('release_notes', 'No release notes available.')
 
         title = self.tr('Update Available')
-        content = self.tr(
-            f"A new version ({latest_version}) is available.\n\nRelease Notes:\n{release_notes}\n\nDo you want to update?")
+        content = self.tr('A new version')+f"{latest_version}" + self.tr('is available. Do you want to download this version? \n\n') + self.tr('Release notes:\n') + f"{release_notes}"
+        
+        
         w = MessageBox(title, content, self.main_window)
 
         # w.setContentCopyable(True)
@@ -110,8 +111,7 @@ class UpdateManager(QObject):
 
     def notify_no_update_found(self):
         title = self.tr('No Update')
-        content = self.tr(
-            f"You are using the latest version.")
+        content = self.tr("You are using the latest version ") + f"{CURRENT_VERSION}."
         w = MessageBox(title, content, self.main_window)
         w.hideCancelButton()
         if w.exec():
@@ -127,7 +127,7 @@ class UpdateManager(QObject):
 
     def on_update_downloaded(self, update_file_path):
         title = self.tr('Update')
-        content = self.tr(f"Downloaded and installed update from {update_file_path}. The application will now restart.")
+        content = self.tr("Downloaded and installed update, the application will now restart.")
         w = MessageBox(title, content, self.main_window)
         w.hideCancelButton()
         if w.exec():

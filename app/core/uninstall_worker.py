@@ -1,3 +1,11 @@
+'''
+Author: Firmin.Sun fmsunyh@gmail.com
+Date: 2024-06-24 14:14:17
+LastEditors: Firmin.Sun fmsunyh@gmail.com
+LastEditTime: 2024-06-25 16:39:44
+FilePath: \aistore\app\core\install_worker.py
+Description: uninstall worker
+'''
 
 import datetime
 import os
@@ -15,7 +23,7 @@ from app.core.filesystem import get_file_size, is_file
 from PyQt5.QtCore import QThread, pyqtSignal, QObject
 
 import os.path
-import ptvsd
+# import ptvsd
 from app.common.logger import logger
 
 class UninstallWorker(QThread):
