@@ -8,6 +8,8 @@ from qfluentwidgets import MessageBox
 # import ptvsd
 from app.common.config import SERVER_IP,SERVER_PORT
 
+from app.common.logger import logger
+
 CURRENT_VERSION = "1.1.0"
 UPDATE_INFO_URL = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/latest_version_info.txt"  # Replace with your URL
 
@@ -41,7 +43,7 @@ class UpdateManager(QObject):
     update_error = pyqtSignal(str)
     update_downloaded = pyqtSignal(str)
 
-    def __init__(self, main_window):
+    def __init__(self, main_window, start_up = False):
         super().__init__()
 
         self.main_window = main_window
@@ -55,6 +57,8 @@ class UpdateManager(QObject):
         self.no_update_available.connect(self.notify_no_update_found)
         self.update_error.connect(self.notify_error)
         self.update_downloaded.connect(self.on_update_downloaded)
+
+        self.start_up = start_up
 
     def check_for_updates(self):
         self.update_checker.start()
@@ -107,15 +111,18 @@ class UpdateManager(QObject):
         else:
             self.update_checker.quit()
             self.update_checker.wait()
-            print('Cancel button is pressed')
+            logger.info('Cancel button is pressed')
 
     def notify_no_update_found(self):
-        title = self.tr('No Update')
-        content = self.tr("You are using the latest version ") + f"{CURRENT_VERSION}."
-        w = MessageBox(title, content, self.main_window)
-        w.hideCancelButton()
-        if w.exec():
-            print('Yes button is pressed')
+        if not self.start_up:
+            title = self.tr('No Update')
+            content = self.tr("You are using the latest version ") + f"{CURRENT_VERSION}."
+            w = MessageBox(title, content, self.main_window)
+            w.hideCancelButton()
+            if w.exec():
+                logger.info('Yes button is pressed')
+        else:
+            logger.info("Self-check when the program starts, no pop-up window required")
 
     def notify_error(self, error_message):
         title = self.tr('Error')
@@ -123,7 +130,7 @@ class UpdateManager(QObject):
         w = MessageBox(title, content, self.main_window)
         w.hideCancelButton()
         if w.exec():
-            print('Yes button is pressed')
+            logger.info('Yes button is pressed')
 
     def on_update_downloaded(self, update_file_path):
         title = self.tr('Update')
@@ -131,5 +138,5 @@ class UpdateManager(QObject):
         w = MessageBox(title, content, self.main_window)
         w.hideCancelButton()
         if w.exec():
-            print('Yes button is pressed')
+            logger.info('Yes button is pressed')
         

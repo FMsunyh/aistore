@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 04:58:48
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-25 15:05:26
+LastEditTime: 2024-06-26 14:07:02
 FilePath: \aistore\demo.py
 Description: main
 '''

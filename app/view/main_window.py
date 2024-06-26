@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 05:28:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-26 01:04:28
+LastEditTime: 2024-06-26 14:11:24
 FilePath: \aistore\app\view\main_window.py
 Description: main windows
 '''
@@ -151,7 +151,7 @@ class MainWindow(FluentWindow):
 
     def onInitFinished(self):
         if cfg.get(cfg.checkUpdateAtStartUp):
-            self.update_manager = UpdateManager(self)
+            self.update_manager = UpdateManager(self, start_up=True)
             self.update_manager.check_for_updates()
 
     def onSupport(self):
