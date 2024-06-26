@@ -22,48 +22,12 @@ class NavigationViewInterface(GalleryInterface):
         )
         self.setObjectName('navigationViewInterface')
 
-        # # breadcrumb bar
-        # breadcrumb = BreadcrumbBar(self)
-        # items = [
-        #     self.tr("Home"), self.tr("Documents"), self.tr("Study"),
-        #     self.tr("Janpanese Sensei"), self.tr("Action Film"), self.tr("G Cup"),
-        #     self.tr("Mikami Yua"), self.tr("Folder1"), self.tr("Folder2"),
-        # ]
-        # for i in items:
-        #     breadcrumb.addItem(i, i)
-
-        # self.addExampleCard(
-        #     title=self.tr('Breadcrumb bar'),
-        #     widget=breadcrumb,
-        #     sourcePath='https://github.com/zhiyiYo/PyQt-Fluent-Widgets/blob/master/examples/navigation/breadcrumb_bar/demo.py',
-        #     stretch=1
-        # )
-
         self.addExampleCard(
             title=self.tr('A basic pivot'),
             widget=PivotInterface(self),
             sourcePath='https://github.com/zhiyiYo/PyQt-Fluent-Widgets/blob/master/examples/navigation/pivot/demo.py'
         )
-
-        # self.addExampleCard(
-        #     title=self.tr('A segmented control'),
-        #     widget=SegmentedInterface(self),
-        #     sourcePath='https://github.com/zhiyiYo/PyQt-Fluent-Widgets/blob/master/examples/navigation/segmented_widget/demo.py'
-        # )
-
-        # self.addExampleCard(
-        #     title=self.tr('Another segmented control'),
-        #     widget=self.createToggleToolWidget(),
-        #     sourcePath='https://github.com/zhiyiYo/PyQt-Fluent-Widgets/blob/master/examples/navigation/segmented_tool_widget/demo.py'
-        # )
-
-        # card = self.addExampleCard(
-        #     title=self.tr('A tab bar'),
-        #     widget=TabInterface(self),
-        #     sourcePath='https://github.com/zhiyiYo/PyQt-Fluent-Widgets/blob/master/examples/navigation/tab_view/demo.py',
-        #     stretch=1
-        # )
-        # card.topLayout.setContentsMargins(12, 0, 0, 0)
+        
 
     def createToggleToolWidget(self):
         w = SegmentedToggleToolWidget(self)

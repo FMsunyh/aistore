@@ -16,6 +16,8 @@ class SignalBus(QObject):
     switchToSampleCard = pyqtSignal(str, int)
     micaEnableChanged = pyqtSignal(bool)
     supportSignal = pyqtSignal()
+    
+    switchToAppInterfaceSig = pyqtSignal(str, int)
 
     # FaceFusion
     facefusion_progressSig = pyqtSignal()

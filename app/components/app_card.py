@@ -133,7 +133,8 @@ class AppCard(CardWidget):
 
     def mouseReleaseEvent(self, e):
         super().mouseReleaseEvent(e)
-        signalBus.switchToSampleCard.emit(self.routeKey, self.index)
+        # signalBus.switchToSampleCard.emit(self.routeKey, self.index)
+        signalBus.switchToAppInterfaceSig.emit(self.routeKey, self.index)
 
     def is_install(self, software_list):
         for item in software_list:
