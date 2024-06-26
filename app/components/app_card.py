@@ -131,9 +131,9 @@ class AppCard(CardWidget):
             self.button_uninstall.setVisible(False)
         # elif self.install_state == 'uninstall'
 
-    # def mouseReleaseEvent(self, e):
-    #     super().mouseReleaseEvent(e)
-    #     signalBus.switchToSampleCard.emit(self.routeKey, self.index)
+    def mouseReleaseEvent(self, e):
+        super().mouseReleaseEvent(e)
+        signalBus.switchToSampleCard.emit(self.routeKey, self.index)
 
     def is_install(self, software_list):
         for item in software_list:

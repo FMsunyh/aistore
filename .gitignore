@@ -165,3 +165,5 @@ tmp
 update_app
 myenv
 config
+.PyInstaller
+*.exe

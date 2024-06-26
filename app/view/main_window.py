@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 05:28:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-25 15:06:32
+LastEditTime: 2024-06-26 01:04:28
 FilePath: \aistore\app\view\main_window.py
 Description: main windows
 '''
@@ -90,14 +90,14 @@ class MainWindow(FluentWindow):
         # self.addSubInterface(self.iconInterface, Icon.EMOJI_TAB_SYMBOLS, t.icons)
         # self.navigationInterface.addSeparator()
 
-        # pos = NavigationItemPosition.SCROLL
+        pos = NavigationItemPosition.SCROLL
         # self.addSubInterface(self.basicInputInterface, FIF.CHECKBOX,t.basicInput, pos)
         # self.addSubInterface(self.dateTimeInterface, FIF.DATE_TIME, t.dateTime, pos)
         # self.addSubInterface(self.dialogInterface, FIF.MESSAGE, t.dialogs, pos)
         # self.addSubInterface(self.layoutInterface, FIF.LAYOUT, t.layout, pos)
         # self.addSubInterface(self.materialInterface, FIF.PALETTE, t.material, pos)
         # self.addSubInterface(self.menuInterface, Icon.MENU, t.menus, pos)
-        # self.addSubInterface(self.navigationViewInterface, FIF.MENU, t.navigation, pos)
+        self.addSubInterface(self.navigationViewInterface, FIF.MENU, t.navigation, pos)
         # self.addSubInterface(self.scrollInterface, FIF.SCROLL, t.scroll, pos)
         # self.addSubInterface(self.statusInfoInterface, FIF.CHAT, t.statusInfo, pos)
         # self.addSubInterface(self.textInterface, Icon.TEXT, t.text, pos)

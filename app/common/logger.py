@@ -2,20 +2,29 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-24 23:51:48
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-25 00:21:38
+LastEditTime: 2024-06-26 10:53:00
 FilePath: \aistore\app\common\logger.py
 Description: logger
 '''
 import logging
 from logging.handlers import TimedRotatingFileHandler
 import datetime
+import os
 
 # 创建一个日志记录器
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
+log_directory = 'logs'
+
+try:
+    if not os.path.exists(log_directory):
+        os.makedirs(log_directory)
+except Exception as e:
+    logger.error(f"Failed to create log directory: {e}")
+    
 # 自定义日志文件名格式，带日期
-log_filename = datetime.datetime.now().strftime('aistore_%Y-%m-%d.log')
+log_filename = datetime.datetime.now().strftime(f'{log_directory}/aistore_%Y-%m-%d.log')
 
 # 创建一个定时轮换文件处理程序，每天生成一个新的日志文件
 file_handler = TimedRotatingFileHandler(log_filename, when='midnight', interval=1, backupCount=7, encoding='utf-8')

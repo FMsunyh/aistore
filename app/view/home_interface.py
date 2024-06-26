@@ -150,8 +150,8 @@ class HomeInterface(ScrollArea):
             icon=":/gallery/images/controls/CommandBarFlyout.png",
             title="Stable Diffusion WebUI",
             content=self.tr("A web interface for Stable Diffusion WebUI."),
-            routeKey="menuInterface",
-            index=7,
+            routeKey="navigationViewInterface",
+            index=0,
             name="sd_webui"
         )
 
@@ -159,8 +159,8 @@ class HomeInterface(ScrollArea):
             icon=":/gallery/images/controls/CommandBar.png",
             title="Kohya_ss GUI",
             content=self.tr("A web interface for training stable diffusion model, base model or lora."),
-            routeKey="menuInterface",
-            index=3,
+            routeKey="navigationViewInterface",
+            index=0,
             name="kohya_ss"
         )
 
@@ -168,7 +168,7 @@ class HomeInterface(ScrollArea):
             icon=":/gallery/images/controls/MenuFlyout.png",
             title="FaceFusion",
             content=self.tr("A web interface for FaceFusion."),
-            routeKey="menuInterface",
+            routeKey="navigationViewInterface",
             index=0,
             name="facefusion"
         )
