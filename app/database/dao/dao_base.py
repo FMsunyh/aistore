@@ -3,8 +3,8 @@ from typing import List
 
 from PyQt5.QtSql import QSqlDatabase, QSqlRecord
 
-from ..entity import Entity, EntityFactory
-from .sql_query import SqlQuery
+from app.database.entity import Entity, EntityFactory
+from app.database.dao.sql_query import SqlQuery
 
 
 def finishQuery(func):

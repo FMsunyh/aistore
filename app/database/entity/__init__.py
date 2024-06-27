@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-27 16:19:41
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-27 17:33:04
+LastEditTime: 2024-06-27 18:07:12
 FilePath: \aistore\app\database\entity\__init__.py
 Description: 
 '''
@@ -30,7 +30,7 @@ class EntityFactory:
         """
         tables = {
             "tbl_user": User,
-            "tbl_user": AppInfo,
+            "tbl_app_info": AppInfo,
         }
         if table not in tables:
             raise ValueError(f"Table name `{table}` is illegal")
