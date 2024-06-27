@@ -32,6 +32,10 @@ class MainWindow(QMainWindow):
 
         self.layout = QVBoxLayout(self.centralWidget)
 
+        self.idInput = QLineEdit(self)
+        self.idInput.setPlaceholderText("Icon")
+        self.layout.addWidget(self.idInput)
+
         self.iconInput = QLineEdit(self)
         self.iconInput.setPlaceholderText("Icon")
         self.layout.addWidget(self.iconInput)
@@ -62,11 +66,12 @@ class MainWindow(QMainWindow):
         self.refreshAppInfoList()
 
     def addAppInfo(self):
+        id = self.idInput.text()
         icon = self.iconInput.text()
         name = self.nameInput.text()
         content = self.contentInput.text()
         if icon and name and content:
-            self.app_info_controller.add_app_info(icon, name, content)
+            self.app_info_controller.add_app_info(id, icon, name, content)
             self.refreshAppInfoList()
         else:
             QMessageBox.warning(self, "Input Error", "Icon, Name, and Content cannot be empty")
@@ -100,5 +105,5 @@ class MainWindow(QMainWindow):
         app_infos = self.app_info_controller.get_all_app_info()
         for app_info in app_infos:
             item = QListWidgetItem(str(app_info))
-            item.setData(1, app_info.app_id)
+            item.setData(1, app_info.id)
             self.appInfoList.addItem(item)

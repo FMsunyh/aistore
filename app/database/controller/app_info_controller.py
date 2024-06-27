@@ -8,8 +8,8 @@ class AppInfoController:
     def __init__(self, db: QSqlDatabase = None) -> None:
         self.app_info_service = AppInfoService(db)
 
-    def add_app_info(self, icon, name, content):
-        self.app_info_service.add_app_info(icon, name, content)
+    def add_app_info(self, app_id, icon, name, content):
+        self.app_info_service.add_app_info(app_id, icon, name, content)
 
     def update_app_info(self, app_id, icon, name, content):
         self.app_info_service.update_app_info(app_id, icon, name, content)

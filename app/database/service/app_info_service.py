@@ -12,8 +12,12 @@ class AppInfoService:
     def createTable(self) -> bool:
         return self.app_info_dao.createTable()
 
-    def add_app_info(self, icon, name, content):
-        app_info = AppInfo(icon=icon, name=name, content=content)
+    def add_app_info(self, app_id, icon, name, content):
+        app_info = AppInfo()
+        app_info.id= app_id
+        app_info.icon= icon
+        app_info.name= name
+        app_info.content= content
         self.app_info_dao.add_app_info(app_info)
 
     def update_app_info(self, app_id, icon, name, content):
