@@ -19,6 +19,9 @@ class AppCard(CardWidget):
         self.index = index
         self.routeKey = routeKey
         self.name = name
+        self.icon = icon
+
+        self.content = content
 
         self.state: AppState =  'uninstall'
 
@@ -134,7 +137,7 @@ class AppCard(CardWidget):
     def mouseReleaseEvent(self, e):
         super().mouseReleaseEvent(e)
         # signalBus.switchToSampleCard.emit(self.routeKey, self.index)
-        signalBus.switchToAppInterfaceSig.emit(self.routeKey, self.index)
+        signalBus.switchToAppInterfaceSig.emit(self.routeKey, self.index, self.icon, self.name, self.content)
 
     def is_install(self, software_list):
         for item in software_list:

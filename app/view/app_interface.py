@@ -1,296 +1,329 @@
 # coding:utf-8
-from PyQt5.QtCore import Qt, QEasingCurve
-from PyQt5.QtWidgets import QWidget, QStackedWidget, QVBoxLayout, QLabel, QHBoxLayout, QFrame, QSizePolicy
-from qfluentwidgets import (Pivot, qrouter, SegmentedWidget, TabBar, CheckBox, ComboBox,
-                            TabCloseButtonDisplayMode, BodyLabel, SpinBox, BreadcrumbBar,TextEdit,SingleDirectionScrollArea, SmoothScrollArea, ToolTipFilter, 
-                            SegmentedToggleToolWidget, FluentIcon, ImageLabel,ScrollArea)
+import sys
+from pathlib import Path
 
-from .gallery_interface import GalleryInterface
-from ..common.translator import Translator
-from ..common.style_sheet import StyleSheet
-from PyQt5.QtCore import Qt, pyqtSignal, QUrl, QEvent
-from PyQt5.QtGui import QDesktopServices, QPainter, QPen, QColor
-from PyQt5.QtWidgets import QWidget, QLabel, QVBoxLayout, QHBoxLayout, QFrame
+from PyQt5.QtCore import Qt, QPoint, QSize, QUrl, QRect, QPropertyAnimation
+from PyQt5.QtGui import QIcon, QFont, QColor, QPainter
+from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QGraphicsOpacityEffect
 
-from qfluentwidgets import (ScrollArea, PushButton, ToolButton, FluentIcon,
-                            isDarkTheme, IconWidget, Theme, ToolTipFilter, TitleLabel, CaptionLabel,
-                            StrongBodyLabel, BodyLabel, toggleTheme)
-from ..common.config import cfg, FEEDBACK_URL, HELP_URL, EXAMPLE_URL
-from ..common.icon import Icon
-from ..common.style_sheet import StyleSheet
-from ..common.signal_bus import signalBus
+from qfluentwidgets import (CardWidget, setTheme, Theme, IconWidget, BodyLabel, CaptionLabel, PushButton,
+                            TransparentToolButton, FluentIcon, RoundMenu, Action, ElevatedCardWidget,
+                            ImageLabel, isDarkTheme, FlowLayout, MSFluentTitleBar, SimpleCardWidget,
+                            HeaderCardWidget, InfoBarIcon, HyperlinkLabel, HorizontalFlipView,
+                            PrimaryPushButton, TitleLabel, PillPushButton, setFont, SingleDirectionScrollArea,
+                            VerticalSeparator, MSFluentWindow, NavigationItemPosition)
+
+from qfluentwidgets.components.widgets.acrylic_label import AcrylicBrush
 
 
-class SeparatorWidget(QWidget):
-    """ Seperator widget """
+def isWin11():
+    return sys.platform == 'win32' and sys.getwindowsversion().build >= 22000
 
-    def __init__(self, parent=None):
-        super().__init__(parent=parent)
-        self.setFixedSize(6, 16)
 
-    def paintEvent(self, e):
-        painter = QPainter(self)
-        pen = QPen(1)
-        pen.setCosmetic(True)
-        c = QColor(255, 255, 255, 21) if isDarkTheme() else QColor(0, 0, 0, 15)
-        pen.setColor(c)
-        painter.setPen(pen)
+if isWin11():
+    from qframelesswindow import AcrylicWindow as Window
+else:
+    from qframelesswindow import FramelessWindow as Window
 
-        x = self.width() // 2
-        painter.drawLine(x, 0, x, self.height())
 
-class ToolBar(QWidget):
-    """ Tool bar """
+class AppInfoCard(SimpleCardWidget):
+    """ App information card """
 
-    def __init__(self, title, subtitle, parent=None):
-        super().__init__(parent=parent)
-        self.titleLabel = TitleLabel(title, self)
-        self.subtitleLabel = CaptionLabel(subtitle, self)
+    def __init__(self, icon_label, name_label, content, parent=None):
+        super().__init__(parent)
+        # self.icon_label = ImageLabel(":/qfluentwidgets/images/logo.png", self)
+        self.icon_label = ImageLabel(icon_label, self)
+        self.icon_label.setBorderRadius(8, 8, 8, 8)
+        self.icon_label.scaledToWidth(120)
 
-        self.documentButton = PushButton(
-            self.tr('Install'), self, FluentIcon.DOCUMENT)
-        self.sourceButton = PushButton(self.tr('Github'), self, FluentIcon.GITHUB)
-        self.themeButton = ToolButton(FluentIcon.CONSTRACT, self)
-        self.separator = SeparatorWidget(self)
-        self.supportButton = ToolButton(FluentIcon.HEART, self)
-        self.feedbackButton = ToolButton(FluentIcon.FEEDBACK, self)
+        self.nameLabel = TitleLabel(f'{name_label}', self)
+        self.installButton = PrimaryPushButton(self.tr('Install'), self)
 
-        self.vBoxLayout = QVBoxLayout(self)
-        self.buttonLayout = QHBoxLayout()
-
-        self.__initWidget()
-
-    def __initWidget(self):
-        self.setFixedHeight(138)
-        self.vBoxLayout.setSpacing(0)
-        self.vBoxLayout.setContentsMargins(36, 22, 36, 12)
-        self.vBoxLayout.addWidget(self.titleLabel)
-        self.vBoxLayout.addSpacing(4)
-        self.vBoxLayout.addWidget(self.subtitleLabel)
-        self.vBoxLayout.addSpacing(4)
-        self.vBoxLayout.addLayout(self.buttonLayout, 1)
-        self.vBoxLayout.setAlignment(Qt.AlignTop)
-
-        self.buttonLayout.setSpacing(4)
-        self.buttonLayout.setContentsMargins(0, 0, 0, 0)
-        self.buttonLayout.addWidget(self.documentButton, 0, Qt.AlignLeft)
-        self.buttonLayout.addWidget(self.sourceButton, 0, Qt.AlignLeft)
-        self.buttonLayout.addStretch(1)
-        self.buttonLayout.addWidget(self.themeButton, 0, Qt.AlignRight)
-        self.buttonLayout.addWidget(self.separator, 0, Qt.AlignRight)
-        self.buttonLayout.addWidget(self.supportButton, 0, Qt.AlignRight)
-        self.buttonLayout.addWidget(self.feedbackButton, 0, Qt.AlignRight)
-        self.buttonLayout.setAlignment(Qt.AlignVCenter | Qt.AlignLeft)
-
-        self.themeButton.installEventFilter(ToolTipFilter(self.themeButton))
-        self.supportButton.installEventFilter(ToolTipFilter(self.supportButton))
-        self.feedbackButton.installEventFilter(
-            ToolTipFilter(self.feedbackButton))
-        self.themeButton.setToolTip(self.tr('Toggle theme'))
-        self.supportButton.setToolTip(self.tr('Support me'))
-        self.feedbackButton.setToolTip(self.tr('Send feedback'))
-
-        self.themeButton.clicked.connect(lambda: toggleTheme(True))
-        self.supportButton.clicked.connect(signalBus.supportSignal)
-        self.documentButton.clicked.connect(
-            lambda: QDesktopServices.openUrl(QUrl(HELP_URL)))
-        self.sourceButton.clicked.connect(
-            lambda: QDesktopServices.openUrl(QUrl(HELP_URL)))
-        self.feedbackButton.clicked.connect(
-            lambda: QDesktopServices.openUrl(QUrl(HELP_URL)))
-
-        self.subtitleLabel.setTextColor(QColor(96, 96, 96), QColor(216, 216, 216))
-
-class AppInterface(ScrollArea):
-    def __init__(self, title: str="App Name", subtitle: str="App introduction", parent=None):
-        """
-        Parameters
-        ----------
-        title: str
-            The title of gallery
-
-        subtitle: str
-            The subtitle of gallery
-
-        parent: QWidget
-            parent widget
-        """
-        super().__init__(parent=parent)
-        self.view = QWidget(self)
-        self.toolBar = ToolBar(title, subtitle, self)
-        self.vBoxLayout = QVBoxLayout(self.view)
-
-        self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.setViewportMargins(0, self.toolBar.height(), 0, 0)
-        self.setWidget(self.view)
-        self.setWidgetResizable(True)
-
-        self.vBoxLayout.setSpacing(30)
-        self.vBoxLayout.setAlignment(Qt.AlignTop)
-        self.vBoxLayout.setContentsMargins(36, 20, 36, 36)
-
-        self.view.setObjectName('view')
-        StyleSheet.GALLERY_INTERFACE.apply(self)
 
         
-        self.setObjectName('appInterface')
+        self.companyLabel = HyperlinkLabel(
+            QUrl('https://github.com/zhiyiYo/PyQt-Fluent-Widgets'), 'Shokokawaii Inc.', self)
+        self.installButton.setFixedWidth(160)
 
-        # text edit
-        textEdit = TextEdit(self)
-        textEdit.setMarkdown(
-            "## Steel Ball Run \n * Johnny Joestar 🦄 \n * Gyro Zeppeli 🐴 ")
-        textEdit.setFixedHeight(150)
-        self.addExampleCard(
-            title=self.tr("What's New"),
-            widget=textEdit,
-            stretch=1
-        )
+        self.scoreWidget = StatisticsWidget(self.tr('RATINGS'), '5.0', self)
+        self.separator = VerticalSeparator(self)
+        self.commentWidget = StatisticsWidget('REVIEWS', '3K', self)
 
+        self.descriptionLabel = BodyLabel(f'{content}', self)
+        self.descriptionLabel.setWordWrap(True)
 
-        # single direction scroll area
-        w = SingleDirectionScrollArea(self, Qt.Horizontal)
-        label = ImageLabel(":/gallery/images/chidanta4.jpg", self)
-        label.setBorderRadius(8, 8, 8, 8)
+        self.tagButton = PillPushButton('组件库', self)
+        self.tagButton.setCheckable(False)
+        setFont(self.tagButton, 12)
+        self.tagButton.setFixedSize(80, 32)
 
-        w.setWidget(label)
-        w.setFixedSize(660, 498)
-        card = self.addExampleCard(
-            self.tr('Preview'),
-            w
-        )
-        card.card.installEventFilter(ToolTipFilter(card.card, showDelay=500))
-        card.card.setToolTip(self.tr('Chitanda Eru is so hot 🥵🥵🥵'))
-        card.card.setToolTipDuration(2000)
+        self.shareButton = TransparentToolButton(FluentIcon.SHARE, self)
+        self.shareButton.setFixedSize(32, 32)
+        self.shareButton.setIconSize(QSize(14, 14))
 
-
-    def addExampleCard(self, title, widget, stretch=0):
-        card = ExampleCard(title, widget, stretch, self.view)
-        self.vBoxLayout.addWidget(card, 0, Qt.AlignTop)
-        return card
-
-    def scrollToCard(self, index: int):
-        """ scroll to example card """
-        w = self.vBoxLayout.itemAt(index).widget()
-        self.verticalScrollBar().setValue(w.y())
-
-    def resizeEvent(self, e):
-        super().resizeEvent(e)
-        self.toolBar.resize(self.width(), self.toolBar.height())
-
-    """ App view interface """
-
-
-
-class ExampleCard(QWidget):
-    """ Example card """
-
-    def __init__(self, title, widget: QWidget,  stretch=0, parent=None):
-        super().__init__(parent=parent)
-        self.widget = widget
-        self.stretch = stretch
-
-        self.titleLabel = StrongBodyLabel(title, self)
-        self.card = QFrame(self)
-
-
-        self.vBoxLayout = QVBoxLayout(self)
-        self.cardLayout = QVBoxLayout(self.card)
+        self.hBoxLayout = QHBoxLayout(self)
+        self.vBoxLayout = QVBoxLayout()
         self.topLayout = QHBoxLayout()
+        self.statisticsLayout = QHBoxLayout()
+        self.buttonLayout = QHBoxLayout()
 
-        self.__initWidget()
+        self.initLayout()
 
-    def __initWidget(self):
-        self.__initLayout()
-        self.card.setObjectName('card')
+    def initLayout(self):
+        self.hBoxLayout.setSpacing(30)
+        self.hBoxLayout.setContentsMargins(34, 24, 24, 24)
+        self.hBoxLayout.addWidget(self.icon_label)
+        self.hBoxLayout.addLayout(self.vBoxLayout)
 
-    def __initLayout(self):
-        self.vBoxLayout.setSizeConstraint(QVBoxLayout.SetMinimumSize)
-        self.cardLayout.setSizeConstraint(QVBoxLayout.SetMinimumSize)
-        self.topLayout.setSizeConstraint(QHBoxLayout.SetMinimumSize)
-
-        self.vBoxLayout.setSpacing(12)
         self.vBoxLayout.setContentsMargins(0, 0, 0, 0)
-        self.topLayout.setContentsMargins(12, 12, 12, 12)
-        self.cardLayout.setContentsMargins(0, 0, 0, 0)
+        self.vBoxLayout.setSpacing(0)
 
-        self.vBoxLayout.addWidget(self.titleLabel, 0, Qt.AlignTop)
-        self.vBoxLayout.addWidget(self.card, 0, Qt.AlignTop)
-        self.vBoxLayout.setAlignment(Qt.AlignTop)
+        # name label and install button
+        self.vBoxLayout.addLayout(self.topLayout)
+        self.topLayout.setContentsMargins(0, 0, 0, 0)
+        self.topLayout.addWidget(self.nameLabel)
+        self.topLayout.addWidget(self.installButton, 0, Qt.AlignRight)
 
-        self.cardLayout.setSpacing(0)
-        self.cardLayout.setAlignment(Qt.AlignTop)
-        self.cardLayout.addLayout(self.topLayout, 0)
+        # company label
+        self.vBoxLayout.addSpacing(3)
+        self.vBoxLayout.addWidget(self.companyLabel)
 
-        self.widget.setParent(self.card)
-        self.topLayout.addWidget(self.widget)
-        if self.stretch == 0:
-            self.topLayout.addStretch(1)
+        # statistics widgets
+        self.vBoxLayout.addSpacing(20)
+        self.vBoxLayout.addLayout(self.statisticsLayout)
+        self.statisticsLayout.setContentsMargins(0, 0, 0, 0)
+        self.statisticsLayout.setSpacing(10)
+        self.statisticsLayout.addWidget(self.scoreWidget)
+        self.statisticsLayout.addWidget(self.separator)
+        self.statisticsLayout.addWidget(self.commentWidget)
+        self.statisticsLayout.setAlignment(Qt.AlignLeft)
 
-        self.widget.show()
+        # description label
+        self.vBoxLayout.addSpacing(20)
+        self.vBoxLayout.addWidget(self.descriptionLabel)
 
-    def eventFilter(self, obj, e):
-        if obj is self.sourceWidget:
-            if e.type() == QEvent.MouseButtonRelease:
-                QDesktopServices.openUrl(QUrl(self.sourcePath))
+        # button
+        self.vBoxLayout.addSpacing(12)
+        self.buttonLayout.setContentsMargins(0, 0, 0, 0)
+        self.vBoxLayout.addLayout(self.buttonLayout)
+        self.buttonLayout.addWidget(self.tagButton, 0, Qt.AlignLeft)
+        self.buttonLayout.addWidget(self.shareButton, 0, Qt.AlignRight)
 
-        return super().eventFilter(obj, e)
-    
-class PivotInterface(QWidget):
-    """ Pivot interface """
-
-    Nav = Pivot
-
-    def __init__(self, parent=None):
-        super().__init__(parent=parent)
-        self.setFixedSize(600, 140)
-
-        self.pivot = self.Nav(self)
-        self.stackedWidget = QStackedWidget(self)
-        self.vBoxLayout = QVBoxLayout(self)
-
-        self.whats_new = QLabel('Song Interface', self)
-        self.albumInterface = QLabel('Album Interface', self)
-        self.artistInterface = QLabel('Artist Interface', self)
-        self.app_privacy = QLabel('App Privacy', self)
-
-        # add items to pivot
-        self.addSubInterface(self.whats_new, 'whats\'new', self.tr('What\'s New'))
-        self.addSubInterface(self.albumInterface, 'albumInterface', self.tr('Preview'))
-        self.addSubInterface(self.artistInterface, 'artistInterface', self.tr('Ratings & Reviews'))
-        self.addSubInterface(self.app_privacy, 'app_privacy', self.tr('App Privacy'))
-
-        self.vBoxLayout.addWidget(self.pivot, 0, Qt.AlignLeft)
-        self.vBoxLayout.addWidget(self.stackedWidget)
-        self.vBoxLayout.setContentsMargins(0, 0, 0, 0)
-        StyleSheet.NAVIGATION_VIEW_INTERFACE.apply(self)
-
-        self.stackedWidget.currentChanged.connect(self.onCurrentIndexChanged)
-        self.stackedWidget.setCurrentWidget(self.whats_new)
-        self.pivot.setCurrentItem(self.whats_new.objectName())
-
-        qrouter.setDefaultRouteKey(self.stackedWidget, self.whats_new.objectName())
-
-    def addSubInterface(self, widget: QLabel, objectName, text):
-        widget.setObjectName(objectName)
-        widget.setAlignment(Qt.AlignTop | Qt.AlignLeft)
-        self.stackedWidget.addWidget(widget)
-        self.pivot.addItem(
-            routeKey=objectName,
-            text=text,
-            onClick=lambda: self.stackedWidget.setCurrentWidget(widget)
-        )
-
-    def onCurrentIndexChanged(self, index):
-        widget = self.stackedWidget.widget(index)
-        self.pivot.setCurrentItem(widget.objectName())
-        qrouter.push(self.stackedWidget, widget.objectName())
+    def update_window(self, icon_label, name_label, content):
+        self.icon_label.setImage(icon_label) 
+        self.nameLabel.setText(f'{name_label}')
+        self.descriptionLabel.setText(f'{content}')
 
 
-class SegmentedInterface(PivotInterface):
-
-    Nav = SegmentedWidget
+class GalleryCard(HeaderCardWidget):
+    """ Gallery card """
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.vBoxLayout.removeWidget(self.pivot)
-        self.vBoxLayout.insertWidget(0, self.pivot)
+        self.setTitle('屏幕截图')
+
+        self.flipView = HorizontalFlipView(self)
+        self.expandButton = TransparentToolButton(
+            FluentIcon.CHEVRON_RIGHT_MED, self)
+
+        self.expandButton.setFixedSize(32, 32)
+        self.expandButton.setIconSize(QSize(12, 12))
+
+        self.flipView.addImages([
+            'app/resource/images/shoko1.jpg', 'app/resource/images//shoko2.jpg',
+            'app/resource/images//shoko3.jpg', 'app/resource/images//shoko4.jpg',':/gallery/images/kunkun.png'
+        ])
+        self.flipView.setBorderRadius(8)
+        self.flipView.setSpacing(10)
+
+        self.headerLayout.addWidget(self.expandButton, 0, Qt.AlignRight)
+        self.viewLayout.addWidget(self.flipView)
+
+
+class DescriptionCard(HeaderCardWidget):
+    """ Description card """
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.descriptionLabel = BodyLabel(
+            'PyQt-Fluent-Widgets 是一个基于 PyQt/PySide 的 Fluent Design 风格组件库，包含许多美观实用的组件，支持亮暗主题无缝切换和自定义主题色，搭配所见即所得的 QtDesigner，帮助开发者快速实现美观优雅的现代化界面。', self)
+
+        self.descriptionLabel.setWordWrap(True)
+        self.viewLayout.addWidget(self.descriptionLabel)
+        self.setTitle('描述')
+
+
+class SystemRequirementCard(HeaderCardWidget):
+    """ System requirements card """
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setTitle('系统要求')
+        self.infoLabel = BodyLabel('此产品适用于你的设备。具有复选标记的项目符合开发人员的系统要求。', self)
+        self.successIcon = IconWidget(InfoBarIcon.SUCCESS, self)
+        self.detailButton = HyperlinkLabel('详细信息', self)
+
+        self.vBoxLayout = QVBoxLayout()
+        self.hBoxLayout = QHBoxLayout()
+
+        self.successIcon.setFixedSize(16, 16)
+        self.hBoxLayout.setSpacing(10)
+        self.vBoxLayout.setSpacing(16)
+        self.hBoxLayout.setContentsMargins(0, 0, 0, 0)
+        self.vBoxLayout.setContentsMargins(0, 0, 0, 0)
+
+        self.hBoxLayout.addWidget(self.successIcon)
+        self.hBoxLayout.addWidget(self.infoLabel)
+        self.vBoxLayout.addLayout(self.hBoxLayout)
+        self.vBoxLayout.addWidget(self.detailButton)
+
+        self.viewLayout.addLayout(self.vBoxLayout)
+
+
+class LightBox(QWidget):
+    """ Light box """
+
+    def __init__(self, parent=None):
+        super().__init__(parent=parent)
+        if isDarkTheme():
+            tintColor = QColor(32, 32, 32, 200)
+        else:
+            tintColor = QColor(255, 255, 255, 160)
+
+        self.acrylicBrush = AcrylicBrush(self, 30, tintColor, QColor(0, 0, 0, 0))
+
+        self.opacityEffect = QGraphicsOpacityEffect(self)
+        self.opacityAni = QPropertyAnimation(self.opacityEffect, b"opacity", self)
+        self.opacityEffect.setOpacity(1)
+        self.setGraphicsEffect(self.opacityEffect)
+
+        self.vBoxLayout = QVBoxLayout(self)
+        self.closeButton = TransparentToolButton(FluentIcon.CLOSE, self)
+        self.flipView = HorizontalFlipView(self)
+        self.nameLabel = BodyLabel('屏幕截图 1', self)
+        self.pageNumButton = PillPushButton('1 / 4', self)
+
+        self.pageNumButton.setCheckable(False)
+        self.pageNumButton.setFixedSize(80, 32)
+        setFont(self.nameLabel, 16, QFont.DemiBold)
+
+        self.closeButton.setFixedSize(32, 32)
+        self.closeButton.setIconSize(QSize(14, 14))
+        self.closeButton.clicked.connect(self.fadeOut)
+
+        self.vBoxLayout.setContentsMargins(26, 28, 26, 28)
+        self.vBoxLayout.addWidget(self.closeButton, 0, Qt.AlignRight | Qt.AlignTop)
+        self.vBoxLayout.addWidget(self.flipView, 1)
+        self.vBoxLayout.addWidget(self.nameLabel, 0, Qt.AlignHCenter)
+        self.vBoxLayout.addSpacing(10)
+        self.vBoxLayout.addWidget(self.pageNumButton, 0, Qt.AlignHCenter)
+
+        self.flipView.addImages([
+            'app/resource/images/shoko1.jpg', 'app/resource/images//shoko2.jpg',
+            'app/resource/images//shoko3.jpg', 'app/resource/images//shoko4.jpg',':/gallery/images/kunkun.png'
+        ])
+        self.flipView.currentIndexChanged.connect(self.setCurrentIndex)
+
+    def setCurrentIndex(self, index: int):
+        self.nameLabel.setText(f'屏幕截图 {index + 1}')
+        self.pageNumButton.setText(f'{index + 1} / {self.flipView.count()}')
+        self.flipView.setCurrentIndex(index)
+
+    def paintEvent(self, e):
+        if self.acrylicBrush.isAvailable():
+            return self.acrylicBrush.paint()
+
+        painter = QPainter(self)
+        painter.setPen(Qt.NoPen)
+        if isDarkTheme():
+            painter.setBrush(QColor(32, 32, 32))
+        else:
+            painter.setBrush(QColor(255, 255, 255))
+
+        painter.drawRect(self.rect())
+
+    def resizeEvent(self, e):
+        w = self.width() - 52
+        self.flipView.setItemSize(QSize(w, w * 9 // 16))
+
+    def fadeIn(self):
+        rect = QRect(self.mapToGlobal(QPoint()), self.size())
+        self.acrylicBrush.grabImage(rect)
+
+        self.opacityAni.setStartValue(0)
+        self.opacityAni.setEndValue(1)
+        self.opacityAni.setDuration(150)
+        self.opacityAni.start()
+        self.show()
+
+    def fadeOut(self):
+        self.opacityAni.setStartValue(1)
+        self.opacityAni.setEndValue(0)
+        self.opacityAni.setDuration(150)
+        self.opacityAni.finished.connect(self._onAniFinished)
+        self.opacityAni.start()
+
+    def _onAniFinished(self):
+        self.opacityAni.finished.disconnect()
+        self.hide()
+
+
+class StatisticsWidget(QWidget):
+    """ Statistics widget """
+
+    def __init__(self, title: str, value: str, parent=None):
+        super().__init__(parent=parent)
+        self.titleLabel = CaptionLabel(title, self)
+        self.valueLabel = BodyLabel(value, self)
+        self.vBoxLayout = QVBoxLayout(self)
+
+        self.vBoxLayout.setContentsMargins(16, 0, 16, 0)
+        self.vBoxLayout.addWidget(self.valueLabel, 0, Qt.AlignTop)
+        self.vBoxLayout.addWidget(self.titleLabel, 0, Qt.AlignBottom)
+
+        setFont(self.valueLabel, 18, QFont.DemiBold)
+        self.titleLabel.setTextColor(QColor(96, 96, 96), QColor(206, 206, 206))
+
+
+class AppInterface(SingleDirectionScrollArea):
+
+    def __init__(self, icon, name, content, parent=None):
+        super().__init__(parent)
+
+        self.view = QWidget(self)
+
+        self.vBoxLayout = QVBoxLayout(self.view)
+        self.appInfoCard = AppInfoCard(icon, name, content, self)
+        self.galleryCard = GalleryCard(self)
+        self.descriptionCard = DescriptionCard(self)
+        self.systemCard = SystemRequirementCard(self)
+
+        self.lightBox = LightBox(self)
+        self.lightBox.hide()
+        self.galleryCard.flipView.itemClicked.connect(self.showLightBox)
+
+        self.setWidget(self.view)
+        self.setWidgetResizable(True)
+        self.setObjectName("appInterface")
+
+        self.vBoxLayout.setSpacing(10)
+        self.vBoxLayout.setContentsMargins(0, 0, 10, 30)
+        self.vBoxLayout.addWidget(self.appInfoCard, 0, Qt.AlignTop)
+        self.vBoxLayout.addWidget(self.galleryCard, 0, Qt.AlignTop)
+        self.vBoxLayout.addWidget(self.descriptionCard, 0, Qt.AlignTop)
+        self.vBoxLayout.addWidget(self.systemCard, 0, Qt.AlignTop)
+
+        self.setStyleSheet("QScrollArea {border: none; background:transparent}")
+        self.view.setStyleSheet('QWidget {background:transparent}')
+
+    def showLightBox(self):
+        index = self.galleryCard.flipView.currentIndex()
+        self.lightBox.setCurrentIndex(index)
+        self.lightBox.fadeIn()
+
+    def resizeEvent(self, e):
+        super().resizeEvent(e)
+        self.lightBox.resize(self.size())
+
+    def update_window(self, icon_label, name_label, content):
+        self.appInfoCard.update_window(icon_label, name_label, content)

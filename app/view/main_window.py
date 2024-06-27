@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 05:28:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-26 18:54:01
+LastEditTime: 2024-06-27 14:55:06
 FilePath: \aistore\app\view\main_window.py
 Description: main windows
 '''
@@ -85,7 +85,7 @@ class MainWindow(FluentWindow):
         self.viewInterface = ViewInterface(self)
         self.aistoreInterface = AiStoreInterface(self)
 
-        self.appInterface = AppInterface(parent=self)
+        self.appInterface = AppInterface(icon=":/qfluentwidgets/images/logo.png", name='AIStore', content='AIStore Software Manager is a tool provided by ZhongJu Cloud that integrates software downloading, updating, uninstalling and optimization.', parent=self)
 
     def initNavigation(self):
         # add navigation items
@@ -106,7 +106,6 @@ class MainWindow(FluentWindow):
         # self.addSubInterface(self.materialInterface, FIF.PALETTE, t.material, pos)
         # self.addSubInterface(self.menuInterface, Icon.MENU, t.menus, pos)
         # self.addSubInterface(self.navigationViewInterface, FIF.MENU, t.navigation, pos)
-        # self.addSubInterface(self.appInterface, FIF.MESSAGE, t.material, pos)
         # self.addSubInterface(self.scrollInterface, FIF.SCROLL, t.scroll, pos)
         # self.addSubInterface(self.statusInfoInterface, FIF.CHAT, t.statusInfo, pos)
         # self.addSubInterface(self.textInterface, Icon.TEXT, t.text, pos)
@@ -123,7 +122,6 @@ class MainWindow(FluentWindow):
         #     position=NavigationItemPosition.BOTTOM
         # )
 
-        # self.addSubInterface(self.appInterface, FIF.MESSAGE, t.material, pos)
 
         self.addSubInterface(
             self.settingInterface, FIF.SETTING, self.tr('Settings'), NavigationItemPosition.BOTTOM)
@@ -187,9 +185,9 @@ class MainWindow(FluentWindow):
                 self.stackedWidget.setCurrentWidget(w, False)
                 w.scrollToCard(index)
 
-    def switchToAppInterface(self, routeKey, index):
+    def switchToAppInterface(self, routeKey, index, icon, name, content):
+        self.appInterface.update_window(icon, name, content)
         self.stackedWidget.setCurrentWidget(self.appInterface, False)
-        self.appInterface.scrollToCard(index)
 
     # def check_software_registy(self):
     #     signalBus.software_registySig.emit(self.software_list)

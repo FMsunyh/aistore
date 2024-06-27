@@ -32,7 +32,7 @@ file_handler.setLevel(logging.DEBUG)
 file_handler.suffix = "%Y-%m-%d"  # 设置后缀为日期格式
 
 # 创建一个日志格式器并设置格式
-formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s -  %(filename)s  - %(module)s - %(lineno)d - %(message)s')
 file_handler.setFormatter(formatter)
 
 # 创建一个控制台处理程序
