@@ -36,15 +36,16 @@ def insert_app(cursor, root):
         software_id = int(item.find('id').text)
         name = item.find('name').text
         icon = item.find('icon').text
+        title = item.find('title').text
         type_id = int(item.find('typeId').text)
         developer_id = int(item.find('developerId').text)
         description = item.find('description').text
         release_date = item.find('releaseDate').text
         
         cursor.execute('''
-        INSERT INTO tbl_app_info (id, name, icon, type_id, developer_id, description, release_date)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-        ''', (software_id, name, icon, type_id, developer_id, description, release_date))
+        INSERT INTO tbl_app_info (id, name, icon, title, type_id, developer_id, description, release_date)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (software_id, name, icon, title, type_id, developer_id, description, release_date))
 
 # 主程序
 def main():

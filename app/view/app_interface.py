@@ -11,7 +11,7 @@ from qfluentwidgets import (CardWidget, setTheme, Theme, IconWidget, BodyLabel, 
                             ImageLabel, isDarkTheme, FlowLayout, MSFluentTitleBar, SimpleCardWidget,
                             HeaderCardWidget, InfoBarIcon, HyperlinkLabel, HorizontalFlipView,
                             PrimaryPushButton, TitleLabel, PillPushButton, setFont, SingleDirectionScrollArea,
-                            VerticalSeparator, MSFluentWindow, NavigationItemPosition)
+                            VerticalSeparator, MSFluentWindow, NavigationItemPosition,MessageBox)
 
 from qfluentwidgets.components.widgets.acrylic_label import AcrylicBrush
 
@@ -36,11 +36,11 @@ class AppInfoCard(SimpleCardWidget):
         self.icon_label.setBorderRadius(8, 8, 8, 8)
         self.icon_label.scaledToWidth(120)
 
+        self.name = name_label
         self.nameLabel = TitleLabel(f'{name_label}', self)
         self.installButton = PrimaryPushButton(self.tr('Install'), self)
 
 
-        
         self.companyLabel = HyperlinkLabel(
             QUrl('https://github.com/zhiyiYo/PyQt-Fluent-Widgets'), 'Shokokawaii Inc.', self)
         self.installButton.setFixedWidth(160)
@@ -68,6 +68,17 @@ class AppInfoCard(SimpleCardWidget):
         self.buttonLayout = QHBoxLayout()
 
         self.initLayout()
+
+        self.installButton.clicked.connect(self.install)
+    
+    def install(self):
+
+        title = self.tr('Install ' + self.name)
+        content = self.tr(f"Will be coming")
+        w = MessageBox(title, content, self)
+
+        if w.exec():
+            print("run")
 
     def initLayout(self):
         self.hBoxLayout.setSpacing(30)
@@ -130,8 +141,10 @@ class GalleryCard(HeaderCardWidget):
         self.expandButton.setIconSize(QSize(12, 12))
 
         self.flipView.addImages([
-            'app/resource/images/shoko1.jpg', 'app/resource/images//shoko2.jpg',
-            'app/resource/images//shoko3.jpg', 'app/resource/images//shoko4.jpg',':/gallery/images/kunkun.png'
+            ":/gallery/images/Shoko1.jpg",
+            ":/gallery/images/Shoko2.jpg",
+            ":/gallery/images/Shoko3.jpg",
+            ":/gallery/images/Shoko4.jpg",
         ])
         self.flipView.setBorderRadius(8)
         self.flipView.setSpacing(10)
@@ -146,7 +159,7 @@ class DescriptionCard(HeaderCardWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.descriptionLabel = BodyLabel(
-            'PyQt-Fluent-Widgets 是一个基于 PyQt/PySide 的 Fluent Design 风格组件库，包含许多美观实用的组件，支持亮暗主题无缝切换和自定义主题色，搭配所见即所得的 QtDesigner，帮助开发者快速实现美观优雅的现代化界面。', self)
+            '广州众聚智能科技有限公司是一家专注于科学计算、大模型训练以及图像渲染领域的创新型科技企业，致力于为客户提供前沿、高效的智能化解决方案。自成立以来，公司始终坚持以技术为核心，以创新为驱动，不断提升自身在人工智能领域的研发实力和应用能力。', self)
 
         self.descriptionLabel.setWordWrap(True)
         self.viewLayout.addWidget(self.descriptionLabel)
@@ -219,8 +232,10 @@ class LightBox(QWidget):
         self.vBoxLayout.addWidget(self.pageNumButton, 0, Qt.AlignHCenter)
 
         self.flipView.addImages([
-            'app/resource/images/shoko1.jpg', 'app/resource/images//shoko2.jpg',
-            'app/resource/images//shoko3.jpg', 'app/resource/images//shoko4.jpg',':/gallery/images/kunkun.png'
+            ":/gallery/images/Shoko1.jpg",
+            ":/gallery/images/Shoko2.jpg",
+            ":/gallery/images/Shoko3.jpg",
+            ":/gallery/images/Shoko4.jpg",
         ])
         self.flipView.currentIndexChanged.connect(self.setCurrentIndex)
 

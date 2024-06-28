@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-28 17:06:35
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-28 17:12:12
+LastEditTime: 2024-06-28 17:55:40
 FilePath: \aistore\app\database\db_sqlite.py
 Description: library
 '''
@@ -38,7 +38,7 @@ class Library(QObject):
         """
         super().__init__(parent=parent)
         self.app_types = []
-        self.app_info = []
+        self.app_infos = []
         self.developers = []
 
         self.app_types_controller = AppTypesController(db)
@@ -50,7 +50,7 @@ class Library(QObject):
     def load(self):
         """ load data to library """
         self.app_types = self.app_types_controller.list_all()
-        self.app_info = self.app_info_controller.list_all()
+        self.app_infos = self.app_info_controller.list_all()
         self.developers = self.developers_controller.list_all()
         
         self.loadFinished.emit()

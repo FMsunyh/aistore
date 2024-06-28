@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 05:28:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-28 17:38:56
+LastEditTime: 2024-06-28 17:48:17
 FilePath: \aistore\app\view\main_window.py
 Description: main windows
 '''
@@ -71,8 +71,11 @@ class MainWindow(FluentWindow):
         self.onInitFinished()
     
     def createWidgets(self):
+        DBInitializer.init()
+        self.library = Library(QSqlDatabase.database(DBInitializer.CONNECTION_NAME))
+    
         # create sub interface
-        self.homeInterface = HomeInterface(parent=self)
+        self.homeInterface = HomeInterface(library = self.library, parent=self)
         self.iconInterface = IconInterface(self)
         self.basicInputInterface = BasicInputInterface(self)
         self.dateTimeInterface = DateTimeInterface(self)
@@ -154,9 +157,6 @@ class MainWindow(FluentWindow):
 
 
     def init_data(self):
-        DBInitializer.init()
-        self.library = Library(QSqlDatabase.database(DBInitializer.CONNECTION_NAME))
-
         self.init_homeInterface()
         
 

@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-27 18:29:11
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-28 15:52:37
+LastEditTime: 2024-06-28 18:08:36
 FilePath: \aistore\app\database\entity\app_info.py
 Description: entity of app
 '''
@@ -13,6 +13,7 @@ class AppInfo(Entity):
     id : str = None
     icon : str = None
     name : str = None
+    title : str = None
     type_id : int = 0 # app_types id
     developer_id : int = 0 # developers id
     description: str = None 

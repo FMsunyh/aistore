@@ -1,8 +1,9 @@
 <app_info>
     <item>
         <id>1</id>
-        <name>Facefusion</name>
-        <icon>icon</icon>
+        <name>facefusion</name>
+        <title>FaceFusion</title>
+        <icon>:/gallery/images/controls/MenuFlyout.png</icon>
         <typeId>1</typeId>
         <developerId>1</developerId>
         <description>A software for facial image fusion.</description>
@@ -11,7 +12,8 @@
     <item>
         <id>2</id>
         <name>kohya_ss</name>
-        <icon>icon</icon>
+        <title>Kohya_ss GUI</title>
+        <icon>:/gallery/images/controls/CommandBar.png</icon>
         <typeId>2</typeId>
         <developerId>1</developerId>
         <description>A machine learning toolset.</description>
@@ -20,7 +22,8 @@
     <item>
         <id>3</id>
         <name>sd_webui</name>
-        <icon>icon</icon>
+        <title>Stable Diffusion WebUI</title>
+        <icon>:/gallery/images/controls/CommandBarFlyout.png</icon>
         <typeId>3</typeId>
         <developerId>1</developerId>
         <description>A web UI for various applications.</description>

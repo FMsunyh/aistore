@@ -19,6 +19,7 @@ Section "Install"
     
     ; Copy application files
     File "..\.PyInstaller\aistore.exe" ; Adjust path to your application executable
+    File "..\app\cache\cache.db" ; Adjust path to your application executable
     
     ; Create uninstaller
     WriteUninstaller "$INSTDIR\Uninstall.exe"

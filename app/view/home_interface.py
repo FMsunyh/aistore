@@ -14,6 +14,7 @@ from app.components.app_card import AppCardView
 from app.core.filesystem import is_directory
 from app.core.install_worker import InstallWorker
 from app.core.uninstall_worker import UninstallWorker
+from app.database.library import Library
 from ..common.config import cfg, HELP_URL, REPO_URL, EXAMPLE_URL, FEEDBACK_URL
 from ..common.icon import Icon, FluentIconBase
 from ..components.link_card import LinkCardView
@@ -111,9 +112,10 @@ class BannerWidget(QWidget):
 class HomeInterface(ScrollArea):
     """ Home interface """
 
-    def __init__(self, registry=None, parent=None):
+    def __init__(self, library : Library=None, registry=None, parent=None):
         super().__init__(parent=parent)
 
+        self.library = library
         self.registry = registry
 
         self.install_threads = []
@@ -124,7 +126,7 @@ class HomeInterface(ScrollArea):
         self.vBoxLayout = QVBoxLayout(self.view)
 
         self.__initWidget()
-        self.loadApps()
+        self.loadApps2()
         self.__connectSignalToSlot()
 
     def __initWidget(self):
@@ -140,6 +142,31 @@ class HomeInterface(ScrollArea):
         self.vBoxLayout.setSpacing(40)
         self.vBoxLayout.addWidget(self.banner)
         self.vBoxLayout.setAlignment(Qt.AlignTop)
+
+
+    def loadApps2(self):
+        """ load apps """
+
+        # Popular Tools
+        self.popularView = AppCardView(self.tr('Popular Tools'), self.view)
+
+        for item in self.library.app_infos:
+            name = item.name
+            icon = item.icon
+            title = item.title
+            content = item.description
+
+            self.popularView.addAppCard(
+                name=name,
+                icon=icon,
+                title=title,
+                content=self.tr(content),
+                routeKey="navigationViewInterface",
+                index=0,
+                
+            )
+
+        self.vBoxLayout.addWidget(self.popularView)
 
     def loadApps(self):
         """ load apps """
