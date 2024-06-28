@@ -1,3 +1,11 @@
+'''
+Author: Firmin.Sun fmsunyh@gmail.com
+Date: 2024-06-27 18:19:05
+LastEditors: Firmin.Sun fmsunyh@gmail.com
+LastEditTime: 2024-06-28 14:47:09
+FilePath: \aistore\app\database\controller\app_info_controller.py
+Description: controller of app info
+'''
 from app.database.service.app_info_service import AppInfoService
 from typing import Dict, List
 from PyQt5.QtSql import QSqlDatabase
