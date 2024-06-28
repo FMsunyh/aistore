@@ -1,6 +1,6 @@
 from app.database.dao.dao_base import DaoBase
 
-class developersDao(DaoBase):
+class DevelopersDao(DaoBase):
     table = 'tbl_developers'
     fields = ['id', 'name', 'contact_info','type','website_url']
 

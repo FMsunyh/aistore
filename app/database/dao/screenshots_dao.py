@@ -1,6 +1,6 @@
 from app.database.dao.dao_base import DaoBase
 
-class LicensesDao(DaoBase):
+class ScreenshotsDao(DaoBase):
     table = 'tbl_screenshots'
     fields = ['id', 'app_id','image_url','description', 'upload_date']
 

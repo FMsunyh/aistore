@@ -1,6 +1,6 @@
 from app.database.dao.dao_base import DaoBase
 
-class LicensesDao(DaoBase):
+class RatingsReviewsDao(DaoBase):
     table = 'tbl_ratings_reviews'
     fields = ['id', 'user_id', 'app_id','rating','review', 'review_date']
 
