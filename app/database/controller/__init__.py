@@ -1,1 +1,10 @@
 # coding:utf-8
+from app.database.controller.user_controller import UserController
+from app.database.controller.app_info_controller import AppInfoController
+from app.database.controller.app_types_controller import AppTypesController
+from app.database.controller.app_versions_controller import AppVersionsService
+from app.database.controller.developers_controller import DevelopersController
+from app.database.controller.licenses_controller import LicensesController
+from app.database.controller.ratings_reviews_controller import RatingsReviewsController
+from app.database.controller.screenshots_controller import ScreenshotsController
+from app.database.controller.user_controller import UserController
