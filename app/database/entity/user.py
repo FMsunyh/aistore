@@ -1,8 +1,11 @@
-class User:
-    def __init__(self, user_id=None, name='', email=''):
-        self.user_id = user_id
-        self.name = name
-        self.email = email
+from app.database.entity import Entity
+from dataclasses import dataclass
+@dataclass
+class User(Entity):
+    id : int = 0
+    name : str = None
+    email : str = None
+    password : str = None
 
     def __str__(self):
-        return f"{self.name} ({self.email})"
+        return f"{self.id} ({self.name} - {self.email})"
