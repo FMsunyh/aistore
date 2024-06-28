@@ -1,5 +1,7 @@
 from app.database.dao.app_info_dao import AppInfoDao
+from ..entity import AppInfo
 from PyQt5.QtSql import QSqlDatabase
+from typing import List
 
 class AppInfoService:
     
@@ -10,6 +12,9 @@ class AppInfoService:
     def createTable(self) -> bool:
         return self.app_info_dao.createTable()
 
+    def listAll(self) -> List[AppInfo]:
+        return self.app_info_dao.listAll()
+    
     # def add_app_info(self, app_id, icon, name, content):
     #     app_info = AppInfo()
     #     app_info.id= app_id

@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 05:28:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-27 14:55:06
+LastEditTime: 2024-06-28 17:38:56
 FilePath: \aistore\app\view\main_window.py
 Description: main windows
 '''
@@ -10,6 +10,7 @@ Description: main windows
 from PyQt5.QtCore import QUrl, QSize
 from PyQt5.QtGui import QIcon, QDesktopServices, QColor
 from PyQt5.QtWidgets import QApplication
+from PyQt5.QtSql import QSqlDatabase
 
 from qfluentwidgets import (NavigationAvatarWidget, NavigationItemPosition, MessageBox, FluentWindow,
                             SplashScreen)
@@ -17,6 +18,8 @@ from qfluentwidgets import FluentIcon as FIF
 
 from app.core.registry import read_all_installed_software_from_registry
 from app.core.update import UpdateManager
+from app.database.db_initializer import DBInitializer
+from app.database.library import Library
 from app.view.app_interface import AppInterface
 
 from .gallery_interface import GalleryInterface
@@ -151,8 +154,11 @@ class MainWindow(FluentWindow):
 
 
     def init_data(self):
-        self.init_homeInterface()
+        DBInitializer.init()
+        self.library = Library(QSqlDatabase.database(DBInitializer.CONNECTION_NAME))
 
+        self.init_homeInterface()
+        
 
     def init_homeInterface(self):
         registy = read_all_installed_software_from_registry(REGISTY_PATH)

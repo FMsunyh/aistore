@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-27 18:19:05
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-28 14:47:09
+LastEditTime: 2024-06-28 17:26:27
 FilePath: \aistore\app\database\controller\app_info_controller.py
 Description: controller of app info
 '''
@@ -16,17 +16,8 @@ class AppInfoController:
     def __init__(self, db: QSqlDatabase = None) -> None:
         self.app_info_service = AppInfoService(db)
 
-    def add_app_info(self, app_id, icon, name, content):
-        self.app_info_service.add_app_info(app_id, icon, name, content)
+    def list_all(self):
+        """ get all app types"""
+        app_infos = self.app_info_service.listAll()
 
-    def update_app_info(self, app_id, icon, name, content):
-        self.app_info_service.update_app_info(app_id, icon, name, content)
-
-    def delete_app_info(self, app_id):
-        self.app_info_service.delete_app_info(app_id)
-
-    def get_app_info_by_id(self, app_id):
-        return self.app_info_service.get_app_info_by_id(app_id)
-
-    def get_all_app_info(self):
-        return self.app_info_service.get_all_app_info()
+        return app_infos

@@ -13,14 +13,5 @@
             "console": "integratedTerminal",
             "justMyCode": false
         },
-        {
-            "name": "Python test: test_database.py",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "test/test_database.py",
-            "console": "integratedTerminal",
-            "justMyCode": false
-        }
-        
     ]
 }

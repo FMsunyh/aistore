@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-27 16:20:39
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-28 15:20:55
+LastEditTime: 2024-06-28 16:35:34
 FilePath: \aistore\app\database\db_initializer.py
 Description: initializer database
 '''

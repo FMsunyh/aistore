@@ -7,7 +7,9 @@ FilePath: \aistore\app\database\service\developers_service.py
 Description: service of developers
 '''
 from app.database.dao.developers_dao import DevelopersDao
+from ..entity import Developers
 from PyQt5.QtSql import QSqlDatabase
+from typing import List
 
 class DevelopersService:
     
@@ -17,3 +19,6 @@ class DevelopersService:
 
     def createTable(self) -> bool:
         return self.developers_dao.createTable()
+    
+    def listAll(self) -> List[Developers]:
+        return self.developers_dao.listAll()

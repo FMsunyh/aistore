@@ -7,3 +7,9 @@ class AppTypesController:
 
     def __init__(self, db: QSqlDatabase = None) -> None:
         self.app_types_service = AppTypesService(db)
+
+    def list_all(self):
+        """ get all app types"""
+        app_types = self.app_types_service.listAll()
+
+        return app_types
