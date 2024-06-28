@@ -42,7 +42,7 @@ class AppInfoCard(SimpleCardWidget):
 
 
         self.companyLabel = HyperlinkLabel(
-            QUrl('https://github.com/zhiyiYo/PyQt-Fluent-Widgets'), 'Shokokawaii Inc.', self)
+            QUrl('https://www.zjusmart.com/#/'), 'ZhongJuYun Inc.', self)
         self.installButton.setFixedWidth(160)
 
         self.scoreWidget = StatisticsWidget(self.tr('RATINGS'), '5.0', self)
