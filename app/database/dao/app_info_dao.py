@@ -14,10 +14,10 @@ class AppInfoDao(DaoBase):
                 name TEXT NOT NULL,
                 description TEXT NOT NULL,
                 type_id INTEGER,
-                KEY developer_id INTEGER，
+                developer_id INTEGER,
+                release_date TEXT,
                 FOREIGN  KEY (type_id) REFERENCES tbl_app_Types(id),
                 FOREIGN  KEY (developer_id) REFERENCES tbl_developers(id),
-                release_date TEXT
             )
         """)
         return success

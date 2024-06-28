@@ -10,7 +10,7 @@ class LicensesDao(DaoBase):
             CREATE TABLE IF NOT EXISTS {self.table}(
                 id INTEGER PRIMARY KEY,
                 app_id INTEGER,
-                image_url TEXT,
+                image_url TEXT NOT NULL,
                 description TEXT,
                 upload_date TEXT,
                 FOREIGN KEY (app_id) REFERENCES tbl_app_info(id)

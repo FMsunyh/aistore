@@ -13,7 +13,8 @@ class LicensesDao(DaoBase):
                 license_key TEXT,
                 release_date TEXT,
                 expiry_date TEXT,
-                license_type TEXT
+                license_type TEXT,
+                FOREIGN KEY (app_id) REFERENCES tbl_app_info(id)
             )
         """)
         return success

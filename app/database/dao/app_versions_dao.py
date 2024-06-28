@@ -10,8 +10,7 @@ class AppVersionsDao(DaoBase):
             CREATE TABLE IF NOT EXISTS {self.table}(
                 id INTEGER PRIMARY KEY,
                 app_id INTEGER,
-                version_number TEXT,
-                release_date TEXT,
+                version_number TEXT NOT NULL,
                 release_date TEXT,
                 change_log TEXT,
                 FOREIGN KEY (app_id) REFERENCES tbl_app_info(id)
