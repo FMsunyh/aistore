@@ -2,10 +2,11 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-27 16:19:41
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-28 14:39:54
-FilePath: \aistore\app\database\service\user_service.py
+LastEditTime: 2024-06-28 15:43:22
+FilePath: user_service.py
 Description: service of user
 '''
+
 # coding:utf-8
 from app.database.dao.user_dao import UserDao
 from PyQt5.QtSql import QSqlDatabase

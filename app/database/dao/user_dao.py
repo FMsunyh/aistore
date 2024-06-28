@@ -3,7 +3,7 @@ Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-27 16:19:41
 LastEditors: Firmin.Sun fmsunyh@gmail.com
 LastEditTime: 2024-06-28 14:20:44
-FilePath: \aistore\app\database\dao\user_dao.py
+FilePath: user_dao.py
 Description: DAO of user
 '''
 from app.database.dao.dao_base import DaoBase

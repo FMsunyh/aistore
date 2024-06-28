@@ -6,7 +6,7 @@ LastEditTime: 2024-06-28 15:11:35
 FilePath: \aistore\app\database\entity\__init__.py
 Description: 
 '''
-from app.database.entity import Entity
+from app.database.entity.entity import Entity
 from app.database.entity.user import User
 from app.database.entity.app_info import AppInfo
 from app.database.entity.app_types import AppTypes

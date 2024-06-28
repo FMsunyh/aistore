@@ -17,7 +17,7 @@ class AppInfoDao(DaoBase):
                 developer_id INTEGER,
                 release_date TEXT,
                 FOREIGN  KEY (type_id) REFERENCES tbl_app_Types(id),
-                FOREIGN  KEY (developer_id) REFERENCES tbl_developers(id),
+                FOREIGN  KEY (developer_id) REFERENCES tbl_developers(id)
             )
         """)
         return success

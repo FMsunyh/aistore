@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-27 16:20:39
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-27 17:38:37
+LastEditTime: 2024-06-28 15:20:55
 FilePath: \aistore\app\database\db_initializer.py
 Description: initializer database
 '''
@@ -12,7 +12,9 @@ from app.common.logger import logger
 from PyQt5.QtSql import QSqlDatabase
 from PyQt5.QtWidgets import qApp
 
-from app.database.service import (UserService,AppInfoService)
+from app.database.service import (UserService,AppInfoService,AppTypesService,AppVersionsService,
+                                  DevelopersService,LicensesService,ScreenshotsService,
+                                  UserAppService,RatingsReviewsService)
 
 from  app.common.config import cfg
 
@@ -34,3 +36,10 @@ class DBInitializer:
 
         UserService(db).createTable()
         AppInfoService(db).createTable()
+        AppTypesService(db).createTable()
+        AppVersionsService(db).createTable()
+        DevelopersService(db).createTable()
+        LicensesService(db).createTable()
+        ScreenshotsService(db).createTable()
+        UserAppService(db).createTable()
+        RatingsReviewsService(db).createTable()

@@ -2,8 +2,8 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-28 11:04:10
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-28 11:06:35
-FilePath: \aistore\app\database\entity\user_app.py
+LastEditTime: 2024-06-28 15:52:52
+FilePath: user_app.py
 Description: entity of user-app
 '''
 from app.database.entity import Entity
