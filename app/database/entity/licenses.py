@@ -13,8 +13,8 @@ class Licenses(Entity):
     id : int = 0
     app_id : int = 0
     license_key : str = None
-    release_data : str = None
-    expiry_data : str = None
+    release_date : str = None
+    expiry_date : str = None
     license_type : str = None
 
     def __str__(self):

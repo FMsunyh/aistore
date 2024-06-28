@@ -1,22 +1,14 @@
-'''
-Author: Firmin.Sun fmsunyh@gmail.com
-Date: 2024-06-27 16:19:41
-LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-28 11:47:37
-FilePath: \aistore\app\database\dao\user_dao.py
-Description: DAO of user
-'''
 from app.database.dao.dao_base import DaoBase
 
 class UserDao(DaoBase):
     table = 'tbl_user'
-    fields = ['id', 'name', 'email']
+    fields = ['user_id', 'name', 'email']
 
 
     def createTable(self):
         success = self.query.exec(f"""
             CREATE TABLE IF NOT EXISTS {self.table}(
-                id INTEGER PRIMARY KEY,
+                user_id CHAR(32) PRIMARY KEY,
                 name TEXT,
                 email TEXT
             )

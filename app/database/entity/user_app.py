@@ -14,7 +14,7 @@ class UserApp(Entity):
     user_id : int = 0
     app_id : int = 0 
     license_id: int = 0 
-    install_data : str = None
+    install_date : str = None
     is_installed : bool = False
 
     def __str__(self):

@@ -15,7 +15,7 @@ class RatingsReviews(Entity):
     app_id : int = 0 
     rating: int = 0 
     review : str = None
-    review_data : str = None
+    review_date : str = None
 
     def __str__(self):
         return f"{self.id} ({self.user_id}-{self.app_id})"
