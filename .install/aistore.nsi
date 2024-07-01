@@ -18,7 +18,7 @@ Section "Install"
     SetOutPath "$INSTDIR" ; Set output path to installation directory
     
     ; Copy application files
-    File "..\.PyInstaller\aistore.exe" ; Adjust path to your application executable
+    File "..\.pyInstaller\aistore.exe" ; Adjust path to your application executable
 
     ; copy other files
     File /r "source\*.*" 
