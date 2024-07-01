@@ -11,7 +11,7 @@ from qfluentwidgets import (CardWidget, setTheme, Theme, IconWidget, BodyLabel, 
                             ImageLabel, isDarkTheme, FlowLayout, MSFluentTitleBar, SimpleCardWidget,
                             HeaderCardWidget, InfoBarIcon, HyperlinkLabel, HorizontalFlipView,
                             PrimaryPushButton, TitleLabel, PillPushButton, setFont, SingleDirectionScrollArea,
-                            VerticalSeparator, MSFluentWindow, ProgressRing,MessageBox)
+                            VerticalSeparator, MSFluentWindow, ProgressRing,ProgressBar,MessageBox)
 
 from qfluentwidgets.components.widgets.acrylic_label import AcrylicBrush
 
@@ -43,8 +43,10 @@ class AppInfoCard(SimpleCardWidget):
         self.name = name
         self.nameLabel = TitleLabel(f'{name}', self)
         self.button_install = PrimaryPushButton(self.tr('Install'), self)
-        self.ring = ProgressRing(self)
-        self.ring.setFixedSize(50, 50)
+        self.ring = ProgressBar(self)
+        self.ring.setFixedWidth(200)  
+        self.ring.setFixedHeight(20)
+        # self.ring.setFixedSize(200, 20)
         self.ring.setTextVisible(True)
         self.ring.setVisible(False)
 
@@ -81,7 +83,7 @@ class AppInfoCard(SimpleCardWidget):
         self.statisticsLayout = QHBoxLayout()
         self.buttonLayout = QHBoxLayout()
 
-        self.vbuttonLayout = QVBoxLayout()
+        self.hbuttonLayout = QHBoxLayout()
 
         self.initLayout()
 
@@ -114,14 +116,16 @@ class AppInfoCard(SimpleCardWidget):
         self.topLayout.setContentsMargins(0, 0, 0, 0)
         self.topLayout.addWidget(self.nameLabel)
         self.topLayout.addWidget(self.button_install, 0, Qt.AlignRight)
-        self.topLayout.addWidget(self.ring)
+        self.topLayout.addWidget(self.ring, 0, Qt.AlignRight)
 
-        self.vbuttonLayout.setSpacing(20)
-        self.vbuttonLayout.setAlignment(Qt.AlignVCenter)
-        self.vbuttonLayout.addWidget(self.button_run)
-        self.vbuttonLayout.addWidget(self.button_uninstall)
+        
 
-        self.topLayout.addLayout(self.vbuttonLayout)
+        self.hbuttonLayout.setSpacing(20)
+        self.hbuttonLayout.setAlignment(Qt.AlignVCenter)
+        self.hbuttonLayout.addWidget(self.button_run)
+        self.hbuttonLayout.addWidget(self.button_uninstall)
+
+        self.topLayout.addLayout(self.hbuttonLayout)
 
         # company label
         self.vBoxLayout.addSpacing(3)
@@ -137,6 +141,7 @@ class AppInfoCard(SimpleCardWidget):
         self.statisticsLayout.addWidget(self.commentWidget)
         self.statisticsLayout.setAlignment(Qt.AlignLeft)
 
+        
         # description label
         self.vBoxLayout.addSpacing(20)
         self.vBoxLayout.addWidget(self.descriptionLabel)
