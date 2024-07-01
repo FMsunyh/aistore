@@ -13,6 +13,7 @@ from app.core.typing import AppState
 class AppCard(SimpleCardWidget):
     """ Sample card """
     refreshSig = pyqtSignal()
+    stateChangedSig = pyqtSignal(object)
 
     def __init__(self, icon, title, content, routeKey, index, name, parent=None):
         super().__init__(parent=parent)
@@ -110,6 +111,7 @@ class AppCard(SimpleCardWidget):
 
     def set_state(self, state : AppState):
         self.state = state
+        self.stateChangedSig.emit(self.state)
 
     def refresh(self):
         # instlled

@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 05:28:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-01 15:39:42
+LastEditTime: 2024-07-01 16:57:08
 FilePath: \aistore\app\view\main_window.py
 Description: main windows
 '''
@@ -167,7 +167,7 @@ class MainWindow(FluentWindow):
                 w.scrollToCard(index)
 
     def switchToAppInterface(self, app_card):
-        self.appInterface.update_window(app_card.icon, app_card.name, app_card.title, app_card.content,app_card.state)
+        self.appInterface.update_window(app_card)
         self.stackedWidget.setCurrentWidget(self.appInterface, False)
 
     # def check_software_registy(self):

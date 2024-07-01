@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-24 14:14:17
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-25 18:34:16
+LastEditTime: 2024-07-01 16:34:29
 FilePath: \aistore\app\core\install_worker.py
 Description: install worker
 '''
@@ -41,7 +41,7 @@ class InstallWorker(QThread):
 	unzip_progress = pyqtSignal(str, int)  # 信号传递解压状态
 	unzip_completed = pyqtSignal(str)  # 信号传递解压状态
 
-	completed = pyqtSignal(str)  # 信号传递解压状态
+	completed = pyqtSignal(str)  # 信号传递安装状态
 
 	def __init__(self, name : str, version : str, download_directory_path : str, url : str, install_directory : str, parent=None):
 		super().__init__(parent)

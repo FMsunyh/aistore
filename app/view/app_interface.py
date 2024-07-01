@@ -15,6 +15,7 @@ from qfluentwidgets import (CardWidget, setTheme, Theme, IconWidget, BodyLabel, 
 
 from qfluentwidgets.components.widgets.acrylic_label import AcrylicBrush
 
+from app.components.app_card import AppCard
 from app.core.typing import AppState
 from ..common.signal_bus import signalBus
 
@@ -84,8 +85,12 @@ class AppInfoCard(SimpleCardWidget):
 
         self.initLayout()
 
-        self.button_install.clicked.connect(self.install)
-    
+        # self.button_install.clicked.connect(self.install)
+
+        self.button_install.clicked.connect(self.on_button_clicked)
+        self.button_run.clicked.connect(self.on_button_run_clicked)
+        self.button_uninstall.clicked.connect(self.on_button_uninstall_clicked)
+
     def install(self):
 
         title = self.tr('Install ' + self.name)
@@ -109,11 +114,13 @@ class AppInfoCard(SimpleCardWidget):
         self.topLayout.setContentsMargins(0, 0, 0, 0)
         self.topLayout.addWidget(self.nameLabel)
         self.topLayout.addWidget(self.button_install, 0, Qt.AlignRight)
+        self.topLayout.addWidget(self.ring)
 
         self.vbuttonLayout.setSpacing(20)
         self.vbuttonLayout.setAlignment(Qt.AlignVCenter)
         self.vbuttonLayout.addWidget(self.button_run)
         self.vbuttonLayout.addWidget(self.button_uninstall)
+
         self.topLayout.addLayout(self.vbuttonLayout)
 
         # company label
@@ -141,25 +148,32 @@ class AppInfoCard(SimpleCardWidget):
         self.buttonLayout.addWidget(self.tagButton, 0, Qt.AlignLeft)
         self.buttonLayout.addWidget(self.shareButton, 0, Qt.AlignRight)
 
-    def update_window(self, icon, name, title, content, state):
-        self.icon_label.setImage(icon) 
-        self.nameLabel.setText(f'{name}')
-        self.descriptionLabel.setText(f'{content}')
-        self.state = state
+    def update_window(self, app_card : AppCard):
+        self.icon_label.setImage(app_card.icon) 
+        self.nameLabel.setText(f'{app_card.name}')
+        self.descriptionLabel.setText(f'{app_card.content}')
+        self.app_card = app_card
+
+        self.state = app_card.state
+
+        self.app_card.stateChangedSig.connect(self.set_state)
+        self.app_card.refreshSig.connect(self.refresh)
+        self.app_card.ring.valueChanged.connect(self.ring.setValue)
+
         self.refresh()
 
     def on_button_clicked(self):
-        signalBus.software_installSig.emit(self)
+        signalBus.software_installSig.emit(self.app_card)
 
     def on_button_uninstall_clicked(self):
-        signalBus.software_uninstallSig.emit(self)
+        signalBus.software_uninstallSig.emit(self.app_card)
 
     def on_button_run_clicked(self):
-        signalBus.software_runSig.emit(self)
+        signalBus.software_runSig.emit(self.app_card)
 
-    def update_progress_bar(self, file, value):
-        # 更新进度条
-        self.ring.setValue(value)
+    # def update_progress_bar(self, file, value):
+    #     # 更新进度条
+    #     self.ring.setValue(value)
 
     def set_state(self, state : AppState):
         self.state = state
@@ -404,5 +418,5 @@ class AppInterface(SingleDirectionScrollArea):
         super().resizeEvent(e)
         self.lightBox.resize(self.size())
 
-    def update_window(self, icon, name, title, content, state):
-        self.appInfoCard.update_window(icon, name, title, content, state)
+    def update_window(self, app_card : AppCard):
+        self.appInfoCard.update_window(app_card)

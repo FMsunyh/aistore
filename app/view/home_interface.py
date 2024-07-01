@@ -259,7 +259,7 @@ class HomeInterface(ScrollArea):
         # logger.info(app_card.name)
 
         title = self.tr('Install ') + f"{app_card.name}"
-        w = CustomMessageBox(title=title, app_name=app_card.name, parent=self)
+        w = CustomMessageBox(title=title, app_name=app_card.name, parent=self.window())
         if w.exec():
             logger.info("Start to install {}".format(app_name))
 
@@ -290,7 +290,7 @@ class HomeInterface(ScrollArea):
 
         title = self.tr('Uninstall')
         content = self.tr("Do you want to uninstall ") + f"{app_card.name} ?"
-        w = MessageBox(title, content, self)
+        w = MessageBox(title, content, self.window())
 
         if w.exec():
             logger.info("Start to uninstall {}".format(app_name))
@@ -314,7 +314,7 @@ class HomeInterface(ScrollArea):
 
         title = self.tr('Successful installation ') + f"{app_card.name}"
         content = self.tr(f"Do you want to run ") + f"{app_card.name}?"
-        w = MessageBox(title, content, self)
+        w = MessageBox(title, content, self.window())
         if w.exec():
             # title = self.tr('Run ' + app_card.name)
             # content = self.tr(f"Run on desktop shortcut")
