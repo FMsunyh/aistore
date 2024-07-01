@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 05:28:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-28 17:48:17
+LastEditTime: 2024-07-01 12:02:01
 FilePath: \aistore\app\view\main_window.py
 Description: main windows
 '''
@@ -24,22 +24,9 @@ from app.view.app_interface import AppInterface
 
 from .gallery_interface import GalleryInterface
 from .home_interface import HomeInterface
-from .basic_input_interface import BasicInputInterface
-from .date_time_interface import DateTimeInterface
-from .dialog_interface import DialogInterface
-from .layout_interface import LayoutInterface
-from .icon_interface import IconInterface
-from .material_interface import MaterialInterface
-from .menu_interface import MenuInterface
 from .navigation_view_interface import NavigationViewInterface
-from .scroll_interface import ScrollInterface
-from .status_info_interface import StatusInfoInterface
 from .setting_interface import SettingInterface
-from .text_interface import TextInterface
-from .view_interface import ViewInterface
-from .aistore_interface import AiStoreInterface
 from ..common.config import ZH_SUPPORT_URL, EN_SUPPORT_URL, cfg, REGISTY_PATH,HELP_URL
-from ..common.icon import Icon
 from ..common.signal_bus import signalBus
 from ..common.translator import Translator
 from ..common import resource
@@ -76,20 +63,8 @@ class MainWindow(FluentWindow):
     
         # create sub interface
         self.homeInterface = HomeInterface(library = self.library, parent=self)
-        self.iconInterface = IconInterface(self)
-        self.basicInputInterface = BasicInputInterface(self)
-        self.dateTimeInterface = DateTimeInterface(self)
-        self.dialogInterface = DialogInterface(self)
-        self.layoutInterface = LayoutInterface(self)
-        self.menuInterface = MenuInterface(self)
-        self.materialInterface = MaterialInterface(self)
         self.navigationViewInterface = NavigationViewInterface(self)
-        self.scrollInterface = ScrollInterface(self)
-        self.statusInfoInterface = StatusInfoInterface(self)
         self.settingInterface = SettingInterface(self)
-        self.textInterface = TextInterface(self)
-        self.viewInterface = ViewInterface(self)
-        self.aistoreInterface = AiStoreInterface(self)
 
         self.appInterface = AppInterface(icon=":/qfluentwidgets/images/logo.png", name='AIStore', content='AIStore Software Manager is a tool provided by ZhongJu Cloud that integrates software downloading, updating, uninstalling and optimization.', parent=self)
 
