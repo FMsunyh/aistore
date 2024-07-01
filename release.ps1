@@ -17,7 +17,7 @@ Write-Host "Recompiling resources"
 pyrcc5 -o ./app/common/resource.py ./app/resource/resource.qrc
 
 Write-Host "Creating PyInstaller package"
-pyinstaller --onefile --noconsole --distpath .\.PyInstaller --icon=.\aistore.ico .\aistore.py
+pyinstaller --onefile --noconsole --distpath .\.pyInstaller --icon=.\aistore.ico .\aistore.py
 # pyinstaller aistore.spec --distpath .\.PyInstaller
 
 # 3. NSIS编译安装程序

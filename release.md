@@ -2,7 +2,7 @@
  * @Author: Firmin.Sun fmsunyh@gmail.com
  * @Date: 2024-07-01 10:56:29
  * @LastEditors: Firmin.Sun fmsunyh@gmail.com
- * @LastEditTime: 2024-07-01 11:37:39
+ * @LastEditTime: 2024-07-01 11:52:33
  * @FilePath: \aistore\Release.md
  * @Description: 发布版本
 -->
@@ -38,7 +38,7 @@ pyrcc5 -o ./app/common/resource.py ./app/resource/resource.qrc
 ```
 
 ```sh
-pyinstaller --onefile  --noconsole  --distpath .\.PyInstaller --icon=.\aistore.ico .\aistore.py
+pyinstaller --onefile  --noconsole  --distpath .\.pyInstaller --icon=.\aistore.ico .\aistore.py
 ```
 
 ```sh
