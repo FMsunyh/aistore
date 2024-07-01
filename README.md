@@ -97,9 +97,3 @@ pyrcc5 -o ./app/common/resource.py ./app/resource/resource.qrc
 [button.clicked.connect(lambda checked, i=i: self.on_button_clicked(i))](https://stackoverflow.com/questions/35819538/using-lambda-expression-to-connect-slots-in-pyqt)
 
 [超全的VSCode快捷键，收藏！](https://juejin.cn/post/7258140838139641917)
-- 2024-06-20
-    - 卸载功能
-- 2024-06-21
-    - 根据注册表，刷新界面信息
-- 2024-06-24
-    - 重构安装和卸载的程序

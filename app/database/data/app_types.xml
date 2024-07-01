@@ -1,0 +1,14 @@
+<app_types>
+    <type>
+        <id>1</id>
+        <name>Image Processing</name>
+    </type>
+    <type>
+        <id>2</id>
+        <name>Machine Learning</name>
+    </type>
+    <type>
+        <id>3</id>
+        <name>Web Development</name>
+    </type>
+</app_types>

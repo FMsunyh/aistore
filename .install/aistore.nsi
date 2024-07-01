@@ -17,14 +17,11 @@ Var LaunchApp
 Section "Install"
     SetOutPath "$INSTDIR" ; Set output path to installation directory
     
-    File "..\app\cache\cache.db" ; Adjust path to your application executable
-    
-    CreateDirectory $INSTDIR\app\cache
-    CopyFiles $INSTDIR\cache.db $INSTDIR\app\cache
-
     ; Copy application files
     File "..\.PyInstaller\aistore.exe" ; Adjust path to your application executable
 
+    ; copy other files
+    File /r "source\*.*" 
 
     ; Create uninstaller
     WriteUninstaller "$INSTDIR\Uninstall.exe"

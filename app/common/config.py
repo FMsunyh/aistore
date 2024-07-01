@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-14 18:28:18
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-27 16:30:20
+LastEditTime: 2024-07-01 10:20:12
 FilePath: \aistore\app\common\config.py
 Description: config for aistore
 '''
@@ -52,7 +52,7 @@ class Config(QConfig):
         "Folders", "CacheFolder", "app/cache", FolderValidator(), restart=True)
     
     install_folder = ConfigItem(
-    "Folders", "Intall", "D:/aistore app/", FolderValidator())
+    "Folders", "Intall", "D:/aistore", FolderValidator())
     
 
     # main window
