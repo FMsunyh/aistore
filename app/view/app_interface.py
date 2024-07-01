@@ -11,10 +11,12 @@ from qfluentwidgets import (CardWidget, setTheme, Theme, IconWidget, BodyLabel, 
                             ImageLabel, isDarkTheme, FlowLayout, MSFluentTitleBar, SimpleCardWidget,
                             HeaderCardWidget, InfoBarIcon, HyperlinkLabel, HorizontalFlipView,
                             PrimaryPushButton, TitleLabel, PillPushButton, setFont, SingleDirectionScrollArea,
-                            VerticalSeparator, MSFluentWindow, NavigationItemPosition,MessageBox)
+                            VerticalSeparator, MSFluentWindow, ProgressRing,MessageBox)
 
 from qfluentwidgets.components.widgets.acrylic_label import AcrylicBrush
 
+from app.core.typing import AppState
+from ..common.signal_bus import signalBus
 
 def isWin11():
     return sys.platform == 'win32' and sys.getwindowsversion().build >= 22000
@@ -35,15 +37,26 @@ class AppInfoCard(SimpleCardWidget):
         self.icon_label = ImageLabel(icon, self)
         self.icon_label.setBorderRadius(8, 8, 8, 8)
         self.icon_label.scaledToWidth(120)
+        self.state: AppState =  'uninstall'
 
         self.name = name
         self.nameLabel = TitleLabel(f'{name}', self)
-        self.installButton = PrimaryPushButton(self.tr('Install'), self)
+        self.button_install = PrimaryPushButton(self.tr('Install'), self)
+        self.ring = ProgressRing(self)
+        self.ring.setFixedSize(50, 50)
+        self.ring.setTextVisible(True)
+        self.ring.setVisible(False)
+
+        self.button_run = PrimaryPushButton(self.tr('Run'), self)
+        self.button_run.setFixedWidth(160)
+
+        self.button_uninstall = PushButton(self.tr('Uninstall'), self)
+        self.button_uninstall.setFixedWidth(160)
 
 
         self.companyLabel = HyperlinkLabel(
             QUrl('https://www.zjusmart.com/#/'), 'ZhongJuYun Inc.', self)
-        self.installButton.setFixedWidth(160)
+        self.button_install.setFixedWidth(160)
 
         self.scoreWidget = StatisticsWidget(self.tr('RATINGS'), '5.0', self)
         self.separator = VerticalSeparator(self)
@@ -67,9 +80,11 @@ class AppInfoCard(SimpleCardWidget):
         self.statisticsLayout = QHBoxLayout()
         self.buttonLayout = QHBoxLayout()
 
+        self.vbuttonLayout = QVBoxLayout()
+
         self.initLayout()
 
-        self.installButton.clicked.connect(self.install)
+        self.button_install.clicked.connect(self.install)
     
     def install(self):
 
@@ -93,7 +108,13 @@ class AppInfoCard(SimpleCardWidget):
         self.vBoxLayout.addLayout(self.topLayout)
         self.topLayout.setContentsMargins(0, 0, 0, 0)
         self.topLayout.addWidget(self.nameLabel)
-        self.topLayout.addWidget(self.installButton, 0, Qt.AlignRight)
+        self.topLayout.addWidget(self.button_install, 0, Qt.AlignRight)
+
+        self.vbuttonLayout.setSpacing(20)
+        self.vbuttonLayout.setAlignment(Qt.AlignVCenter)
+        self.vbuttonLayout.addWidget(self.button_run)
+        self.vbuttonLayout.addWidget(self.button_uninstall)
+        self.topLayout.addLayout(self.vbuttonLayout)
 
         # company label
         self.vBoxLayout.addSpacing(3)
@@ -120,12 +141,55 @@ class AppInfoCard(SimpleCardWidget):
         self.buttonLayout.addWidget(self.tagButton, 0, Qt.AlignLeft)
         self.buttonLayout.addWidget(self.shareButton, 0, Qt.AlignRight)
 
-    def update_window(self, icon, name, title, content):
+    def update_window(self, icon, name, title, content, state):
         self.icon_label.setImage(icon) 
         self.nameLabel.setText(f'{name}')
         self.descriptionLabel.setText(f'{content}')
+        self.state = state
+        self.refresh()
 
+    def on_button_clicked(self):
+        signalBus.software_installSig.emit(self)
 
+    def on_button_uninstall_clicked(self):
+        signalBus.software_uninstallSig.emit(self)
+
+    def on_button_run_clicked(self):
+        signalBus.software_runSig.emit(self)
+
+    def update_progress_bar(self, file, value):
+        # 更新进度条
+        self.ring.setValue(value)
+
+    def set_state(self, state : AppState):
+        self.state = state
+
+    def refresh(self):
+        # instlled
+        if self.state == 'installed' or self.state == 'install_completed':
+            self.button_install.setVisible(False)
+            self.ring.setVisible(False)
+            self.button_run.setVisible(True)
+            self.button_uninstall.setVisible(True)
+            self.ring.setValue(0)
+
+        elif self.state == 'uninstall' or self.state == 'uninstall_completed':
+            self.button_install.setVisible(True)
+            self.ring.setVisible(False)
+            self.button_run.setVisible(False)
+            self.button_uninstall.setVisible(False)
+            self.ring.setValue(0)
+
+        elif self.state == 'installing':
+            self.button_install.setVisible(False)
+            self.ring.setVisible(True)
+            self.button_run.setVisible(False)
+            self.button_uninstall.setVisible(False)
+        elif self.state == 'uninstalling':
+            self.button_install.setVisible(False)
+            self.ring.setVisible(True)
+            self.button_run.setVisible(False)
+            self.button_uninstall.setVisible(False)
 class GalleryCard(HeaderCardWidget):
     """ Gallery card """
 
@@ -340,5 +404,5 @@ class AppInterface(SingleDirectionScrollArea):
         super().resizeEvent(e)
         self.lightBox.resize(self.size())
 
-    def update_window(self, icon, name, title, content):
-        self.appInfoCard.update_window(icon, name, title, content)
+    def update_window(self, icon, name, title, content, state):
+        self.appInfoCard.update_window(icon, name, title, content, state)

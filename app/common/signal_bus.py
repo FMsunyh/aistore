@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-14 18:28:18
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-27 15:03:06
+LastEditTime: 2024-07-01 15:39:13
 FilePath: \aistore\app\common\signal_bus.py
 Description: Defining global signal(notify)
 '''
@@ -17,7 +17,7 @@ class SignalBus(QObject):
     micaEnableChanged = pyqtSignal(bool)
     supportSignal = pyqtSignal()
     
-    switchToAppInterfaceSig = pyqtSignal(str, str, str, str)
+    switchToAppInterfaceSig = pyqtSignal(object)
 
     # FaceFusion
     facefusion_progressSig = pyqtSignal()
