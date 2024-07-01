@@ -2,7 +2,7 @@
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtWidgets import QWidget, QFrame, QLabel, QVBoxLayout, QHBoxLayout,QPushButton, QSpacerItem, QSizePolicy
 
-from qfluentwidgets import IconWidget, TextWrap, FlowLayout, CardWidget,PushButton,PrimaryPushButton,ProgressRing
+from qfluentwidgets import IconWidget, TextWrap, FlowLayout, CardWidget,PushButton,PrimaryPushButton,ProgressRing,SimpleCardWidget
 from ..common.signal_bus import signalBus
 from ..common.style_sheet import StyleSheet
 import importlib
@@ -10,7 +10,7 @@ from qfluentwidgets import MessageBox
 
 from app.core.typing import AppState
 
-class AppCard(CardWidget):
+class AppCard(SimpleCardWidget):
     """ Sample card """
     refreshSig = pyqtSignal()
 
@@ -30,8 +30,8 @@ class AppCard(CardWidget):
         self.titleLabel = QLabel(title, self)
         self.contentLabel = QLabel(TextWrap.wrap(content, 45, False)[0], self)
 
-        self.button = PrimaryPushButton(self.tr('Install'), self)
-        self.button.setFixedSize(100, 30)
+        self.button_install = PrimaryPushButton(self.tr('Install'), self)
+        self.button_install.setFixedSize(100, 30)
 
         self.ring = ProgressRing(self)
         self.ring.setFixedSize(50, 50)
@@ -52,11 +52,26 @@ class AppCard(CardWidget):
         self.vBoxLayout = QVBoxLayout()
 
         self.vbuttonLayout = QVBoxLayout()
-        self.vbuttonLayout.setAlignment(Qt.AlignVCenter)
         # self.vbuttonLayout.setContentsMargins(0, 20, 0, 20)
 
         self.setFixedSize(500, 120)
         self.iconWidget.setFixedSize(48, 48)
+
+        self.initLayout()
+
+        self.titleLabel.setObjectName('titleLabel')
+        self.contentLabel.setObjectName('contentLabel')
+
+        self.button_install.clicked.connect(self.on_button_clicked)
+        self.button_run.clicked.connect(self.on_button_run_clicked)
+        self.button_uninstall.clicked.connect(self.on_button_uninstall_clicked)
+
+        signalBus.software_registySig.connect(self.is_install)
+
+        self.refreshSig.connect(self.refresh)
+
+    def initLayout(self):
+        self.vbuttonLayout.setAlignment(Qt.AlignVCenter)
 
         self.hBoxLayout.setSpacing(28)
         self.hBoxLayout.setContentsMargins(20, 20, 20,20)
@@ -67,7 +82,7 @@ class AppCard(CardWidget):
         self.hBoxLayout.setAlignment(Qt.AlignVCenter)
         self.hBoxLayout.addWidget(self.iconWidget)
         self.hBoxLayout.addLayout(self.vBoxLayout)
-        self.hBoxLayout.addWidget(self.button)
+        self.hBoxLayout.addWidget(self.button_install)
         self.hBoxLayout.addWidget(self.ring)
 
 
@@ -79,17 +94,6 @@ class AppCard(CardWidget):
         self.vBoxLayout.addWidget(self.titleLabel)
         self.vBoxLayout.addWidget(self.contentLabel)
         self.vBoxLayout.addStretch(1)
-
-        self.titleLabel.setObjectName('titleLabel')
-        self.contentLabel.setObjectName('contentLabel')
-
-        self.button.clicked.connect(self.on_button_clicked)
-        self.button_run.clicked.connect(self.on_button_run_clicked)
-        self.button_uninstall.clicked.connect(self.on_button_uninstall_clicked)
-
-        signalBus.software_registySig.connect(self.is_install)
-
-        self.refreshSig.connect(self.refresh)
 
     def on_button_clicked(self):
         signalBus.software_installSig.emit(self)
@@ -110,26 +114,26 @@ class AppCard(CardWidget):
     def refresh(self):
         # instlled
         if self.state == 'installed' or self.state == 'install_completed':
-            self.button.setVisible(False)
+            self.button_install.setVisible(False)
             self.ring.setVisible(False)
             self.button_run.setVisible(True)
             self.button_uninstall.setVisible(True)
             self.ring.setValue(0)
 
         elif self.state == 'uninstall' or self.state == 'uninstall_completed':
-            self.button.setVisible(True)
+            self.button_install.setVisible(True)
             self.ring.setVisible(False)
             self.button_run.setVisible(False)
             self.button_uninstall.setVisible(False)
             self.ring.setValue(0)
 
         elif self.state == 'installing':
-            self.button.setVisible(False)
+            self.button_install.setVisible(False)
             self.ring.setVisible(True)
             self.button_run.setVisible(False)
             self.button_uninstall.setVisible(False)
         elif self.state == 'uninstalling':
-            self.button.setVisible(False)
+            self.button_install.setVisible(False)
             self.ring.setVisible(True)
             self.button_run.setVisible(False)
             self.button_uninstall.setVisible(False)
@@ -138,7 +142,7 @@ class AppCard(CardWidget):
     def mouseReleaseEvent(self, e):
         super().mouseReleaseEvent(e)
         # signalBus.switchToSampleCard.emit(self.routeKey, self.index)
-        signalBus.switchToAppInterfaceSig.emit(self.routeKey, self.index, self.icon, self.title, self.content)
+        signalBus.switchToAppInterfaceSig.emit(self.icon, self.name, self.title, self.content)
 
     def is_install(self, software_list):
         for item in software_list:

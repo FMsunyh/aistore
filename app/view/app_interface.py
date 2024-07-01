@@ -29,15 +29,15 @@ else:
 class AppInfoCard(SimpleCardWidget):
     """ App information card """
 
-    def __init__(self, icon_label, name_label, content, parent=None):
+    def __init__(self, icon, name, title, content, parent=None):
         super().__init__(parent)
         # self.icon_label = ImageLabel(":/qfluentwidgets/images/logo.png", self)
-        self.icon_label = ImageLabel(icon_label, self)
+        self.icon_label = ImageLabel(icon, self)
         self.icon_label.setBorderRadius(8, 8, 8, 8)
         self.icon_label.scaledToWidth(120)
 
-        self.name = name_label
-        self.nameLabel = TitleLabel(f'{name_label}', self)
+        self.name = name
+        self.nameLabel = TitleLabel(f'{name}', self)
         self.installButton = PrimaryPushButton(self.tr('Install'), self)
 
 
@@ -120,9 +120,9 @@ class AppInfoCard(SimpleCardWidget):
         self.buttonLayout.addWidget(self.tagButton, 0, Qt.AlignLeft)
         self.buttonLayout.addWidget(self.shareButton, 0, Qt.AlignRight)
 
-    def update_window(self, icon_label, name_label, content):
-        self.icon_label.setImage(icon_label) 
-        self.nameLabel.setText(f'{name_label}')
+    def update_window(self, icon, name, title, content):
+        self.icon_label.setImage(icon) 
+        self.nameLabel.setText(f'{name}')
         self.descriptionLabel.setText(f'{content}')
 
 
@@ -302,13 +302,13 @@ class StatisticsWidget(QWidget):
 
 class AppInterface(SingleDirectionScrollArea):
 
-    def __init__(self, icon, name, content, parent=None):
+    def __init__(self, icon, name, title, content, parent=None):
         super().__init__(parent)
 
         self.view = QWidget(self)
 
         self.vBoxLayout = QVBoxLayout(self.view)
-        self.appInfoCard = AppInfoCard(icon, name, content, self)
+        self.appInfoCard = AppInfoCard(icon, name, title, content, self)
         self.galleryCard = GalleryCard(self)
         self.descriptionCard = DescriptionCard(self)
         self.systemCard = SystemRequirementCard(self)
@@ -340,5 +340,5 @@ class AppInterface(SingleDirectionScrollArea):
         super().resizeEvent(e)
         self.lightBox.resize(self.size())
 
-    def update_window(self, icon_label, name_label, content):
-        self.appInfoCard.update_window(icon_label, name_label, content)
+    def update_window(self, icon, name, title, content):
+        self.appInfoCard.update_window(icon, name, title, content)

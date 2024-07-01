@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 05:28:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-01 12:02:01
+LastEditTime: 2024-07-01 14:35:57
 FilePath: \aistore\app\view\main_window.py
 Description: main windows
 '''
@@ -66,7 +66,7 @@ class MainWindow(FluentWindow):
         self.navigationViewInterface = NavigationViewInterface(self)
         self.settingInterface = SettingInterface(self)
 
-        self.appInterface = AppInterface(icon=":/qfluentwidgets/images/logo.png", name='AIStore', content='AIStore Software Manager is a tool provided by ZhongJu Cloud that integrates software downloading, updating, uninstalling and optimization.', parent=self)
+        self.appInterface = AppInterface(icon=":/qfluentwidgets/images/logo.png", name='AIStore', title='AIStore', content='AIStore Software Manager is a tool provided by ZhongJu Cloud that integrates software downloading, updating, uninstalling and optimization.', parent=self)
 
     def initNavigation(self):
         # add navigation items
@@ -166,8 +166,8 @@ class MainWindow(FluentWindow):
                 self.stackedWidget.setCurrentWidget(w, False)
                 w.scrollToCard(index)
 
-    def switchToAppInterface(self, routeKey, index, icon, name, content):
-        self.appInterface.update_window(icon, name, content)
+    def switchToAppInterface(self, icon, name, title, content):
+        self.appInterface.update_window(icon, name, title, content)
         self.stackedWidget.setCurrentWidget(self.appInterface, False)
 
     # def check_software_registy(self):
