@@ -126,7 +126,7 @@ class HomeInterface(ScrollArea):
         self.vBoxLayout = QVBoxLayout(self.view)
 
         self.__initWidget()
-        self.loadApps2()
+        self.loadApps3()
         self.__connectSignalToSlot()
 
     def __initWidget(self):
@@ -143,6 +143,31 @@ class HomeInterface(ScrollArea):
         self.vBoxLayout.addWidget(self.banner)
         self.vBoxLayout.setAlignment(Qt.AlignTop)
 
+    def loadApps3(self):
+        """ load apps """
+
+        # 1.load types
+        # 2.
+        # Popular Tools
+        self.type_views = []
+        for app_type in self.library.app_types:
+
+            type_view = AppCardView(self.tr(f'{app_type.name}'), self.view)
+
+            app_infos = self.library.app_info_controller.get_app_infos_by_type_id(app_type.id)
+            
+            for app_info in app_infos:
+                # app_info
+                type_view.addAppCard(
+                    self.library,
+                    app_info,
+                    routeKey="navigationViewInterface",
+                    index=0,
+                )
+
+            self.vBoxLayout.addWidget(type_view)
+            self.type_views.append(type_view)
+
 
     def loadApps2(self):
         """ load apps """
@@ -156,6 +181,7 @@ class HomeInterface(ScrollArea):
             title = item.title
             content = item.description
 
+            # app_info, 
             self.popularView.addAppCard(
                 name=name,
                 icon=icon,
@@ -206,13 +232,13 @@ class HomeInterface(ScrollArea):
         self.registy = registy
 
 
-    def set_apps_state(self):
-        count =  self.popularView.flowLayout.count()
-        for index in range(count):
-            app_name = self.popularView.flowLayout.itemAt(index).widget().name
-            for item in self.registy:
-                if item["DisplayName"] == app_name:
-                    self.popularView.flowLayout.itemAt(index).widget().set_state('installed')
+    # def set_apps_state(self):
+    #     count =  self.popularView.flowLayout.count()
+    #     for index in range(count):
+    #         app_name = self.popularView.flowLayout.itemAt(index).widget().name
+    #         for item in self.registy:
+    #             if item["DisplayName"] == app_name:
+    #                 self.popularView.flowLayout.itemAt(index).widget().set_state('installed')
 
 
     def _aboutCardClick(self):
@@ -342,8 +368,8 @@ class HomeInterface(ScrollArea):
         app_card.refreshSig.emit()
 
     def refresh(self):
-        if self.popularView is not None:
-            self.popularView.refresh()
+        for view in self.type_views:
+            view.refresh()
         
 
 class CustomMessageBox(MessageBoxBase):

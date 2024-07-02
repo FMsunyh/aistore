@@ -138,7 +138,7 @@ class MainWindow(FluentWindow):
     def init_homeInterface(self):
         registy = read_all_installed_software_from_registry(REGISTY_PATH)
         self.homeInterface.set_registy(registy)
-        self.homeInterface.set_apps_state()
+        # self.homeInterface.set_apps_state()
         self.homeInterface.refresh()
 
     def onInitFinished(self):

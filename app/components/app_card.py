@@ -3,6 +3,9 @@ from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtWidgets import QWidget, QFrame, QLabel, QVBoxLayout, QHBoxLayout,QPushButton, QSpacerItem, QSizePolicy
 
 from qfluentwidgets import IconWidget, TextWrap, FlowLayout, CardWidget,PushButton,PrimaryPushButton,ProgressRing,SimpleCardWidget
+
+from app.database.entity.app_info import AppInfo
+from app.database.library import Library
 from ..common.signal_bus import signalBus
 from ..common.style_sheet import StyleSheet
 import importlib
@@ -15,21 +18,22 @@ class AppCard(SimpleCardWidget):
     refreshSig = pyqtSignal()
     stateChangedSig = pyqtSignal(object)
 
-    def __init__(self, icon, title, content, routeKey, index, name, parent=None):
+    def __init__(self, library: Library, app_info: AppInfo, routeKey, index, parent=None):
         super().__init__(parent=parent)
+        self.library = library
         self.index = index
         self.routeKey = routeKey
-        self.name = name
-        self.icon = icon
-        self.title = title
+        self.name = app_info.name
+        self.icon = app_info.icon
+        self.title =app_info.title
 
-        self.content = content
+        self.content = app_info.description
 
         self.state: AppState =  'uninstall'
 
-        self.iconWidget = IconWidget(icon, self)
-        self.titleLabel = QLabel(title, self)
-        self.contentLabel = QLabel(TextWrap.wrap(content, 45, False)[0], self)
+        self.iconWidget = IconWidget(self.icon, self)
+        self.titleLabel = QLabel(self.title, self)
+        self.contentLabel = QLabel(TextWrap.wrap(self.content, 45, False)[0], self)
 
         self.button_install = PrimaryPushButton(self.tr('Install'), self)
         self.button_install.setFixedSize(100, 30)
@@ -177,9 +181,9 @@ class AppCardView(QWidget):
         self.titleLabel.setObjectName('viewTitleLabel')
         StyleSheet.SAMPLE_CARD.apply(self)
 
-    def addAppCard(self, icon, title, content, routeKey, index,name):
+    def addAppCard(self, library: Library, app_info: AppInfo, routeKey, index):
         """ add app card """
-        card = AppCard(icon, title, content, routeKey, index, name, self)
+        card = AppCard(library, app_info, routeKey, index,  self)
         self.flowLayout.addWidget(card)
 
     def refresh(self):
