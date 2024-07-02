@@ -4,7 +4,7 @@ from pathlib import Path
 
 from PyQt5.QtCore import Qt, QPoint, QSize, QUrl, QRect, QPropertyAnimation
 from PyQt5.QtGui import QIcon, QFont, QColor, QPainter
-from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QGraphicsOpacityEffect
+from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QGraphicsOpacityEffect,QSpacerItem,QSizePolicy
 
 from qfluentwidgets import (CardWidget, setTheme, Theme, IconWidget, BodyLabel, CaptionLabel, PushButton,
                             TransparentToolButton, FluentIcon, RoundMenu, Action, ElevatedCardWidget,
@@ -63,15 +63,15 @@ class AppInfoCard(SimpleCardWidget):
 
         self.scoreWidget = StatisticsWidget(self.tr('RATINGS'), '5.0', self)
         self.separator = VerticalSeparator(self)
-        self.commentWidget = StatisticsWidget('REVIEWS', '3K', self)
+        self.commentWidget = StatisticsWidget(self.tr('REVIEWS'), '3K', self)
 
         self.descriptionLabel = BodyLabel(f'{content}', self)
         self.descriptionLabel.setWordWrap(True)
 
-        self.tagButton = PillPushButton('组件库', self)
+        self.tagButton = PillPushButton(self.tr('Component Library'), self)
         self.tagButton.setCheckable(False)
         setFont(self.tagButton, 12)
-        self.tagButton.setFixedSize(80, 32)
+        self.tagButton.setFixedSize(130, 32)
 
         self.shareButton = TransparentToolButton(FluentIcon.SHARE, self)
         self.shareButton.setFixedSize(32, 32)
@@ -87,20 +87,10 @@ class AppInfoCard(SimpleCardWidget):
 
         self.initLayout()
 
-        # self.button_install.clicked.connect(self.install)
-
         self.button_install.clicked.connect(self.on_button_clicked)
         self.button_run.clicked.connect(self.on_button_run_clicked)
         self.button_uninstall.clicked.connect(self.on_button_uninstall_clicked)
 
-    def install(self):
-
-        title = self.tr('Install ' + self.name)
-        content = self.tr(f"Will be coming")
-        w = MessageBox(title, content, self)
-
-        if w.exec():
-            print("run")
 
     def initLayout(self):
         self.hBoxLayout.setSpacing(30)
@@ -118,7 +108,6 @@ class AppInfoCard(SimpleCardWidget):
         self.topLayout.addWidget(self.button_install, 0, Qt.AlignRight)
         self.topLayout.addWidget(self.ring, 0, Qt.AlignRight)
 
-        
 
         self.hbuttonLayout.setSpacing(20)
         self.hbuttonLayout.setAlignment(Qt.AlignVCenter)
@@ -209,12 +198,14 @@ class AppInfoCard(SimpleCardWidget):
             self.ring.setVisible(True)
             self.button_run.setVisible(False)
             self.button_uninstall.setVisible(False)
+
+
 class GalleryCard(HeaderCardWidget):
     """ Gallery card """
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setTitle('屏幕截图')
+        self.setTitle(self.tr('Screenshots'))
 
         self.flipView = HorizontalFlipView(self)
         self.expandButton = TransparentToolButton(
@@ -235,29 +226,62 @@ class GalleryCard(HeaderCardWidget):
         self.headerLayout.addWidget(self.expandButton, 0, Qt.AlignRight)
         self.viewLayout.addWidget(self.flipView)
 
+class WhatsNewCard(HeaderCardWidget):
+    """ Description card """
+
+    def __init__(self, title, description, version_number, parent=None):
+
+        super().__init__(parent)
+        self.title = title
+        self.description = description
+
+        self.versionWidget = HStatisticsWidget(self.tr('Version'), version_number, '2024-07-03', self)
+
+        self.descriptionLabel = BodyLabel(
+            self.tr(f'{self.description}'), self)
+
+        self.descriptionLabel.setWordWrap(True)
+        self.vBoxLayout.insertWidget(2, self.versionWidget)
+
+        self.viewLayout.addWidget(self.descriptionLabel)
+        self.setTitle(self.tr(f'{self.title}'))
+
+    def set_title(self, title):
+        self.title = title
+        
+    def set_description(self, description):
+        self.description = description
 
 class DescriptionCard(HeaderCardWidget):
     """ Description card """
 
-    def __init__(self, parent=None):
+    def __init__(self, title, description, parent=None):
+
         super().__init__(parent)
+        self.title = title
+        self.description = description
         self.descriptionLabel = BodyLabel(
-            '广州众聚智能科技有限公司是一家专注于科学计算、大模型训练以及图像渲染领域的创新型科技企业，致力于为客户提供前沿、高效的智能化解决方案。自成立以来，公司始终坚持以技术为核心，以创新为驱动，不断提升自身在人工智能领域的研发实力和应用能力。', self)
+            self.tr(f'{self.description}'), self)
 
         self.descriptionLabel.setWordWrap(True)
         self.viewLayout.addWidget(self.descriptionLabel)
-        self.setTitle('描述')
+        self.setTitle(self.tr(f'{self.title}'))
 
+    def set_title(self, title):
+        self.title = title
+        
+    def set_description(self, description):
+        self.description = description
 
 class SystemRequirementCard(HeaderCardWidget):
     """ System requirements card """
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setTitle('系统要求')
-        self.infoLabel = BodyLabel('此产品适用于你的设备。具有复选标记的项目符合开发人员的系统要求。', self)
+        self.setTitle(self.tr('System Requirements'))
+        self.infoLabel = BodyLabel(self.tr('windows 10'), self)
         self.successIcon = IconWidget(InfoBarIcon.SUCCESS, self)
-        self.detailButton = HyperlinkLabel('详细信息', self)
+        self.detailButton = HyperlinkLabel(self.tr('Details'), self)
 
         self.vBoxLayout = QVBoxLayout()
         self.hBoxLayout = QHBoxLayout()
@@ -296,7 +320,7 @@ class LightBox(QWidget):
         self.vBoxLayout = QVBoxLayout(self)
         self.closeButton = TransparentToolButton(FluentIcon.CLOSE, self)
         self.flipView = HorizontalFlipView(self)
-        self.nameLabel = BodyLabel('屏幕截图 1', self)
+        self.nameLabel = BodyLabel(self.tr('Screenshots 1'), self)
         self.pageNumButton = PillPushButton('1 / 4', self)
 
         self.pageNumButton.setCheckable(False)
@@ -323,7 +347,7 @@ class LightBox(QWidget):
         self.flipView.currentIndexChanged.connect(self.setCurrentIndex)
 
     def setCurrentIndex(self, index: int):
-        self.nameLabel.setText(f'屏幕截图 {index + 1}')
+        self.nameLabel.setText(self.tr('Screenshots') + f' {index + 1}')
         self.pageNumButton.setText(f'{index + 1} / {self.flipView.count()}')
         self.flipView.setCurrentIndex(index)
 
@@ -382,6 +406,24 @@ class StatisticsWidget(QWidget):
         setFont(self.valueLabel, 18, QFont.DemiBold)
         self.titleLabel.setTextColor(QColor(96, 96, 96), QColor(206, 206, 206))
 
+class HStatisticsWidget(QWidget):
+    """ Statistics widget """
+
+    def __init__(self, title: str, value: str, release_date: str, parent=None):
+        super().__init__(parent=parent)
+        self.titleLabel = CaptionLabel(title, self)
+        self.valueLabel = BodyLabel(value, self)
+        self.release_date = BodyLabel(release_date, self)
+
+        self.hBoxLayout = QHBoxLayout(self)
+        self.hBoxLayout.setContentsMargins(24, 0, 24, 0)
+        self.hBoxLayout.addWidget(self.titleLabel)
+        self.hBoxLayout.addWidget(self.valueLabel)
+        self.hBoxLayout.addItem(QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
+        self.hBoxLayout.addWidget(self.release_date)
+
+        setFont(self.valueLabel, 18, QFont.DemiBold)
+        self.titleLabel.setTextColor(QColor(96, 96, 96), QColor(206, 206, 206))
 
 class AppInterface(SingleDirectionScrollArea):
 
@@ -393,7 +435,8 @@ class AppInterface(SingleDirectionScrollArea):
         self.vBoxLayout = QVBoxLayout(self.view)
         self.appInfoCard = AppInfoCard(icon, name, title, content, self)
         self.galleryCard = GalleryCard(self)
-        self.descriptionCard = DescriptionCard(self)
+        self.whatNewCard = WhatsNewCard(self.tr('What\'s New'), self.tr('Continuously optimize to create the most amazing products and bring you a better user experience'), '1.0.1',  self)
+        self.descriptionCard = DescriptionCard(self.tr('Description'), self.tr('Description of app details'), self)
         self.systemCard = SystemRequirementCard(self)
 
         self.lightBox = LightBox(self)
@@ -407,6 +450,7 @@ class AppInterface(SingleDirectionScrollArea):
         self.vBoxLayout.setSpacing(10)
         self.vBoxLayout.setContentsMargins(0, 0, 10, 30)
         self.vBoxLayout.addWidget(self.appInfoCard, 0, Qt.AlignTop)
+        self.vBoxLayout.addWidget(self.whatNewCard, 0, Qt.AlignTop)
         self.vBoxLayout.addWidget(self.galleryCard, 0, Qt.AlignTop)
         self.vBoxLayout.addWidget(self.descriptionCard, 0, Qt.AlignTop)
         self.vBoxLayout.addWidget(self.systemCard, 0, Qt.AlignTop)
