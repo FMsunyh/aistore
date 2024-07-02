@@ -1,5 +1,7 @@
 from app.database.dao.app_versions_dao import AppVersionsDao
+from ..entity import AppVersions
 from PyQt5.QtSql import QSqlDatabase
+from typing import List
 
 class AppVersionsService:
     
@@ -9,3 +11,6 @@ class AppVersionsService:
 
     def createTable(self) -> bool:
         return self.app_versions_dao.createTable()
+    
+    def listAll(self) -> List[AppVersions]:
+        return self.app_versions_dao.listAll()

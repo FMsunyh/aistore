@@ -7,3 +7,8 @@ class RatingsReviewsController:
 
     def __init__(self, db: QSqlDatabase = None) -> None:
         self.ratings_reviews_service = RatingsReviewsService(db)
+
+    def list_all(self):
+        ratings_reviews = self.ratings_reviews_service.listAll()
+
+        return ratings_reviews

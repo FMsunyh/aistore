@@ -1,5 +1,7 @@
 from app.database.dao.licenses_dao import LicensesDao
+from ..entity import Licenses
 from PyQt5.QtSql import QSqlDatabase
+from typing import List
 
 class LicensesService:
     
@@ -9,3 +11,6 @@ class LicensesService:
 
     def createTable(self) -> bool:
         return self.licenses_dao.createTable()
+    
+    def listAll(self) -> List[Licenses]:
+        return self.licenses_dao.listAll()

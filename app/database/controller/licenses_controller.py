@@ -15,3 +15,8 @@ class LicensesController:
 
     def __init__(self, db: QSqlDatabase = None) -> None:
         self.licenses_service = LicensesService(db)
+
+    def list_all(self):
+        licenses = self.licenses_service.listAll()
+
+        return licenses

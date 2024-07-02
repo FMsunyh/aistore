@@ -7,7 +7,9 @@ FilePath: \aistore\app\database\service\screenshots_service.py
 Description: service of screenshots
 '''
 from app.database.dao.screenshots_dao import ScreenshotsDao
+from ..entity import Screenshots
 from PyQt5.QtSql import QSqlDatabase
+from typing import List
 
 class ScreenshotsService:
     
@@ -17,3 +19,6 @@ class ScreenshotsService:
 
     def createTable(self) -> bool:
         return self.screenshots_dao.createTable()
+
+    def listAll(self) -> List[Screenshots]:
+        return self.screenshots_dao.listAll()

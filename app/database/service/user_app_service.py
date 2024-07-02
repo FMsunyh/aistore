@@ -1,5 +1,7 @@
 from app.database.dao.user_app_dao import UserAppDao
+from ..entity import UserApp
 from PyQt5.QtSql import QSqlDatabase
+from typing import List
 
 class UserAppService:
     
@@ -9,3 +11,6 @@ class UserAppService:
 
     def createTable(self) -> bool:
         return self.user_app_dao.createTable()
+    
+    def listAll(self) -> List[UserApp]:
+        return self.user_app_dao.listAll()

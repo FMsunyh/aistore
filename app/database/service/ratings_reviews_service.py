@@ -7,7 +7,9 @@ FilePath: \aistore\app\database\service\ratings_reviews_service.py
 Description: service of ratings and reviews
 '''
 from app.database.dao.ratings_reviews_dao import RatingsReviewsDao
+from ..entity import RatingsReviews
 from PyQt5.QtSql import QSqlDatabase
+from typing import List
 
 class RatingsReviewsService:
     
@@ -17,3 +19,6 @@ class RatingsReviewsService:
 
     def createTable(self) -> bool:
         return self.ratings_reviews_dao.createTable()
+    
+    def listAll(self) -> List[RatingsReviews]:
+        return self.ratings_reviews_dao.listAll()

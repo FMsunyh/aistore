@@ -2,14 +2,16 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-27 16:19:41
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-28 15:43:22
+LastEditTime: 2024-07-02 14:59:39
 FilePath: user_service.py
 Description: service of user
 '''
 
 # coding:utf-8
 from app.database.dao.user_dao import UserDao
+from ..entity import User
 from PyQt5.QtSql import QSqlDatabase
+from typing import List
 
 class UserService:
 
@@ -19,20 +21,6 @@ class UserService:
 
     def createTable(self) -> bool:
         return self.user_dao.createTable()
-    
-    # def add_user(self, name, email):
-    #     user = User(name=name, email=email)
-    #     self.user_dao.add_user(user)
 
-    # def update_user(self, user_id, name, email):
-    #     user = User(user_id, name, email)
-    #     self.user_dao.update_user(user)
-
-    # def delete_user(self, user_id):
-    #     self.user_dao.delete_user(user_id)
-
-    # def get_user_by_id(self, user_id):
-    #     return self.user_dao.get_user_by_id(user_id)
-
-    # def get_all_users(self):
-    #     return self.user_dao.get_all_users()
+    def listAll(self) -> List[User]:
+        return self.user_dao.listAll()  

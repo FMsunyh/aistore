@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-28 17:06:35
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-28 17:55:40
+LastEditTime: 2024-07-02 14:46:24
 FilePath: \aistore\app\database\db_sqlite.py
 Description: library
 '''
@@ -30,9 +30,6 @@ class Library(QObject):
         db: QDataBase
             database to be used
 
-        watch: bool
-            whether to monitor audio directories
-
         parent:
             parent instance
         """
@@ -40,10 +37,22 @@ class Library(QObject):
         self.app_types = []
         self.app_infos = []
         self.developers = []
+        self.app_versions = []
+        self.user = []
+        self.user_app = []
+        self.screenshots = []
+        self.licenses = []
+        self.ratings_reviews = []
 
         self.app_types_controller = AppTypesController(db)
         self.app_info_controller = AppInfoController(db)
         self.developers_controller = DevelopersController(db)
+        self.app_versions_controller = AppVersionsController(db)
+        self.user_controller = UserController(db)
+        self.user_app_controller = UserAppController(db)
+        self.screenshots_controller = ScreenshotsController(db)
+        self.licenses_controller = LicensesController(db)
+        self.ratings_reviews_controller = RatingsReviewsController(db)
 
         self.load()
 
