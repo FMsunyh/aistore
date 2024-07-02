@@ -11,10 +11,10 @@ from dataclasses import dataclass
 @dataclass
 class AppVersions(Entity):
     id : int = 0
-    app_id : int = 0
+    software_id : int = 0
     version_number : str = None
     release_date : str = None
     change_log : str = None
 
     def __str__(self):
-        return f"{self.id} ({self.app_id})"
+        return f"{self.id} ({self.software_id})"

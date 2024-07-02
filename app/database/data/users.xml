@@ -1,0 +1,14 @@
+<users>
+    <user>
+        <id>1</id>
+        <userName>JohnDoe</userName>
+        <email>johndoe@example.com</email>
+        <password>password1</password>
+    </user>
+    <user>
+        <id>2</id>
+        <userName>JaneSmith</userName>
+        <email>janesmith@example.com</email>
+        <password>password2</password>
+    </user>
+</users>

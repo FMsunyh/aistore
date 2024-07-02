@@ -1,0 +1,18 @@
+<user_software>
+    <entry>
+        <id>1</id>
+        <userId>1</userId>
+        <softwareId>1</softwareId>
+        <licenseId>1</licenseId>
+        <installDate>2023-02-01</installDate>
+        <isInstalled>1</isInstalled>
+    </entry>
+    <entry>
+        <id>2</id>
+        <userId>2</userId>
+        <softwareId>2</softwareId>
+        <licenseId>2</licenseId>
+        <installDate>2023-03-25</installDate>
+        <isInstalled>1</isInstalled>
+    </entry>
+</user_software>

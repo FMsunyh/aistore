@@ -12,10 +12,10 @@ from dataclasses import dataclass
 class UserApp(Entity):
     id : int = 0
     user_id : int = 0
-    app_id : int = 0 
+    software_id : int = 0 
     license_id: int = 0 
     install_date : str = None
     is_installed : bool = False
 
     def __str__(self):
-        return f"{self.id} ({self.user_id}-{self.app_id})"
+        return f"{self.id} ({self.user_id}-{self.software_id})"

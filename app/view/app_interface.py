@@ -252,6 +252,9 @@ class WhatsNewCard(HeaderCardWidget):
     def set_description(self, description):
         self.description = description
 
+    def update_window(self,):
+        pass
+
 class DescriptionCard(HeaderCardWidget):
     """ Description card """
 
@@ -273,6 +276,8 @@ class DescriptionCard(HeaderCardWidget):
     def set_description(self, description):
         self.description = description
 
+    def update_window(self,):
+        pass
 class SystemRequirementCard(HeaderCardWidget):
     """ System requirements card """
 
@@ -389,6 +394,8 @@ class LightBox(QWidget):
         self.opacityAni.finished.disconnect()
         self.hide()
 
+    def update_window(self,):
+        pass
 
 class StatisticsWidget(QWidget):
     """ Statistics widget """
@@ -425,6 +432,18 @@ class HStatisticsWidget(QWidget):
         setFont(self.valueLabel, 18, QFont.DemiBold)
         self.titleLabel.setTextColor(QColor(96, 96, 96), QColor(206, 206, 206))
 
+    def set_title(self, title):
+        self.titleLabel.setText(title)
+
+    def set_value(self, value):
+        self.valueLabel.setText(value)
+
+    def set_value(self, value):
+        self.valueLabel.setText(value)
+
+    def update_window(self,):
+        pass
+    
 class AppInterface(SingleDirectionScrollArea):
 
     def __init__(self, icon, name, title, content, parent=None):

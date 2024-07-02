@@ -1,0 +1,16 @@
+<screenshots>
+    <screenshot>
+        <id>1</id>
+        <softwareId>1</softwareId>
+        <imageURL>http://example.com/facefusion1.png</imageURL>
+        <description>Facefusion screenshot 1</description>
+        <uploadDate>2023-01-16</uploadDate>
+    </screenshot>
+    <screenshot>
+        <id>2</id>
+        <softwareId>2</softwareId>
+        <imageURL>http://example.com/kohya_ss1.png</imageURL>
+        <description>kohya_ss screenshot 1</description>
+        <uploadDate>2023-03-23</uploadDate>
+    </screenshot>
+</screenshots>

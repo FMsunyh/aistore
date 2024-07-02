@@ -1,0 +1,18 @@
+<ratings_reviews>
+    <rating_review>
+        <id>1</id>
+        <softwareId>1</softwareId>
+        <userId>1</userId>
+        <rating>5</rating>
+        <review>Excellent software!</review>
+        <reviewDate>2023-02-10</reviewDate>
+    </rating_review>
+    <rating_review>
+        <id>2</id>
+        <softwareId>2</softwareId>
+        <userId>2</userId>
+        <rating>4</rating>
+        <review>Very useful toolset.</review>
+        <reviewDate>2023-03-30</reviewDate>
+    </rating_review>
+</ratings_reviews>

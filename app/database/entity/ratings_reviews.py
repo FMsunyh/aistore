@@ -12,7 +12,7 @@ from dataclasses import dataclass
 class RatingsReviews(Entity):
     id : int = 0
     user_id : int = 0
-    app_id : int = 0 
+    software_id : int = 0 
     rating: int = 0 
     review : str = None
     review_date : str = None

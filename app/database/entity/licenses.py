@@ -11,7 +11,7 @@ from dataclasses import dataclass
 @dataclass
 class Licenses(Entity):
     id : int = 0
-    app_id : int = 0
+    software_id : int = 0
     license_key : str = None
     release_date : str = None
     expiry_date : str = None
