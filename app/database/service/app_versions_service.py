@@ -14,3 +14,6 @@ class AppVersionsService:
     
     def listAll(self) -> List[AppVersions]:
         return self.app_versions_dao.listAll()
+    
+    def listBy(self, **condition) -> List[AppVersions]:
+        return self.app_versions_dao.listBy(**condition)

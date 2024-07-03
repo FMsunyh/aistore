@@ -236,16 +236,15 @@ class GalleryCard(HeaderCardWidget):
 class WhatsNewCard(HeaderCardWidget):
     """ Description card """
 
-    def __init__(self, title, description, version_number, parent=None):
-
+    def __init__(self, library: Library = None, app_info: AppInfo=None, title: str='', parent=None):
         super().__init__(parent)
+        self.library = library
+
         self.title = title
-        self.description = description
-
-        self.versionWidget = HStatisticsWidget(self.tr('Version'), version_number, '2024-07-03', self)
-
+        app_version = self.library.app_versions_controller.get_last_app_version_by_app_id(app_info.id)
+        self.versionWidget = HStatisticsWidget(self.tr('Version'), app_version.version_number, app_version.release_date, self)
         self.descriptionLabel = BodyLabel(
-            self.tr(f'{self.description}'), self)
+            self.tr(f'{app_version.change_log}'), self)
 
         self.descriptionLabel.setWordWrap(True)
         self.vBoxLayout.insertWidget(2, self.versionWidget)
@@ -253,14 +252,18 @@ class WhatsNewCard(HeaderCardWidget):
         self.viewLayout.addWidget(self.descriptionLabel)
         self.setTitle(self.tr(f'{self.title}'))
 
-    def set_title(self, title):
-        self.title = title
-        
-    def set_description(self, description):
-        self.description = description
+    def set_description(self, value):
+        self.descriptionLabel.setText(value)
 
-    def update_window(self,):
-        pass
+    def update_window(self, app_info: AppInfo=None):
+        if app_info is None:
+            return
+        
+        app_info = app_info
+        app_version = self.library.app_versions_controller.get_last_app_version_by_app_id(app_info.id)
+
+        self.versionWidget.update_window(self.tr('Version'), app_version.version_number, app_version.release_date)
+        self.set_description(self.tr(f'{app_version.change_log}'))
 
 class DescriptionCard(HeaderCardWidget):
     """ Description card """
@@ -427,14 +430,14 @@ class HStatisticsWidget(QWidget):
         super().__init__(parent=parent)
         self.titleLabel = CaptionLabel(title, self)
         self.valueLabel = BodyLabel(value, self)
-        self.release_date = BodyLabel(release_date, self)
+        self.release_dateLabel = BodyLabel(release_date, self)
 
         self.hBoxLayout = QHBoxLayout(self)
         self.hBoxLayout.setContentsMargins(24, 0, 24, 0)
         self.hBoxLayout.addWidget(self.titleLabel)
         self.hBoxLayout.addWidget(self.valueLabel)
-        self.hBoxLayout.addItem(QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum))
-        self.hBoxLayout.addWidget(self.release_date)
+        self.hBoxLayout.addItem(QSpacerItem(24, 24, QSizePolicy.Expanding, QSizePolicy.Minimum))
+        self.hBoxLayout.addWidget(self.release_dateLabel)
 
         setFont(self.valueLabel, 18, QFont.DemiBold)
         self.titleLabel.setTextColor(QColor(96, 96, 96), QColor(206, 206, 206))
@@ -445,11 +448,13 @@ class HStatisticsWidget(QWidget):
     def set_value(self, value):
         self.valueLabel.setText(value)
 
-    def set_value(self, value):
-        self.valueLabel.setText(value)
+    def set_release_date(self, value):
+        self.release_dateLabel.setText(value)
 
-    def update_window(self,):
-        pass
+    def update_window(self, title, value, release_date):
+        self.set_title(title)
+        self.set_value(value)
+        self.set_release_date(release_date)
 
 class AppInterface(SingleDirectionScrollArea):
 
@@ -463,8 +468,8 @@ class AppInterface(SingleDirectionScrollArea):
 
         self.vBoxLayout = QVBoxLayout(self.view)
         self.appInfoCard = AppInfoCard(self.app_info, self)
+        self.whatNewCard = WhatsNewCard(self.library, app_info, 'What\'s New', self)
         self.galleryCard = GalleryCard(self)
-        self.whatNewCard = WhatsNewCard(self.tr('What\'s New'), self.tr('Continuously optimize to create the most amazing products and bring you a better user experience'), '1.0.1',  self)
         self.descriptionCard = DescriptionCard(self.tr('Description'), self.tr('Description of app details'), self)
         self.systemCard = SystemRequirementCard(self)
 
@@ -498,3 +503,4 @@ class AppInterface(SingleDirectionScrollArea):
 
     def update_window(self, app_card : AppCard):
         self.appInfoCard.update_window(app_card)
+        self.whatNewCard.update_window(app_card.app_info)

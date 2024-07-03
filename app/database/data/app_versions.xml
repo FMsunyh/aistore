@@ -3,21 +3,34 @@
         <id>1</id>
         <softwareId>1</softwareId>
         <versionNumber>1.0</versionNumber>
-        <releaseDate>2023-01-15</releaseDate>
-        <changelog>Initial release</changelog>
+        <releaseDate>2024-01-15</releaseDate>
+        <changelog>
+        Continuously optimize to create the most amazing products and bring you a better user experience
+        Initial release
+        </changelog>
     </version>
     <version>
         <id>2</id>
         <softwareId>1</softwareId>
         <versionNumber>1.1</versionNumber>
-        <releaseDate>2023-02-15</releaseDate>
-        <changelog>Bug fixes and improvements</changelog>
+        <releaseDate>2024-06-06</releaseDate>
+        <changelog>
+        Continuously optimize to create the most amazing products and bring you a better user experience
+        Bug fixes and improvements
+        </changelog>
     </version>
     <version>
         <id>3</id>
         <softwareId>2</softwareId>
-        <versionNumber>2.0</versionNumber>
-        <releaseDate>2023-03-22</releaseDate>
+        <versionNumber>1.0</versionNumber>
+        <releaseDate>2024-06-01</releaseDate>
         <changelog>New features added</changelog>
+    </version>
+    <version>
+        <id>4</id>
+        <softwareId>3</softwareId>
+        <versionNumber>1.0</versionNumber>
+        <releaseDate>2024-07-02</releaseDate>
+        <changelog>New features added, buf fix</changelog>
     </version>
 </app_versions>
