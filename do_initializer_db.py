@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-28 15:34:31
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-02 14:34:49
+LastEditTime: 2024-07-03 13:56:02
 FilePath: \aistore\do_initializer_db.py
 Description: initialize db
 '''
@@ -58,13 +58,14 @@ def insert_app(cursor, root):
         title = item.find('title').text
         type_id = int(item.find('typeId').text)
         developer_id = int(item.find('developerId').text)
+        brief_introduction = item.find('briefIntroduction').text
         description = item.find('description').text
         release_date = item.find('releaseDate').text
         
         cursor.execute('''
-        INSERT INTO tbl_app_info (id, name, icon, title, type_id, developer_id, description, release_date)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (software_id, name, icon, title, type_id, developer_id, description, release_date))
+        INSERT INTO tbl_app_info (id, name, icon, title, type_id, developer_id, description, brief_introduction, release_date)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (software_id, name, icon, title, type_id, developer_id, description,brief_introduction, release_date))
 
 # 插入许可证数据
 def insert_licenses(cursor, root):

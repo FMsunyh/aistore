@@ -27,13 +27,14 @@ class AppCard(SimpleCardWidget):
         self.icon = app_info.icon
         self.title =app_info.title
 
-        self.content = app_info.description
+        self.brief_introduction = app_info.brief_introduction
+        self.description = app_info.description
 
         self.state: AppState =  'uninstall'
 
         self.iconWidget = IconWidget(self.icon, self)
         self.titleLabel = QLabel(self.title, self)
-        self.contentLabel = QLabel(TextWrap.wrap(self.content, 45, False)[0], self)
+        self.brief_introductionLabel = QLabel(TextWrap.wrap(self.brief_introduction, 45, False)[0], self)
 
         self.button_install = PrimaryPushButton(self.tr('Install'), self)
         self.button_install.setFixedSize(100, 30)
@@ -63,17 +64,11 @@ class AppCard(SimpleCardWidget):
         self.iconWidget.setFixedSize(48, 48)
 
         self.initLayout()
+        self.connectSignalToSlot()
 
         self.titleLabel.setObjectName('titleLabel')
-        self.contentLabel.setObjectName('contentLabel')
+        self.brief_introductionLabel.setObjectName('briefIntroduction')
 
-        self.button_install.clicked.connect(self.on_button_clicked)
-        self.button_run.clicked.connect(self.on_button_run_clicked)
-        self.button_uninstall.clicked.connect(self.on_button_uninstall_clicked)
-
-        signalBus.software_registySig.connect(self.is_install)
-
-        self.refreshSig.connect(self.refresh)
 
     def initLayout(self):
         self.vbuttonLayout.setAlignment(Qt.AlignVCenter)
@@ -97,7 +92,7 @@ class AppCard(SimpleCardWidget):
 
         self.vBoxLayout.addStretch(1)
         self.vBoxLayout.addWidget(self.titleLabel)
-        self.vBoxLayout.addWidget(self.contentLabel)
+        self.vBoxLayout.addWidget(self.brief_introductionLabel)
         self.vBoxLayout.addStretch(1)
 
     def on_button_clicked(self):
@@ -159,7 +154,16 @@ class AppCard(SimpleCardWidget):
                 self.button_uninstall.setVisible(True)
             else:
                 pass
+    
+    def connectSignalToSlot(self):
         
+        self.button_install.clicked.connect(self.on_button_clicked)
+        self.button_run.clicked.connect(self.on_button_run_clicked)
+        self.button_uninstall.clicked.connect(self.on_button_uninstall_clicked)
+
+        signalBus.software_registySig.connect(self.is_install)
+
+        self.refreshSig.connect(self.refresh)
 class AppCardView(QWidget):
     """ Sample card view """
 
@@ -179,7 +183,7 @@ class AppCardView(QWidget):
         self.vBoxLayout.addLayout(self.flowLayout, 1)
 
         self.titleLabel.setObjectName('viewTitleLabel')
-        StyleSheet.SAMPLE_CARD.apply(self)
+        StyleSheet.APP_CARD.apply(self)
 
     def addAppCard(self, library: Library, app_info: AppInfo, routeKey, index):
         """ add app card """

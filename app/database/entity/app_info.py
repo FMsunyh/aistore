@@ -16,8 +16,9 @@ class AppInfo(Entity):
     title : str = None
     type_id : int = 0 # app_types id
     developer_id : int = 0 # developers id
+    brief_introduction: str = None 
     description: str = None 
     release_date : str = None
     
     def __str__(self):
-        return f"{self.name} ({self.description})"
+        return f"{self.name} ({self.brief_introduction})"

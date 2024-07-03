@@ -3,7 +3,7 @@ from app.database.entity.app_info import AppInfo
 
 class AppInfoDao(DaoBase):
     table = 'tbl_app_info'
-    fields = ['id', 'icon', 'name', 'title', 'description', 'type_id','developer_id','release_date']
+    fields = ['id', 'icon', 'name', 'title', 'brief_introduction','description', 'type_id','developer_id','release_date']
 
 
     def createTable(self):
@@ -13,6 +13,7 @@ class AppInfoDao(DaoBase):
                 icon TEXT NOT NULL,
                 name TEXT NOT NULL,
                 title TEXT NOT NULL,
+                brief_introduction TEXT NOT NULL,
                 description TEXT NOT NULL,
                 type_id INTEGER,
                 developer_id INTEGER,
@@ -22,7 +23,3 @@ class AppInfoDao(DaoBase):
             )
         """)
         return success
-
-    def get_app_infos_by_type(type):
-        app_infos = self.app_info_dao.get_app_infos_by_type(type)
-        return app_infos

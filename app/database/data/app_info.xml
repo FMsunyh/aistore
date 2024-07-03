@@ -6,6 +6,7 @@
         <icon>:/gallery/images/controls/MenuFlyout.png</icon>
         <typeId>1</typeId>
         <developerId>1</developerId>
+        <briefIntroduction>A software for facial image fusion.</briefIntroduction>
         <description>A software for facial image fusion.</description>
         <releaseDate>2023-01-15</releaseDate>
     </item>
@@ -16,6 +17,7 @@
         <icon>:/gallery/images/controls/CommandBar.png</icon>
         <typeId>2</typeId>
         <developerId>1</developerId>
+        <briefIntroduction>A software for facial image fusion.</briefIntroduction>
         <description>A machine learning toolset.</description>
         <releaseDate>2023-03-22</releaseDate>
     </item>
@@ -26,6 +28,7 @@
         <icon>:/gallery/images/controls/CommandBarFlyout.png</icon>
         <typeId>3</typeId>
         <developerId>1</developerId>
+        <briefIntroduction>A software for facial image fusion.</briefIntroduction>
         <description>A web UI for various applications.</description>
         <releaseDate>2023-06-10</releaseDate>
     </item>

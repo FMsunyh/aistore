@@ -144,8 +144,8 @@ class AppInfoCard(SimpleCardWidget):
 
     def update_window(self, app_card : AppCard):
         self.icon_label.setImage(app_card.icon) 
-        self.nameLabel.setText(f'{app_card.name}')
-        self.descriptionLabel.setText(f'{app_card.content}')
+        self.nameLabel.setText(f'{app_card.title}')
+        self.descriptionLabel.setText(f'{app_card.description}')
         self.app_card = app_card
 
         self.state = app_card.state
@@ -443,7 +443,7 @@ class HStatisticsWidget(QWidget):
 
     def update_window(self,):
         pass
-    
+
 class AppInterface(SingleDirectionScrollArea):
 
     def __init__(self, icon, name, title, content, parent=None):
