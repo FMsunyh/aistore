@@ -2,15 +2,36 @@
     <screenshot>
         <id>1</id>
         <softwareId>1</softwareId>
-        <imageURL>http://example.com/facefusion1.png</imageURL>
-        <description>Facefusion screenshot 1</description>
-        <uploadDate>2023-01-16</uploadDate>
+        <imageURL>:/gallery/images/app_screenshots/stable_diffusion_webui_1.png</imageURL>
+        <description>stable diffusion webui screenshot 1</description>
+        <uploadDate>2024-07-03</uploadDate>
     </screenshot>
     <screenshot>
         <id>2</id>
         <softwareId>2</softwareId>
-        <imageURL>http://example.com/kohya_ss1.png</imageURL>
+        <imageURL>:/gallery/images/app_screenshots/kohya_ss_1.jpg</imageURL>
         <description>kohya_ss screenshot 1</description>
-        <uploadDate>2023-03-23</uploadDate>
+        <uploadDate>2024-07-03</uploadDate>
+    </screenshot>
+    <screenshot>
+        <id>3</id>
+        <softwareId>2</softwareId>
+        <imageURL>:/gallery/images/app_screenshots/kohya_ss_2.jpg</imageURL>
+        <description>kohya_ss screenshot 2</description>
+        <uploadDate>2024-07-03</uploadDate>
+    </screenshot>
+    <screenshot>
+        <id>4</id>
+        <softwareId>2</softwareId>
+        <imageURL>:/gallery/images/app_screenshots/kohya_ss_3.jpg</imageURL>
+        <description>kohya_ss screenshot 3</description>
+        <uploadDate>2024-07-03</uploadDate>
+    </screenshot>
+    <screenshot>
+        <id>5</id>
+        <softwareId>3</softwareId>
+        <imageURL>:/gallery/images/app_screenshots/facefusion_1.png</imageURL>
+        <description>kohya_ss screenshot 3</description>
+        <uploadDate>2024-07-03</uploadDate>
     </screenshot>
 </screenshots>

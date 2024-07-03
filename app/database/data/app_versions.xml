@@ -15,8 +15,8 @@
         <versionNumber>1.1</versionNumber>
         <releaseDate>2024-06-06</releaseDate>
         <changelog>
-        Continuously optimize to create the most amazing products and bring you a better user experience
-        Bug fixes and improvements
+        * Continuously optimize to create the most amazing products and bring you a better user experience
+        * Bug fixes and improvements
         </changelog>
     </version>
     <version>
@@ -24,13 +24,19 @@
         <softwareId>2</softwareId>
         <versionNumber>1.0</versionNumber>
         <releaseDate>2024-06-01</releaseDate>
-        <changelog>New features added</changelog>
+        <changelog>
+        * Continuously optimize to create the most amazing products and bring you a better user experience
+        * New features added
+        </changelog>
     </version>
     <version>
         <id>4</id>
         <softwareId>3</softwareId>
         <versionNumber>1.0</versionNumber>
         <releaseDate>2024-07-02</releaseDate>
-        <changelog>New features added, buf fix</changelog>
+        <changelog>
+        * Continuously optimize to create the most amazing products and bring you a better user experience
+        * New features added
+        </changelog>
     </version>
 </app_versions>

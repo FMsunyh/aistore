@@ -22,3 +22,6 @@ class ScreenshotsService:
 
     def listAll(self) -> List[Screenshots]:
         return self.screenshots_dao.listAll()
+    
+    def listBy(self, **condition) -> List[Screenshots]:
+        return self.screenshots_dao.listBy(**condition)

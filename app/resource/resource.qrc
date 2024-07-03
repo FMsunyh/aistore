@@ -130,6 +130,19 @@
         <file>images/Shoko3.jpg</file>
         <file>images/Shoko4.jpg</file>
 
+
+        <file>images/app_screenshots/kohya_ss_1.jpg</file>
+        <file>images/app_screenshots/kohya_ss_2.jpg</file>
+        <file>images/app_screenshots/kohya_ss_3.jpg</file>
+        <file>images/app_screenshots/facefusion_1.png</file>
+        <file>images/app_screenshots/stable_diffusion_webui_1.png</file>
+
+
+        <file>images/app_icons/stable_diffusion_webui.ico</file>
+        <file>images/app_icons/kohya_ss.ico</file>
+        <file>images/app_icons/facefusion.ico</file>
+
+
         <file>qss/dark/gallery_interface.qss</file>
         <file>qss/dark/home_interface.qss</file>
         <file>qss/dark/icon_interface.qss</file>

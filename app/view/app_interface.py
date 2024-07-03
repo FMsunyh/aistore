@@ -210,8 +210,11 @@ class AppInfoCard(SimpleCardWidget):
 class GalleryCard(HeaderCardWidget):
     """ Gallery card """
 
-    def __init__(self, parent=None):
+    def __init__(self, library: Library = None, app_info: AppInfo=None, parent=None):
         super().__init__(parent)
+
+        self.library = library
+
         self.setTitle(self.tr('Screenshots'))
 
         self.flipView = HorizontalFlipView(self)
@@ -232,6 +235,16 @@ class GalleryCard(HeaderCardWidget):
 
         self.headerLayout.addWidget(self.expandButton, 0, Qt.AlignRight)
         self.viewLayout.addWidget(self.flipView)
+
+    def update_window(self, app_info: AppInfo=None):
+        if app_info is None:
+            return
+        
+        app_info = app_info
+        screenshots = self.library.screenshots_controller.get_screenshots_by_app_id(app_info.id)
+
+        self.flipView.clear()
+        self.flipView.addImages([obj.image_url for obj in screenshots])
 
 class WhatsNewCard(HeaderCardWidget):
     """ Description card """
@@ -268,11 +281,14 @@ class WhatsNewCard(HeaderCardWidget):
 class DescriptionCard(HeaderCardWidget):
     """ Description card """
 
-    def __init__(self, title, description, parent=None):
+    def __init__(self, library: Library = None, app_info: AppInfo=None, parent=None):
 
         super().__init__(parent)
-        self.title = title
-        self.description = description
+        self.library = library
+
+        self.title = self.tr('Description')
+        self.description = app_info.description
+
         self.descriptionLabel = BodyLabel(
             self.tr(f'{self.description}'), self)
 
@@ -280,14 +296,15 @@ class DescriptionCard(HeaderCardWidget):
         self.viewLayout.addWidget(self.descriptionLabel)
         self.setTitle(self.tr(f'{self.title}'))
 
-    def set_title(self, title):
-        self.title = title
-        
     def set_description(self, description):
-        self.description = description
+        self.descriptionLabel.setText(description)
 
-    def update_window(self,):
-        pass
+    def update_window(self, app_info: AppInfo=None):
+        if app_info is None:
+            return
+        
+        self.set_description(app_info.description)
+
 class SystemRequirementCard(HeaderCardWidget):
     """ System requirements card """
 
@@ -318,8 +335,11 @@ class SystemRequirementCard(HeaderCardWidget):
 class LightBox(QWidget):
     """ Light box """
 
-    def __init__(self, parent=None):
+    def __init__(self, library: Library = None, app_info: AppInfo=None, parent=None):
         super().__init__(parent=parent)
+
+        self.library = library
+        
         if isDarkTheme():
             tintColor = QColor(32, 32, 32, 200)
         else:
@@ -404,8 +424,15 @@ class LightBox(QWidget):
         self.opacityAni.finished.disconnect()
         self.hide()
 
-    def update_window(self,):
-        pass
+    def update_window(self, app_info: AppInfo=None):
+        if app_info is None:
+            return
+        
+        app_info = app_info
+        screenshots = self.library.screenshots_controller.get_screenshots_by_app_id(app_info.id)
+
+        self.flipView.clear()
+        self.flipView.addImages([obj.image_url for obj in screenshots])
 
 class StatisticsWidget(QWidget):
     """ Statistics widget """
@@ -469,11 +496,11 @@ class AppInterface(SingleDirectionScrollArea):
         self.vBoxLayout = QVBoxLayout(self.view)
         self.appInfoCard = AppInfoCard(self.app_info, self)
         self.whatNewCard = WhatsNewCard(self.library, app_info, 'What\'s New', self)
-        self.galleryCard = GalleryCard(self)
-        self.descriptionCard = DescriptionCard(self.tr('Description'), self.tr('Description of app details'), self)
+        self.galleryCard = GalleryCard(self.library, app_info, self)
+        self.descriptionCard = DescriptionCard(self.library, app_info, self)
         self.systemCard = SystemRequirementCard(self)
 
-        self.lightBox = LightBox(self)
+        self.lightBox = LightBox(self.library, app_info, self)
         self.lightBox.hide()
         self.galleryCard.flipView.itemClicked.connect(self.showLightBox)
 
@@ -504,3 +531,6 @@ class AppInterface(SingleDirectionScrollArea):
     def update_window(self, app_card : AppCard):
         self.appInfoCard.update_window(app_card)
         self.whatNewCard.update_window(app_card.app_info)
+        self.descriptionCard.update_window(app_card.app_info)
+        self.galleryCard.update_window(app_card.app_info)
+        self.lightBox.update_window(app_card.app_info)
