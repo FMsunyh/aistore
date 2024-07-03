@@ -19,6 +19,9 @@ from app.components.app_card import AppCard
 from app.core.typing import AppState
 from ..common.signal_bus import signalBus
 
+from app.database.entity.app_info import AppInfo
+from app.database.library import Library
+
 def isWin11():
     return sys.platform == 'win32' and sys.getwindowsversion().build >= 22000
 
@@ -32,17 +35,21 @@ else:
 class AppInfoCard(SimpleCardWidget):
     """ App information card """
 
-    def __init__(self, icon, name, title, content, parent=None):
+    def __init__(self, app_info: AppInfo=None, parent=None):
         super().__init__(parent)
+        self.app_info = app_info
         # self.icon_label = ImageLabel(":/qfluentwidgets/images/logo.png", self)
-        self.icon_label = ImageLabel(icon, self)
+        self.icon_label = ImageLabel(self.app_info.icon, self)
         self.icon_label.setBorderRadius(8, 8, 8, 8)
         self.icon_label.scaledToWidth(120)
+
         self.state: AppState =  'uninstall'
 
-        self.name = name
-        self.nameLabel = TitleLabel(f'{name}', self)
+        self.nameLabel = TitleLabel(f'{self.app_info.name}', self)
+
         self.button_install = PrimaryPushButton(self.tr('Install'), self)
+
+
         self.ring = ProgressBar(self)
         self.ring.setFixedWidth(200)  
         self.ring.setFixedHeight(20)
@@ -65,8 +72,8 @@ class AppInfoCard(SimpleCardWidget):
         self.separator = VerticalSeparator(self)
         self.commentWidget = StatisticsWidget(self.tr('REVIEWS'), '3K', self)
 
-        self.descriptionLabel = BodyLabel(f'{content}', self)
-        self.descriptionLabel.setWordWrap(True)
+        self.brief_introductionLabel = BodyLabel(f'{self.app_info.brief_introduction}', self)
+        self.brief_introductionLabel.setWordWrap(True)
 
         self.tagButton = PillPushButton(self.tr('Component Library'), self)
         self.tagButton.setCheckable(False)
@@ -133,7 +140,7 @@ class AppInfoCard(SimpleCardWidget):
         
         # description label
         self.vBoxLayout.addSpacing(20)
-        self.vBoxLayout.addWidget(self.descriptionLabel)
+        self.vBoxLayout.addWidget(self.brief_introductionLabel)
 
         # button
         self.vBoxLayout.addSpacing(12)
@@ -143,13 +150,13 @@ class AppInfoCard(SimpleCardWidget):
         self.buttonLayout.addWidget(self.shareButton, 0, Qt.AlignRight)
 
     def update_window(self, app_card : AppCard):
-        self.icon_label.setImage(app_card.icon) 
-        self.nameLabel.setText(f'{app_card.title}')
-        self.descriptionLabel.setText(f'{app_card.description}')
         self.app_card = app_card
 
-        self.state = app_card.state
-
+        self.icon_label.setImage(self.app_card.app_info.icon) 
+        self.nameLabel.setText(f'{self.app_card.app_info.title}')
+        self.brief_introductionLabel.setText(f'{self.app_card.app_info.brief_introduction}')
+        self.state = self.app_card.state
+        
         self.app_card.stateChangedSig.connect(self.set_state)
         self.app_card.refreshSig.connect(self.refresh)
         self.app_card.ring.valueChanged.connect(self.ring.setValue)
@@ -446,13 +453,16 @@ class HStatisticsWidget(QWidget):
 
 class AppInterface(SingleDirectionScrollArea):
 
-    def __init__(self, icon, name, title, content, parent=None):
+    def __init__(self, library: Library = None, app_info: AppInfo=None, parent=None):
         super().__init__(parent)
+
+        self.library = library
+        self.app_info = app_info
 
         self.view = QWidget(self)
 
         self.vBoxLayout = QVBoxLayout(self.view)
-        self.appInfoCard = AppInfoCard(icon, name, title, content, self)
+        self.appInfoCard = AppInfoCard(self.app_info, self)
         self.galleryCard = GalleryCard(self)
         self.whatNewCard = WhatsNewCard(self.tr('What\'s New'), self.tr('Continuously optimize to create the most amazing products and bring you a better user experience'), '1.0.1',  self)
         self.descriptionCard = DescriptionCard(self.tr('Description'), self.tr('Description of app details'), self)

@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 05:28:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-01 16:57:08
+LastEditTime: 2024-07-03 15:21:23
 FilePath: \aistore\app\view\main_window.py
 Description: main windows
 '''
@@ -66,7 +66,9 @@ class MainWindow(FluentWindow):
         self.navigationViewInterface = NavigationViewInterface(self)
         self.settingInterface = SettingInterface(self)
 
-        self.appInterface = AppInterface(icon=":/qfluentwidgets/images/logo.png", name='AIStore', title='AIStore', content='AIStore Software Manager is a tool provided by ZhongJu Cloud that integrates software downloading, updating, uninstalling and optimization.', parent=self)
+        if len(self.library.app_infos) > 0:
+            app_info = self.library.app_infos[0]
+            self.appInterface = AppInterface(library = self.library, app_info = app_info, parent=self)
 
     def initNavigation(self):
         # add navigation items
@@ -167,7 +169,9 @@ class MainWindow(FluentWindow):
                 w.scrollToCard(index)
 
     def switchToAppInterface(self, app_card):
+
         self.appInterface.update_window(app_card)
+
         self.stackedWidget.setCurrentWidget(self.appInterface, False)
 
     # def check_software_registy(self):

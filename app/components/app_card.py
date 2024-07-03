@@ -21,19 +21,18 @@ class AppCard(SimpleCardWidget):
     def __init__(self, library: Library, app_info: AppInfo, routeKey, index, parent=None):
         super().__init__(parent=parent)
         self.library = library
+        self.app_info = app_info
+
         self.index = index
         self.routeKey = routeKey
-        self.name = app_info.name
-        self.icon = app_info.icon
-        self.title =app_info.title
 
         self.brief_introduction = app_info.brief_introduction
         self.description = app_info.description
 
         self.state: AppState =  'uninstall'
 
-        self.iconWidget = IconWidget(self.icon, self)
-        self.titleLabel = QLabel(self.title, self)
+        self.iconWidget = IconWidget(self.app_info.icon, self)
+        self.titleLabel = QLabel(self.app_info.title, self)
         self.brief_introductionLabel = QLabel(TextWrap.wrap(self.brief_introduction, 45, False)[0], self)
 
         self.button_install = PrimaryPushButton(self.tr('Install'), self)
@@ -147,7 +146,7 @@ class AppCard(SimpleCardWidget):
 
     def is_install(self, software_list):
         for item in software_list:
-            if item['DisplayName'] == self.name:
+            if item['DisplayName'] == self.app_info:
                 self.ring.setVisible(False)
                 self.button.setVisible(False)
                 self.button_run.setVisible(True)
@@ -164,6 +163,7 @@ class AppCard(SimpleCardWidget):
         signalBus.software_registySig.connect(self.is_install)
 
         self.refreshSig.connect(self.refresh)
+        
 class AppCardView(QWidget):
     """ Sample card view """
 
