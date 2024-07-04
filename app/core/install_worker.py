@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-24 14:14:17
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-04 16:36:12
+LastEditTime: 2024-07-04 17:48:21
 FilePath: \aistore\app\core\install_worker.py
 Description: install worker
 '''
@@ -149,8 +149,6 @@ class InstallWorker(QThread):
 
 		logger.info(f"Finished")
 
-	
-		
 
 	def _create_registry(self):
 		logger.info(f"Start to create registry info")

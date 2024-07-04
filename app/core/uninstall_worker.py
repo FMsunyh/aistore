@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-24 14:14:17
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-25 16:39:44
+LastEditTime: 2024-07-04 17:54:56
 FilePath: \aistore\app\core\install_worker.py
 Description: uninstall worker
 '''
@@ -71,7 +71,7 @@ class UninstallWorker(QThread):
                     logger.error(f"Error deleting directory {dir_path}: {e}")
                     self.progress.emit(f'Error',  -1)
         try:
-            os.rmdir(self.uninstall_directory)
+            shutil.rmtree(self.uninstall_directory)
             self.completed.emit()
             logger.info(f"Finished")
 
