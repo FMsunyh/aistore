@@ -32,7 +32,7 @@
     <version>
         <id>4</id>
         <softwareId>3</softwareId>
-        <versionNumber>1.0</versionNumber>
+        <versionNumber>2.6.0</versionNumber>
         <releaseDate>2024-07-02</releaseDate>
         <changelog>
         * Continuously optimize to create the most amazing products and bring you a better user experience

@@ -158,7 +158,7 @@ class HomeInterface(ScrollArea):
             
             for app_info in app_infos:
                 # app_info
-
+                state = 'uninstall'
                 for item in self.registry:
                     if item["DisplayName"] == app_info.name:
                         state = 'installed'
@@ -239,15 +239,6 @@ class HomeInterface(ScrollArea):
         self.registry = registry
 
 
-    # def set_apps_state(self):
-    #     count =  self.popularView.flowLayout.count()
-    #     for index in range(count):
-    #         app_name = self.popularView.flowLayout.itemAt(index).widget().name
-    #         for item in self.registry:
-    #             if item["DisplayName"] == app_name:
-    #                 self.popularView.flowLayout.itemAt(index).widget().set_state('installed')
-
-
     def _aboutCardClick(self):
         print("__connectSignalToSlot")
 
@@ -257,18 +248,18 @@ class HomeInterface(ScrollArea):
         signalBus.software_runSig.connect(self.software_run)
 
     def software_run(self, app_card):
-        # app_name = app_card.name
-        # print(app_card.name)
+        app_name = app_card.app_info.name
+        # print(app_card.app_info.name)
 
-        # title = self.tr('Run ' + app_card.name)
+        # title = self.tr('Run ' + app_card.app_info.name)
         # content = self.tr(f"Run on desktop shortcut")
         # w = MessageBox(title, content, self)
 
         # if w.exec():
         #     print("run")
 
-        command = f"{cfg.get(cfg.install_folder)}/{app_card.name}/run_{app_card.name}.bat"
-        start_directory = f"{cfg.get(cfg.install_folder)}/{app_card.name}"
+        command = f"{cfg.get(cfg.install_folder)}/{app_name}/run_{app_name}.bat"
+        start_directory = f"{cfg.get(cfg.install_folder)}/{app_name}"
         process = subprocess.Popen(command, shell=True, text=True, cwd=start_directory, encoding='utf-8')
         # logger.info("Return code:", result.code)
         # logger.info("Output:", result.stdout)
@@ -289,7 +280,7 @@ class HomeInterface(ScrollArea):
             return url, version
 
         app_name = app_card.app_info.name
-        # logger.info(app_card.name)
+        # logger.info(app_card.app_info.name)
 
         title = self.tr('Install ') + f"{app_name}"
         w = CustomMessageBox(title=title, app_name=app_name, parent=self.window())
@@ -351,7 +342,7 @@ class HomeInterface(ScrollArea):
         content = self.tr(f"Do you want to run ") + f"{app_name}?"
         w = MessageBox(title, content, self.window())
         if w.exec():
-            # title = self.tr('Run ' + app_card.name)
+            # title = self.tr('Run ' + app_card.app_info.name)
             # content = self.tr(f"Run on desktop shortcut")
             # w = MessageBox(title, content, self)
 
@@ -359,8 +350,8 @@ class HomeInterface(ScrollArea):
             #     print("run")
        
 
-            command = f"{cfg.get(cfg.install_folder)}/{app_card.name}/run_{app_card.name}.bat"
-            start_directory = f"{cfg.get(cfg.install_folder)}/{app_card.name}"
+            command = f"{cfg.get(cfg.install_folder)}/{app_name}/run_{app_name}.bat"
+            start_directory = f"{cfg.get(cfg.install_folder)}/{app_name}"
             process = subprocess.Popen(command, shell=True, text=True, cwd=start_directory, encoding='utf-8')
             # logger.info("Return code:", result.code)
             # logger.info("Output:", result.stdout)
@@ -368,8 +359,10 @@ class HomeInterface(ScrollArea):
 
 
     def on_uninstall_thread_finished(self, thread, app_card):
+        app_name = app_card.app_info.name
+
         for item in self.registry:
-            if item["DisplayName"] == app_card.name:
+            if item["DisplayName"] == app_name:
                 self.registry.remove(item)
         self.uninstall_threads.remove(thread)
 

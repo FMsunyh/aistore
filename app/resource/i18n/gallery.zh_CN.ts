@@ -571,12 +571,12 @@ In that case, I would accept it no matter which side the ball falls on.</source>
         <translation>您确定要立即启动 </translation>
     </message>
     <message>
-        <source>Do you want to uninstall {app_card.name} ?</source>
-        <translation type="vanished">您想要卸载 {app_card.name}？</translation>
+        <source>Do you want to uninstall {app_card.app_info.name} ?</source>
+        <translation type="vanished">您想要卸载 {app_card.app_info.name}？</translation>
     </message>
     <message>
-        <source>Do you want to run {app_card.name} ?</source>
-        <translation type="vanished">立即启动 {app_card.name}？</translation>
+        <source>Do you want to run {app_card.app_info.name} ?</source>
+        <translation type="vanished">立即启动 {app_card.app_info.name}？</translation>
     </message>
 </context>
 <context>
