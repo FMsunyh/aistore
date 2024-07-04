@@ -48,6 +48,10 @@ class AppCard(SimpleCardWidget):
         self.button_run.setVisible(False)
         self.button_run.setFixedSize(100, 30)
 
+        self.button_stop = PrimaryPushButton(self.tr('Stop'), self)
+        self.button_stop.setVisible(False)
+        self.button_stop.setFixedSize(100, 30)
+
         self.button_uninstall = PushButton(self.tr('Uninstall'), self)
         self.button_uninstall.setVisible(False)
         self.button_uninstall.setFixedSize(100, 30)
@@ -87,6 +91,7 @@ class AppCard(SimpleCardWidget):
 
 
         self.vbuttonLayout.addWidget(self.button_run)
+        self.vbuttonLayout.addWidget(self.button_stop)
         self.vbuttonLayout.addWidget(self.button_uninstall)
         self.hBoxLayout.addLayout(self.vbuttonLayout)
 
@@ -104,6 +109,9 @@ class AppCard(SimpleCardWidget):
     def on_button_run_clicked(self):
         signalBus.software_runSig.emit(self)
 
+    def on_button_stop_clicked(self):
+        signalBus.software_stopSig.emit(self)
+
     def update_progress_bar(self, file, value):
         # 更新进度条
         self.ring.setValue(value)
@@ -114,10 +122,11 @@ class AppCard(SimpleCardWidget):
 
     def refresh(self):
         # instlled
-        if self.state == 'installed' or self.state == 'install_completed':
+        if self.state == 'installed' or self.state == 'install_completed' or self.state == 'stop':
             self.button_install.setVisible(False)
             self.ring.setVisible(False)
             self.button_run.setVisible(True)
+            self.button_stop.setVisible(False)
             self.button_uninstall.setVisible(True)
             self.ring.setValue(0)
 
@@ -125,6 +134,7 @@ class AppCard(SimpleCardWidget):
             self.button_install.setVisible(True)
             self.ring.setVisible(False)
             self.button_run.setVisible(False)
+            self.button_stop.setVisible(False)
             self.button_uninstall.setVisible(False)
             self.ring.setValue(0)
 
@@ -132,11 +142,19 @@ class AppCard(SimpleCardWidget):
             self.button_install.setVisible(False)
             self.ring.setVisible(True)
             self.button_run.setVisible(False)
+            self.button_stop.setVisible(False)
             self.button_uninstall.setVisible(False)
         elif self.state == 'uninstalling':
             self.button_install.setVisible(False)
             self.ring.setVisible(True)
             self.button_run.setVisible(False)
+            self.button_stop.setVisible(False)
+            self.button_uninstall.setVisible(False)
+        elif self.state == 'running':
+            self.button_install.setVisible(False)
+            self.ring.setVisible(False)
+            self.button_run.setVisible(False)
+            self.button_stop.setVisible(True)
             self.button_uninstall.setVisible(False)
         # elif self.install_state == 'uninstall'
 
@@ -159,6 +177,7 @@ class AppCard(SimpleCardWidget):
         
         self.button_install.clicked.connect(self.on_button_clicked)
         self.button_run.clicked.connect(self.on_button_run_clicked)
+        self.button_stop.clicked.connect(self.on_button_stop_clicked)
         self.button_uninstall.clicked.connect(self.on_button_uninstall_clicked)
 
         signalBus.software_registrySig.connect(self.is_install)

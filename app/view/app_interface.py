@@ -60,6 +60,9 @@ class AppInfoCard(SimpleCardWidget):
         self.button_run = PrimaryPushButton(self.tr('Run'), self)
         self.button_run.setFixedWidth(160)
 
+        self.button_stop = PrimaryPushButton(self.tr('Stop'), self)
+        self.button_stop.setFixedWidth(160)
+
         self.button_uninstall = PushButton(self.tr('Uninstall'), self)
         self.button_uninstall.setFixedWidth(160)
 
@@ -96,6 +99,7 @@ class AppInfoCard(SimpleCardWidget):
 
         self.button_install.clicked.connect(self.on_button_clicked)
         self.button_run.clicked.connect(self.on_button_run_clicked)
+        self.button_stop.clicked.connect(self.on_button_stop_clicked)
         self.button_uninstall.clicked.connect(self.on_button_uninstall_clicked)
 
 
@@ -119,6 +123,7 @@ class AppInfoCard(SimpleCardWidget):
         self.hbuttonLayout.setSpacing(20)
         self.hbuttonLayout.setAlignment(Qt.AlignVCenter)
         self.hbuttonLayout.addWidget(self.button_run)
+        self.hbuttonLayout.addWidget(self.button_stop)
         self.hbuttonLayout.addWidget(self.button_uninstall)
 
         self.topLayout.addLayout(self.hbuttonLayout)
@@ -172,6 +177,8 @@ class AppInfoCard(SimpleCardWidget):
     def on_button_run_clicked(self):
         signalBus.software_runSig.emit(self.app_card)
 
+    def on_button_stop_clicked(self):
+        signalBus.software_stopSig.emit(self.app_card)
     # def update_progress_bar(self, file, value):
     #     # 更新进度条
     #     self.ring.setValue(value)
@@ -181,10 +188,11 @@ class AppInfoCard(SimpleCardWidget):
 
     def refresh(self):
         # instlled
-        if self.state == 'installed' or self.state == 'install_completed':
+        if self.state == 'installed' or self.state == 'install_completed' or self.state == 'stop':
             self.button_install.setVisible(False)
             self.ring.setVisible(False)
             self.button_run.setVisible(True)
+            self.button_stop.setVisible(False)
             self.button_uninstall.setVisible(True)
             self.ring.setValue(0)
 
@@ -192,6 +200,7 @@ class AppInfoCard(SimpleCardWidget):
             self.button_install.setVisible(True)
             self.ring.setVisible(False)
             self.button_run.setVisible(False)
+            self.button_stop.setVisible(False)
             self.button_uninstall.setVisible(False)
             self.ring.setValue(0)
 
@@ -199,11 +208,19 @@ class AppInfoCard(SimpleCardWidget):
             self.button_install.setVisible(False)
             self.ring.setVisible(True)
             self.button_run.setVisible(False)
+            self.button_stop.setVisible(False)
             self.button_uninstall.setVisible(False)
         elif self.state == 'uninstalling':
             self.button_install.setVisible(False)
             self.ring.setVisible(True)
             self.button_run.setVisible(False)
+            self.button_stop.setVisible(False)
+            self.button_uninstall.setVisible(False)
+        elif self.state == 'running':
+            self.button_install.setVisible(False)
+            self.ring.setVisible(False)
+            self.button_run.setVisible(False)
+            self.button_stop.setVisible(True)
             self.button_uninstall.setVisible(False)
 
 

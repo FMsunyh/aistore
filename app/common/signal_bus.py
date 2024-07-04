@@ -30,5 +30,6 @@ class SignalBus(QObject):
     software_installSig = pyqtSignal(object)
     software_uninstallSig = pyqtSignal(object)
     software_runSig = pyqtSignal(object)
+    software_stopSig = pyqtSignal(object)
 
 signalBus = SignalBus()

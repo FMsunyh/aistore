@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-14 18:28:18
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-04 15:35:57
+LastEditTime: 2024-07-04 17:20:51
 FilePath: \aistore\app\common\config.py
 Description: config for aistore
 '''
@@ -13,9 +13,9 @@ from enum import Enum
 from PyQt5.QtCore import QLocale
 from qfluentwidgets import (qconfig, QConfig, ConfigItem, OptionsConfigItem, BoolValidator,
                             OptionsValidator, RangeConfigItem, RangeValidator,
-                            FolderListValidator, Theme, FolderValidator, ConfigSerializer, __version__)
+                            FolderListValidator, Theme, FolderValidator, ConfigSerializer)
 
-
+from version import __author__, __version__
 class Language(Enum):
     """ Language enumeration """
 
@@ -70,8 +70,8 @@ class Config(QConfig):
 
 
 YEAR = 2024
-AUTHOR = "ZhongJu GPU Cloud"
-VERSION = "1.0.5"
+AUTHOR = __author__
+VERSION = __version__
 HELP_URL = "https://www.zjusmart.com/#/"
 REPO_URL = "https://manage.zjusmart.com/vmt/web/user/login"
 EXAMPLE_URL = "https://github.com/zhiyiYo/PyQt-Fluent-Widgets/tree/master/examples"

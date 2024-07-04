@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-24 14:14:17
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-01 16:34:29
+LastEditTime: 2024-07-04 16:36:12
 FilePath: \aistore\app\core\install_worker.py
 Description: install worker
 '''
@@ -112,12 +112,17 @@ class InstallWorker(QThread):
 			logger.error("Not a zip file or a corrupted zip file")
 			# print('Not a zip file or a corrupted zip file')
 		
-		app_path = os.path.join(output, self.name)
-		if os.path.exists(app_path):
-			shutil.rmtree(app_path)
-			logger.info(f"Remove old folder {app_path}")	
+		try:
+			app_path = os.path.join(output, self.name)
+			if os.path.exists(app_path):
+				shutil.rmtree(app_path)
+				logger.info(f"Remove old folder {app_path}")	
 
-		os.rename(os.path.join(output, f"{self.name}-{self.version}"), app_path)
+			os.rename(os.path.join(output, f"{self.name}-{self.version}"), app_path)
+
+		except Exception as e:
+			logger.error(f"An unexpected error occurred: {e}")
+
 		return app_path
 
 	def _create_shortcut(self, target_path):
@@ -127,19 +132,25 @@ class InstallWorker(QThread):
 		ps_script_path = os.path.join(target_path,"createshortcut.ps1") 
 
 		command = ["powershell.exe","-NoProfile", "-Command"," Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force"]
-		result = subprocess.run(command, capture_output=True, text=True,creationflags=subprocess.CREATE_NO_WINDOW)
+		self._run_subprocess(command)
+		# result = subprocess.run(command, capture_output=True, text=True,creationflags=subprocess.CREATE_NO_WINDOW)
 
 		# 构建PowerShell命令
 		command = ["powershell.exe", "-NoProfile", "-File", ps_script_path]
+		self._run_subprocess(command)
+
 		# 执行PowerShell命令
-		result = subprocess.run(command, capture_output=True, text=True, encoding='utf-8',creationflags=subprocess.CREATE_NO_WINDOW)
-		if result.stderr:
-			logger.error("Error: {result.stderr}")
+		# result = subprocess.run(command, capture_output=True, text=True, encoding='utf-8',creationflags=subprocess.CREATE_NO_WINDOW)
 
 		command = ["powershell.exe", "-NoProfile", "-Command", "set-executionpolicy restricted -Scope CurrentUser -Force"]
-		result = subprocess.run(command, capture_output=True, text=True, creationflags=subprocess.CREATE_NO_WINDOW)
+		self._run_subprocess(command)
+
+		# result = subprocess.run(command, capture_output=True, text=True, creationflags=subprocess.CREATE_NO_WINDOW)
 
 		logger.info(f"Finished")
+
+	
+		
 
 	def _create_registry(self):
 		logger.info(f"Start to create registry info")
@@ -165,3 +176,18 @@ class InstallWorker(QThread):
 		if is_file(file_path):
 			return self._get_download_size(url) == get_file_size(file_path)
 		return False
+	
+	def _run_subprocess(self, command):
+		try:
+			result = subprocess.run(command, capture_output=True, text=True, creationflags=subprocess.CREATE_NO_WINDOW)
+			logger.info(f'Run {command}, return: {result}')
+		except subprocess.CalledProcessError as e:
+			logger.error(f'Command failed with exit status {e.returncode}')
+			logger.error(f'Stdout: {e.stdout}')
+			logger.error(f'Stderr: {e.stderr}')
+		except FileNotFoundError as e:
+			logger.error(f'Command not found: {e}')
+		except subprocess.TimeoutExpired as e:
+			logger.error(f'Command timed out: {e}')
+		except Exception as e:
+			logger.error(f'An unexpected error occurred: {e}')

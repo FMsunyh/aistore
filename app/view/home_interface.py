@@ -163,7 +163,6 @@ class HomeInterface(ScrollArea):
                     if item["DisplayName"] == app_info.name:
                         state = 'installed'
 
-
                 type_view.addAppCard(
                     self.library,
                     app_info,
@@ -246,9 +245,12 @@ class HomeInterface(ScrollArea):
         signalBus.software_installSig.connect(self.software_install)
         signalBus.software_uninstallSig.connect(self.software_uninstall)
         signalBus.software_runSig.connect(self.software_run)
+        signalBus.software_stopSig.connect(self.software_stop)
 
     def software_run(self, app_card):
         app_name = app_card.app_info.name
+        logger.info(f"Run the process: {app_name}")
+
         # print(app_card.app_info.name)
 
         # title = self.tr('Run ' + app_card.app_info.name)
@@ -260,10 +262,57 @@ class HomeInterface(ScrollArea):
 
         command = f"{cfg.get(cfg.install_folder)}/{app_name}/run_{app_name}.bat"
         start_directory = f"{cfg.get(cfg.install_folder)}/{app_name}"
-        process = subprocess.Popen(command, shell=True, text=True, cwd=start_directory, encoding='utf-8')
-        # logger.info("Return code:", result.code)
-        # logger.info("Output:", result.stdout)
-        # logger.error("Error:", result.stderr)
+        try:
+            app_card.process = subprocess.Popen(command, shell=True, text=True, cwd=start_directory, encoding='utf-8')
+            logger.info(f'Run {command}, return: {app_card.process.pid}')
+        except subprocess.CalledProcessError as e:
+            logger.error(f'Command failed with exit status {e.returncode}')
+            logger.error(f'Stdout: {e.stdout}')
+            logger.error(f'Stderr: {e.stderr}')
+        except FileNotFoundError as e:
+            logger.error(f'Command not found: {e}')
+        except subprocess.TimeoutExpired as e:
+            logger.error(f'Command timed out: {e}')
+        except Exception as e:
+            logger.error(f'An unexpected error occurred: {e}')
+               
+        app_card.set_state('running')
+        app_card.refreshSig.emit()
+        logger.info("Done")
+
+
+    def software_stop(self, app_card):
+        app_name = app_card.app_info.name
+        logger.info(f"Close the process: {app_name}")
+
+        print(app_card.app_info.name)
+        # app_card.process.terminate()
+        # app_card.process.kill()
+
+        command= "taskkill /F /T /PID " + str(app_card.process.pid)
+
+        try:
+            result = subprocess.run(command, shell=True)
+            logger.info(f'Run {command}, return: {result}')
+        except subprocess.CalledProcessError as e:
+            logger.error(f'Command failed with exit status {e.returncode}')
+            logger.error(f'Stdout: {e.stdout}')
+            logger.error(f'Stderr: {e.stderr}')
+        except FileNotFoundError as e:
+            logger.error(f'Command not found: {e}')
+        except subprocess.TimeoutExpired as e:
+            logger.error(f'Command timed out: {e}')
+        except Exception as e:
+            logger.error(f'An unexpected error occurred: {e}')
+
+
+
+        # app_card.process.wait()
+        app_card.set_state('stop')
+        app_card.refreshSig.emit()
+
+        logger.info("Done")
+
 
     def software_install(self, app_card: AppCard):
         def get_url(app_name):

@@ -122,4 +122,4 @@ ExecutionDevice = TypedDict('ExecutionDevice',
 })
 
 
-AppState = Literal['installed','installing', 'install_completed', 'uninstall', 'uninstalling', 'uninstall_completed']
+AppState = Literal['installed','installing', 'install_completed', 'uninstall', 'uninstalling', 'uninstall_completed', 'running', 'stop']
