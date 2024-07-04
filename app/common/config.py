@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-14 18:28:18
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-04 17:20:51
+LastEditTime: 2024-07-04 23:19:11
 FilePath: \aistore\app\common\config.py
 Description: config for aistore
 '''
@@ -72,6 +72,7 @@ class Config(QConfig):
 YEAR = 2024
 AUTHOR = __author__
 VERSION = __version__
+APP_NAME = 'AIStore'
 HELP_URL = "https://www.zjusmart.com/#/"
 REPO_URL = "https://manage.zjusmart.com/vmt/web/user/login"
 EXAMPLE_URL = "https://github.com/zhiyiYo/PyQt-Fluent-Widgets/tree/master/examples"

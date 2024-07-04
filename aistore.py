@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 04:58:48
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-26 18:01:10
+LastEditTime: 2024-07-04 23:18:28
 FilePath: \aistore\demo.py
 Description: main
 '''
@@ -15,7 +15,8 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QApplication
 from qfluentwidgets import FluentTranslator
 
-from app.common.config import cfg
+from app.common.application import SingletonApplication
+from app.common.config import cfg,APP_NAME
 from app.view.main_window import MainWindow
 
 # enable dpi scale
@@ -30,7 +31,8 @@ else:
 QApplication.setAttribute(Qt.AA_UseHighDpiPixmaps)
 
 # create application
-app = QApplication(sys.argv)
+# app = QApplication(sys.argv)
+app = SingletonApplication(sys.argv, APP_NAME)
 app.setAttribute(Qt.AA_DontCreateNativeWidgetSiblings)
 
 # internationalization

@@ -2,14 +2,14 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 05:28:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-04 15:50:10
+LastEditTime: 2024-07-04 23:29:53
 FilePath: \aistore\app\view\main_window.py
 Description: main windows
 '''
 # coding: utf-8
-from PyQt5.QtCore import QUrl, QSize
+from PyQt5.QtCore import QUrl, QSize,Qt
 from PyQt5.QtGui import QIcon, QDesktopServices, QColor
-from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication,qApp
 from PyQt5.QtSql import QSqlDatabase
 
 from qfluentwidgets import (NavigationAvatarWidget, NavigationItemPosition, MessageBox, FluentWindow,
@@ -138,12 +138,34 @@ class MainWindow(FluentWindow):
             self.update_manager = UpdateManager(self, start_up=True)
             self.update_manager.check_for_updates()
 
+    def onAppMessage(self, message: str):
+        if message == "show":
+            if self.windowState() & Qt.WindowMinimized:
+                self.showNormal()
+            else:
+                self.show()
+        else:
+            # self.setPlaylist(self.library.loadFromFiles([message]))
+            self.show()
+
+    def onAppError(self, message: str):
+        """ app error slot """
+        qApp.clipboard().setText(message)
+        w = MessageBox(
+            self.tr("Unhandled exception occurred"),
+            self.tr(
+                "The error message has been written to the paste board and log. Do you want to report?"),
+            self)
+        w.hideCancelButton()
+        w.exec()
+        
+
     def onSupport(self):
         language = cfg.get(cfg.language).value
         if language.name() == "zh_CN":
             QDesktopServices.openUrl(QUrl(HELP_URL))
         else:
-            QDesktopServices.openUrl(QUrl(EN_SUPPORT_URL))
+            QDesktopServices.openUrl(QUrl(HELP_URL))
 
     def resizeEvent(self, e):
         super().resizeEvent(e)
@@ -167,5 +189,7 @@ class MainWindow(FluentWindow):
         signalBus.switchToSampleCard.connect(self.switchToSample)
         signalBus.supportSignal.connect(self.onSupport)
         # signalBus.software_uninstallSig.connect(self.software_uninstall)
-        signalBus.switchToAppInterfaceSig.connect(
-            self.switchToAppInterface)
+        signalBus.switchToAppInterfaceSig.connect(self.switchToAppInterface)
+
+        signalBus.appMessageSig.connect(self.onAppMessage)
+        signalBus.appErrorSig.connect(self.onAppError)

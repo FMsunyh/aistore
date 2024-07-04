@@ -13,6 +13,10 @@ from PyQt5.QtCore import QObject, pyqtSignal
 class SignalBus(QObject):
     """ Signal bus """
 
+    appMessageSig = pyqtSignal(object)          # APP 
+    appErrorSig = pyqtSignal(str)               # APP 
+    appRestartSig = pyqtSignal()                # APP restart
+
     switchToSampleCard = pyqtSignal(str, int)
     micaEnableChanged = pyqtSignal(bool)
     supportSignal = pyqtSignal()
@@ -31,5 +35,7 @@ class SignalBus(QObject):
     software_uninstallSig = pyqtSignal(object)
     software_runSig = pyqtSignal(object)
     software_stopSig = pyqtSignal(object)
+
+
 
 signalBus = SignalBus()

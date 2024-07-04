@@ -22,8 +22,8 @@
     <version>
         <id>3</id>
         <softwareId>2</softwareId>
-        <versionNumber>1.0</versionNumber>
-        <releaseDate>2024-06-01</releaseDate>
+        <versionNumber>24.1.4</versionNumber>
+        <releaseDate>2024-07-03</releaseDate>
         <changelog>
         * Continuously optimize to create the most amazing products and bring you a better user experience
         * New features added
