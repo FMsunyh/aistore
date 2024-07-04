@@ -61,7 +61,7 @@ class InstallWorker(QThread):
 		self._download_file()
 		output = self._extract_file(self.download_file_path, self.install_directory)
 		self._create_shortcut(output)
-		self._create_registy()
+		self._create_registry()
 		
 		self.completed.emit(self.name)
 
@@ -141,8 +141,8 @@ class InstallWorker(QThread):
 
 		logger.info(f"Finished")
 
-	def _create_registy(self):
-		logger.info(f"Start to create registy info")
+	def _create_registry(self):
+		logger.info(f"Start to create registry info")
 		software_name, software_version = os.path.basename(self.url).split('-')
 
 		reg_path = os.path.join(r"Software\aistore", software_name)

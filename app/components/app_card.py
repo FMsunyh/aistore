@@ -18,7 +18,7 @@ class AppCard(SimpleCardWidget):
     refreshSig = pyqtSignal()
     stateChangedSig = pyqtSignal(object)
 
-    def __init__(self, library: Library, app_info: AppInfo, routeKey, index, parent=None):
+    def __init__(self, library: Library, app_info: AppInfo, routeKey, index, state: AppState, parent=None):
         super().__init__(parent=parent)
         self.library = library
         self.app_info = app_info
@@ -29,7 +29,7 @@ class AppCard(SimpleCardWidget):
         self.brief_introduction = app_info.brief_introduction
         self.description = app_info.description
 
-        self.state: AppState =  'uninstall'
+        self.state: AppState =  state
 
         self.iconWidget = IconWidget(self.app_info.icon, self)
         self.titleLabel = QLabel(self.app_info.title, self)
@@ -68,6 +68,7 @@ class AppCard(SimpleCardWidget):
         self.titleLabel.setObjectName('titleLabel')
         self.brief_introductionLabel.setObjectName('briefIntroduction')
 
+        self.refresh()
 
     def initLayout(self):
         self.vbuttonLayout.setAlignment(Qt.AlignVCenter)
@@ -160,7 +161,7 @@ class AppCard(SimpleCardWidget):
         self.button_run.clicked.connect(self.on_button_run_clicked)
         self.button_uninstall.clicked.connect(self.on_button_uninstall_clicked)
 
-        signalBus.software_registySig.connect(self.is_install)
+        signalBus.software_registrySig.connect(self.is_install)
 
         self.refreshSig.connect(self.refresh)
         
@@ -185,9 +186,9 @@ class AppCardView(QWidget):
         self.titleLabel.setObjectName('viewTitleLabel')
         StyleSheet.APP_CARD.apply(self)
 
-    def addAppCard(self, library: Library, app_info: AppInfo, routeKey, index):
+    def addAppCard(self, library: Library, app_info: AppInfo, state: AppState, routeKey, index):
         """ add app card """
-        card = AppCard(library, app_info, routeKey, index,  self)
+        card = AppCard(library, app_info, routeKey, index, state,  self)
         self.flowLayout.addWidget(card)
 
     def refresh(self):

@@ -10,7 +10,7 @@ from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel,QLabel, QVBoxLayout, QH
 from qfluentwidgets import ScrollArea, isDarkTheme, FluentIcon,MessageBox,MessageBoxBase,SubtitleLabel,LineEdit,PushButton,CheckBox,StrongBodyLabel
 import requests
 
-from app.components.app_card import AppCardView
+from app.components.app_card import AppCard, AppCardView
 from app.core.filesystem import is_directory
 from app.core.install_worker import InstallWorker
 from app.core.uninstall_worker import UninstallWorker
@@ -158,9 +158,16 @@ class HomeInterface(ScrollArea):
             
             for app_info in app_infos:
                 # app_info
+
+                for item in self.registry:
+                    if item["DisplayName"] == app_info.name:
+                        state = 'installed'
+
+
                 type_view.addAppCard(
                     self.library,
                     app_info,
+                    state,
                     routeKey="navigationViewInterface",
                     index=0,
                 )
@@ -228,15 +235,15 @@ class HomeInterface(ScrollArea):
         
         self.vBoxLayout.addWidget(self.popularView)
 
-    def set_registy(self, registy):
-        self.registy = registy
+    def set_registry(self, registry):
+        self.registry = registry
 
 
     # def set_apps_state(self):
     #     count =  self.popularView.flowLayout.count()
     #     for index in range(count):
     #         app_name = self.popularView.flowLayout.itemAt(index).widget().name
-    #         for item in self.registy:
+    #         for item in self.registry:
     #             if item["DisplayName"] == app_name:
     #                 self.popularView.flowLayout.itemAt(index).widget().set_state('installed')
 
@@ -267,7 +274,7 @@ class HomeInterface(ScrollArea):
         # logger.info("Output:", result.stdout)
         # logger.error("Error:", result.stderr)
 
-    def software_install(self, app_card):
+    def software_install(self, app_card: AppCard):
         def get_url(app_name):
             info_url = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/{app_name}/info.txt"
             response = requests.get(info_url)
@@ -281,11 +288,11 @@ class HomeInterface(ScrollArea):
 
             return url, version
 
-        app_name = app_card.name
+        app_name = app_card.app_info.name
         # logger.info(app_card.name)
 
-        title = self.tr('Install ') + f"{app_card.name}"
-        w = CustomMessageBox(title=title, app_name=app_card.name, parent=self.window())
+        title = self.tr('Install ') + f"{app_name}"
+        w = CustomMessageBox(title=title, app_name=app_name, parent=self.window())
         if w.exec():
             logger.info("Start to install {}".format(app_name))
 
@@ -311,11 +318,11 @@ class HomeInterface(ScrollArea):
             app_card.refreshSig.emit()
             logger.info("Finished")
 
-    def software_uninstall(self, app_card):
-        app_name = app_card.name
+    def software_uninstall(self, app_card: AppCard):
+        app_name = app_card.app_info.name
 
         title = self.tr('Uninstall')
-        content = self.tr("Do you want to uninstall ") + f"{app_card.name} ?"
+        content = self.tr("Do you want to uninstall ") + f"{app_name} ?"
         w = MessageBox(title, content, self.window())
 
         if w.exec():
@@ -332,14 +339,16 @@ class HomeInterface(ScrollArea):
             logger.info("Finished")
 
 
-    def on_install_thread_finished(self, thread, app_card):
+    def on_install_thread_finished(self, thread, app_card: AppCard):
+        app_name = app_card.app_info.name
+
         self.install_threads.remove(thread)
 
         app_card.set_state('install_completed')
         app_card.refreshSig.emit()
 
-        title = self.tr('Successful installation ') + f"{app_card.name}"
-        content = self.tr(f"Do you want to run ") + f"{app_card.name}?"
+        title = self.tr('Successful installation ') + f"{app_name}"
+        content = self.tr(f"Do you want to run ") + f"{app_name}?"
         w = MessageBox(title, content, self.window())
         if w.exec():
             # title = self.tr('Run ' + app_card.name)
@@ -359,17 +368,17 @@ class HomeInterface(ScrollArea):
 
 
     def on_uninstall_thread_finished(self, thread, app_card):
-        for item in self.registy:
+        for item in self.registry:
             if item["DisplayName"] == app_card.name:
-                self.registy.remove(item)
+                self.registry.remove(item)
         self.uninstall_threads.remove(thread)
 
         app_card.set_state('uninstall_completed')
         app_card.refreshSig.emit()
 
-    def refresh(self):
-        for view in self.type_views:
-            view.refresh()
+    # def refresh(self):
+    #     for view in self.type_views:
+    #         view.refresh()
         
 
 class CustomMessageBox(MessageBoxBase):

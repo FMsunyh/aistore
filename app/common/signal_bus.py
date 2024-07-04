@@ -25,7 +25,7 @@ class SignalBus(QObject):
     facefusion_installSig = pyqtSignal()
     facefusion_finishedSig = pyqtSignal()
 
-    software_registySig = pyqtSignal(list)
+    software_registrySig = pyqtSignal(list)
     
     software_installSig = pyqtSignal(object)
     software_uninstallSig = pyqtSignal(object)

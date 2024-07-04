@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-14 18:28:18
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-04 13:49:01
+LastEditTime: 2024-07-04 15:35:57
 FilePath: \aistore\app\common\config.py
 Description: config for aistore
 '''
@@ -81,8 +81,8 @@ ZH_SUPPORT_URL = "https://qfluentwidgets.com/zh/price/"
 EN_SUPPORT_URL = "https://qfluentwidgets.com/price/"
 
 REGISTY_PATH = r"Software\aistore"
-# SERVER_IP = "183.232.235.52"
-SERVER_IP = "172.30.9.84" # local test
+SERVER_IP = "183.232.235.52"
+# SERVER_IP = "172.30.9.84" # local test
 SERVER_PORT = "7860"
 
 UPDATE_INFO_URL = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/latest_version_info.txt"  # Replace with your URL

@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 05:28:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-03 15:21:23
+LastEditTime: 2024-07-04 15:50:10
 FilePath: \aistore\app\view\main_window.py
 Description: main windows
 '''
@@ -36,6 +36,8 @@ class MainWindow(FluentWindow):
 
     def __init__(self):
         super().__init__()
+        self.init_data()
+
         self.initWindow()
         self.createWidgets()
 
@@ -49,20 +51,13 @@ class MainWindow(FluentWindow):
         self.initNavigation()
         self.initWidget()
 
-
         self.splashScreen.finish()
-
-        self.init_data()
-        # self.check_software_registy()
 
         self.onInitFinished()
     
     def createWidgets(self):
-        DBInitializer.init()
-        self.library = Library(QSqlDatabase.database(DBInitializer.CONNECTION_NAME))
-    
         # create sub interface
-        self.homeInterface = HomeInterface(library = self.library, parent=self)
+        self.homeInterface = HomeInterface(library = self.library, registry=self.registry, parent=self)
         self.navigationViewInterface = NavigationViewInterface(self)
         self.settingInterface = SettingInterface(self)
 
@@ -132,16 +127,11 @@ class MainWindow(FluentWindow):
     def initWidget(self):
         self.stackedWidget.addWidget(self.appInterface)
 
-
     def init_data(self):
-        self.init_homeInterface()
-        
-
-    def init_homeInterface(self):
-        registy = read_all_installed_software_from_registry(REGISTY_PATH)
-        self.homeInterface.set_registy(registy)
-        # self.homeInterface.set_apps_state()
-        self.homeInterface.refresh()
+        DBInitializer.init()
+        self.library = Library(QSqlDatabase.database(DBInitializer.CONNECTION_NAME))
+    
+        self.registry = read_all_installed_software_from_registry(REGISTY_PATH)
 
     def onInitFinished(self):
         if cfg.get(cfg.checkUpdateAtStartUp):
@@ -169,28 +159,8 @@ class MainWindow(FluentWindow):
                 w.scrollToCard(index)
 
     def switchToAppInterface(self, app_card):
-
         self.appInterface.update_window(app_card)
-
         self.stackedWidget.setCurrentWidget(self.appInterface, False)
-
-    # def check_software_registy(self):
-    #     signalBus.software_registySig.emit(self.software_list)
-
-    # def software_uninstall(self, app_card):
-    #     print(app_card.name)
-    #     title = self.tr('Uninstall ' + app_card.name)
-    #     content = self.tr(f"Do you want to uninstall {app_card.name} ?")
-    #     w = MessageBox(title, content, self)
-    #     if w.exec():
-            
-    #         for item in self.software_list:
-    #             if item["DisplayName"] == app_card.name:
-    #                 self.software_list.remove(item)
-    #         app_card.refreshSig.emit()
-
-    #         for item in self.software_list:
-    #             print(item)
 
     def connectSignalToSlot(self):
         signalBus.micaEnableChanged.connect(self.setMicaEffectEnabled)
