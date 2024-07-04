@@ -42,16 +42,7 @@ Var LaunchApp
 ; Installation sections
 Section "Install"
     ; Check if old version is running
-    Call CheckForRunningProcess
-    Pop $0
-    ${If} $0 != 0
-        MessageBox MB_OKCANCEL "AIStore is currently running. Please close the application before proceeding with the installation." IDOK Continue IDCancel Cancel
-        Cancel:
-        Abort
-        Continue:
-        Call TerminateOldProcess
-        Sleep 1000 ; Wait for a moment to ensure the process is terminated
-    ${EndIf}
+    ; Call CheckForRunningProcess
 
     SetOutPath "$INSTDIR" ; Set output path to installation directory
     
@@ -86,34 +77,12 @@ SectionEnd
 
 ; Function to check for running process
 Function CheckForRunningProcess
-    ; Execute the tasklist command and output the result to a temporary file
-    ExecDos::exec /OUTPUT "$PLUGINSDIR\processes.txt" 'tasklist /FI "IMAGENAME eq aistore.exe"'
-    
-    ; Open the temporary file for reading
-    FileOpen $0 "$PLUGINSDIR\processes.txt" r
-    
-    ; Initialize variables
-    Var /GLOBAL isRunning
-    StrCpy $isRunning 0
-    
-    ; Read each line from the file
-    loop:
-    FileRead $0 $1
-    IfErrors done
-    ${If} $1 != ""
-        ; Check if the line contains the process name
-        ${If} ${Segment1:0:10} == "aistore.exe"
-            StrCpy $isRunning 1
-            goto done
-        ${EndIf}
-        goto loop
-    ${EndIf}
-    
-    done:
-    FileClose $0
-    
-    ; Check if the process was found
-    ${If} $isRunning == 1
+    StrCpy $1 "aistore.exe"
+    nsProcess::_FindProcess $1
+    Pop $0
+
+    ${If} $0 = 0
+        MessageBox MB_OK "AIStore is currently running. Please close the application before proceeding with the installation."
         Push 1
     ${Else}
         Push 0
@@ -160,3 +129,13 @@ Function CustomPageLeave
     StrCmp $0 ${BST_CHECKED} 0 +2
     Call StartApplication
 FunctionEnd
+
+; Function .onInit
+;     StrCpy $1 "aistore.exe"
+;     nsProcess::_FindProcess "$1" 
+;     Pop $R0
+;     ${If} $R0 = 0
+;       MessageBox MB_OK|MB_ICONSTOP "AIStore is currently running. Please close the application before proceeding with the installation." IDOK
+;       ;Abort
+;     ${EndIf}
+; FunctionEnd

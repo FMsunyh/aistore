@@ -1,4 +1,5 @@
 import sys
+import tempfile
 import requests
 import os
 import subprocess
@@ -6,12 +7,9 @@ from PyQt5.QtCore import QThread, pyqtSignal, QObject
 from PyQt5.QtWidgets import QApplication
 from qfluentwidgets import MessageBox
 # import ptvsd
-from app.common.config import SERVER_IP,SERVER_PORT
+from app.common.config import VERSION,UPDATE_INFO_URL
 
 from app.common.logger import logger
-
-CURRENT_VERSION = "1.1.0"
-UPDATE_INFO_URL = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/latest_version_info.txt"  # Replace with your URL
 
 class UpdateChecker(QThread):
     update_found = pyqtSignal(dict)
@@ -28,7 +26,7 @@ class UpdateChecker(QThread):
             if response.status_code == 200:
                 latest_version_info = response.json()
                 latest_version = latest_version_info['version']
-                if latest_version != CURRENT_VERSION:
+                if latest_version != VERSION:
                     self.update_found.emit(latest_version_info)
                 else:
                     self.no_update_found.emit()
@@ -71,7 +69,7 @@ class UpdateManager(QObject):
             # Download the update file
             response = requests.get(download_url, stream=True)
             if response.status_code == 200:
-                update_file_path = os.path.join(os.getcwd(), f"update_{latest_version}.exe")
+                update_file_path = os.path.join(tempfile.gettempdir(), f"update_{latest_version}.exe")
                 with open(update_file_path, 'wb') as f:
                     for chunk in response.iter_content(chunk_size=8192):
                         f.write(chunk)
@@ -79,12 +77,12 @@ class UpdateManager(QObject):
                 self.update_downloaded.emit(update_file_path)
 
                 # Overwrite the current executable with the downloaded file
-                current_executable = sys.argv[0]
-                os.rename(current_executable, current_executable + ".old")  # Backup current executable
-                os.rename(update_file_path, current_executable)
+                # current_executable = sys.argv[0]
+                # os.rename(current_executable, current_executable + ".old")  # Backup current executable
+                # os.rename(update_file_path, current_executable)
 
                 # Restart the application
-                subprocess.Popen([current_executable])
+                subprocess.Popen([update_file_path])
                 
                 # Close the current application
                 QApplication.quit()
@@ -116,7 +114,7 @@ class UpdateManager(QObject):
     def notify_no_update_found(self):
         if not self.start_up:
             title = self.tr('No Update')
-            content = self.tr("You are using the latest version ") + f"{CURRENT_VERSION}."
+            content = self.tr("You are using the latest version ") + f"{VERSION}."
             w = MessageBox(title, content, self.main_window)
             w.hideCancelButton()
             if w.exec():

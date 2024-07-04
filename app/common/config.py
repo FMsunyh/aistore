@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-14 18:28:18
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-01 10:20:12
+LastEditTime: 2024-07-04 13:49:01
 FilePath: \aistore\app\common\config.py
 Description: config for aistore
 '''
@@ -70,8 +70,8 @@ class Config(QConfig):
 
 
 YEAR = 2024
-AUTHOR = "Firmin.Sun"
-VERSION = __version__
+AUTHOR = "ZhongJu GPU Cloud"
+VERSION = "1.0.5"
 HELP_URL = "https://www.zjusmart.com/#/"
 REPO_URL = "https://manage.zjusmart.com/vmt/web/user/login"
 EXAMPLE_URL = "https://github.com/zhiyiYo/PyQt-Fluent-Widgets/tree/master/examples"
@@ -81,8 +81,11 @@ ZH_SUPPORT_URL = "https://qfluentwidgets.com/zh/price/"
 EN_SUPPORT_URL = "https://qfluentwidgets.com/price/"
 
 REGISTY_PATH = r"Software\aistore"
-SERVER_IP = "183.232.235.52"
+# SERVER_IP = "183.232.235.52"
+SERVER_IP = "172.30.9.84" # local test
 SERVER_PORT = "7860"
+
+UPDATE_INFO_URL = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/latest_version_info.txt"  # Replace with your URL
 
 cfg = Config()
 cfg.themeMode.value = Theme.AUTO
