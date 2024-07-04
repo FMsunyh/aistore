@@ -74,20 +74,21 @@ class SettingInterface(ScrollArea):
             FIF.LANGUAGE,
             self.tr('Language'),
             self.tr('Set your preferred language for UI'),
+            # texts=['简体中文', '繁體中文', 'English', self.tr('Use system setting')],
             texts=['简体中文', '繁體中文', 'English', self.tr('Use system setting')],
             parent=self.personalGroup
         )
 
-        # material
-        self.materialGroup = SettingCardGroup(
-            self.tr('Material'), self.scrollWidget)
-        self.blurRadiusCard = RangeSettingCard(
-            cfg.blurRadius,
-            FIF.ALBUM,
-            self.tr('Acrylic blur radius'),
-            self.tr('The greater the radius, the more blurred the image'),
-            self.materialGroup
-        )
+        # # material
+        # self.materialGroup = SettingCardGroup(
+        #     self.tr('Material'), self.scrollWidget)
+        # self.blurRadiusCard = RangeSettingCard(
+        #     cfg.blurRadius,
+        #     FIF.ALBUM,
+        #     self.tr('Acrylic blur radius'),
+        #     self.tr('The greater the radius, the more blurred the image'),
+        #     self.materialGroup
+        # )
 
         # update software
         self.updateSoftwareGroup = SettingCardGroup(
@@ -144,7 +145,7 @@ class SettingInterface(ScrollArea):
         self.personalGroup.addSettingCard(self.zoomCard)
         self.personalGroup.addSettingCard(self.languageCard)
 
-        self.materialGroup.addSettingCard(self.blurRadiusCard)
+        # self.materialGroup.addSettingCard(self.blurRadiusCard)
 
         self.updateSoftwareGroup.addSettingCard(self.updateOnStartUpCard)
 
@@ -153,10 +154,10 @@ class SettingInterface(ScrollArea):
         # add setting card group to layout
         self.expandLayout.setSpacing(28)
         self.expandLayout.setContentsMargins(36, 10, 36, 0)
-        self.expandLayout.addWidget(self.personalGroup)
-        self.expandLayout.addWidget(self.materialGroup)
-        self.expandLayout.addWidget(self.updateSoftwareGroup)
         self.expandLayout.addWidget(self.aboutGroup)
+        self.expandLayout.addWidget(self.personalGroup)
+        # self.expandLayout.addWidget(self.materialGroup)
+        self.expandLayout.addWidget(self.updateSoftwareGroup)
 
     def __showRestartTooltip(self):
         """ show restart tooltip """

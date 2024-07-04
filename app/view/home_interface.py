@@ -282,6 +282,9 @@ class HomeInterface(ScrollArea):
 
 
     def software_stop(self, app_card):
+        if app_card.process is None:
+            return
+        
         app_name = app_card.app_info.name
         logger.info(f"Close the process: {app_name}")
 

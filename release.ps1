@@ -10,11 +10,11 @@ Write-Host "Step 2: Running PyInstaller translations"
 cd D:\aistore
 # lupdate .\aistore.pro
 # linguist app/resource/i18n/gallery.zh_CN.ts
-lrelease app/resource/i18n/gallery.zh_CN.ts
+# lrelease app/resource/i18n/gallery.zh_CN.ts
 
 # 重新编译资源
 Write-Host "Recompiling resources"
-pyrcc5 -o ./app/common/resource.py ./app/resource/resource.qrc
+# pyrcc5 -o ./app/common/resource.py ./app/resource/resource.qrc
 
 Write-Host "Creating PyInstaller package"
 pyinstaller --onefile --noconsole --distpath .\.pyInstaller --icon=.\aistore.ico .\aistore.py
@@ -25,4 +25,5 @@ Write-Host "Step 3: Compiling installer with NSIS"
 cd D:\aistore\.install
 makensis ./aistore.nsi
 
+cd D:\aistore
 Write-Host "Publishing completed"

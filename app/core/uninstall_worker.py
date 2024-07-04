@@ -17,7 +17,6 @@ from typing import List
 from functools import lru_cache
 
 from app.core.registry import write_install_info_to_registry,delete_software_registry_info
-import app.core.wording
 from app.core.common_helper import is_macos
 from app.core.filesystem import get_file_size, is_file
 from PyQt5.QtCore import QThread, pyqtSignal, QObject

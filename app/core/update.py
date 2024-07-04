@@ -10,6 +10,7 @@ from qfluentwidgets import MessageBox
 from app.common.config import VERSION,UPDATE_INFO_URL
 
 from app.common.logger import logger
+from packaging import version
 
 class UpdateChecker(QThread):
     update_found = pyqtSignal(dict)
@@ -26,7 +27,8 @@ class UpdateChecker(QThread):
             if response.status_code == 200:
                 latest_version_info = response.json()
                 latest_version = latest_version_info['version']
-                if latest_version != VERSION:
+
+                if version.parse(latest_version) > version.parse(VERSION):
                     self.update_found.emit(latest_version_info)
                 else:
                     self.no_update_found.emit()
@@ -97,10 +99,11 @@ class UpdateManager(QObject):
         release_notes = latest_version_info.get('release_notes', 'No release notes available.')
 
         title = self.tr('Update Available')
-        content = self.tr('A new version')+f"{latest_version}" + self.tr('is available. Do you want to download this version? \n\n') + self.tr('Release notes:\n') + f"{release_notes}"
+        content = self.tr('A new version')+f" {latest_version} " + self.tr('is available. Do you want to download this version? \n\n') + self.tr('Release notes:\n') + f"{release_notes}"
         
         
         w = MessageBox(title, content, self.main_window)
+        w.hideCancelButton()
 
         # w.setContentCopyable(True)
         if w.exec():

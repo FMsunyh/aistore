@@ -22,6 +22,7 @@ class AppCard(SimpleCardWidget):
         super().__init__(parent=parent)
         self.library = library
         self.app_info = app_info
+        self.process = None
 
         self.index = index
         self.routeKey = routeKey
