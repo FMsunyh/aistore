@@ -1,5 +1,5 @@
 ; Define the name of the installer and the version number
-!define VERSION "1.0.4"
+!define VERSION "1.0.5"
 Name "AIStore"
 OutFile "AIStoreInstaller_${VERSION}.exe"
 
@@ -8,19 +8,57 @@ InstallDir "$PROGRAMFILES\AIStore"
 
 ; Include necessary NSIS libraries
 !include "MUI2.nsh"
-!include "nsDialogs.nsh"
+!include "FileFunc.nsh"
+!include "LogicLib.nsh"
+!include "InstallOptions.nsh"
 
-; Variable to store checkbox state
+; Variables
 Var LaunchApp
+
+; MUI Settings
+!define MUI_ABORTWARNING
+!define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\modern-install.ico"
+!define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
+
+; Welcome page
+!insertmacro MUI_PAGE_WELCOME
+!insertmacro MUI_PAGE_LICENSE "license.txt"
+!insertmacro MUI_PAGE_DIRECTORY
+!insertmacro MUI_PAGE_INSTFILES
+
+; Finish page with checkbox to launch application
+!insertmacro MUI_PAGE_FINISH
+!define MUI_FINISHPAGE_RUN
+
+; Uninstaller pages
+!insertmacro MUI_UNPAGE_WELCOME
+!insertmacro MUI_UNPAGE_CONFIRM
+!insertmacro MUI_UNPAGE_INSTFILES
+!insertmacro MUI_UNPAGE_FINISH
+
+; Language files
+!insertmacro MUI_LANGUAGE "SimpChinese"
 
 ; Installation sections
 Section "Install"
+    ; Check if old version is running
+    Call CheckForRunningProcess
+    Pop $0
+    ${If} $0 != 0
+        MessageBox MB_OKCANCEL "AIStore is currently running. Please close the application before proceeding with the installation." IDOK Continue IDCancel Cancel
+        Cancel:
+        Abort
+        Continue:
+        Call TerminateOldProcess
+        Sleep 1000 ; Wait for a moment to ensure the process is terminated
+    ${EndIf}
+
     SetOutPath "$INSTDIR" ; Set output path to installation directory
     
     ; Copy application files
     File "..\.pyInstaller\aistore.exe" ; Adjust path to your application executable
 
-    ; copy other files
+    ; Copy other files
     File /r "source\*.*" 
 
     ; Create uninstaller
@@ -33,8 +71,6 @@ Section "Install"
     CreateDirectory "$SMPROGRAMS\AIStore"
     CreateShortcut "$SMPROGRAMS\AIStore\AIStore.lnk" "$INSTDIR\aistore.exe"
     CreateShortcut "$SMPROGRAMS\AIStore\Uninstall AIStore.lnk" "$INSTDIR\Uninstall.exe"
-    
-
 SectionEnd
 
 ; Uninstallation section
@@ -48,13 +84,60 @@ Section "Uninstall"
     RMDir /r "$INSTDIR"
 SectionEnd
 
+; Function to check for running process
+Function CheckForRunningProcess
+    ; Execute the tasklist command and output the result to a temporary file
+    ExecDos::exec /OUTPUT "$PLUGINSDIR\processes.txt" 'tasklist /FI "IMAGENAME eq aistore.exe"'
+    
+    ; Open the temporary file for reading
+    FileOpen $0 "$PLUGINSDIR\processes.txt" r
+    
+    ; Initialize variables
+    Var /GLOBAL isRunning
+    StrCpy $isRunning 0
+    
+    ; Read each line from the file
+    loop:
+    FileRead $0 $1
+    IfErrors done
+    ${If} $1 != ""
+        ; Check if the line contains the process name
+        ${If} ${Segment1:0:10} == "aistore.exe"
+            StrCpy $isRunning 1
+            goto done
+        ${EndIf}
+        goto loop
+    ${EndIf}
+    
+    done:
+    FileClose $0
+    
+    ; Check if the process was found
+    ${If} $isRunning == 1
+        Push 1
+    ${Else}
+        Push 0
+    ${EndIf}
+FunctionEnd
+
+; Function to terminate the old process
+Function TerminateOldProcess
+    ExecDos::exec 'taskkill /F /IM aistore.exe'
+FunctionEnd
+
+; Function to start the application
+Function StartApplication
+    Exec '"$INSTDIR\aistore.exe"'
+FunctionEnd
+
 ; Page for custom installation options
-Page directory
-Page instfiles
 Page custom CustomPageCreate CustomPageLeave
 
 ; Custom page functions
+Var Label
 Function CustomPageCreate
+    !insertmacro MUI_HEADER_TEXT "Select additional tasks" ""
+    !insertmacro MUI_HEADER_TEXT " " " "
     nsDialogs::Create /NOUNLOAD 1018
     Pop $0
     
@@ -62,7 +145,10 @@ Function CustomPageCreate
         Abort
     ${EndIf}
     
-    ${NSD_CreateCheckbox} 0 0 100% 10% "Launch AIStore"
+    ${NSD_CreateLabel} 0 0 100% 12u "Hello, Start the AiStore immediately!"
+	Pop $Label
+
+    ${NSD_CreateCheckbox} 0 20u 100% 10u "Launch AIStore"
     Pop $LaunchApp
     ${NSD_SetState} $LaunchApp ${BST_CHECKED}
     
@@ -71,13 +157,6 @@ FunctionEnd
 
 Function CustomPageLeave
     ${NSD_GetState} $LaunchApp $0
-
     StrCmp $0 ${BST_CHECKED} 0 +2
-    ; Run the application if the checkbox is checked
-    
-    Exec '"$INSTDIR\aistore.exe"'
-
+    Call StartApplication
 FunctionEnd
-
-; Include additional language support if needed
-!insertmacro MUI_LANGUAGE "English"
