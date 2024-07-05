@@ -29,7 +29,7 @@ makensis ./aistore.nsi
 # 4. 发布到线上
 Write-Host "Step 4: Upload the new version to http server"
 cd D:\aistore
-python uploader_installer.py
+python upload_installer.py
 
 
 cd D:\aistore

@@ -80,7 +80,7 @@ class SingletonApplication(QApplication):
 
 def exception_hook(exception: BaseException, value, tb):
     """ exception callback function """
-    SingletonApplication.logger.error("Unhandled exception", (exception, value, tb))
+    SingletonApplication.logger.error("Unhandled exception: {exception}, {value}, {tb}")
     message = '\n'.join([''.join(traceback.format_tb(tb)),
                         '{0}: {1}'.format(exception.__name__, value)])
     signalBus.appErrorSig.emit(message)
