@@ -7,7 +7,7 @@ from PyQt5.QtCore import Qt, QRectF
 from PyQt5.QtGui import QPixmap, QPainter, QColor, QBrush, QPainterPath, QLinearGradient
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel,QLabel, QVBoxLayout, QHBoxLayout,QFileDialog
 
-from qfluentwidgets import ScrollArea, isDarkTheme, FluentIcon,MessageBox,MessageBoxBase,SubtitleLabel,LineEdit,PushButton,CheckBox,StrongBodyLabel
+from qfluentwidgets import ScrollArea, isDarkTheme, FluentIcon,MessageBox,MessageBoxBase,SubtitleLabel,LineEdit,PushButton,CheckBox,StrongBodyLabel,InfoBar, InfoBarIcon, FluentIcon, InfoBarPosition
 import requests
 
 from app.components.app_card import AppCard, AppCardView
@@ -278,6 +278,17 @@ class HomeInterface(ScrollArea):
                
         app_card.set_state('running')
         app_card.refreshSig.emit()
+
+        InfoBar.success(
+            title=self.tr(f'Running {app_card.app_info.title}'),
+            content=self.tr("It takes some time to start the application, please be patient and wait for a moment."),
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.TOP,
+            duration=5000,
+            parent=self.window()
+        )
+
         logger.info("Done")
 
 
@@ -288,7 +299,6 @@ class HomeInterface(ScrollArea):
         app_name = app_card.app_info.name
         logger.info(f"Close the process: {app_name}")
 
-        print(app_card.app_info.name)
         # app_card.process.terminate()
         # app_card.process.kill()
 
@@ -309,10 +319,19 @@ class HomeInterface(ScrollArea):
             logger.error(f'An unexpected error occurred: {e}')
 
 
-
         # app_card.process.wait()
         app_card.set_state('stop')
         app_card.refreshSig.emit()
+
+        InfoBar.success(
+            title=self.tr(f'Stopping {app_card.app_info.title}'),
+            content=self.tr("It takes some time to stop the application, please be patient and wait for a moment."),
+            orient=Qt.Horizontal,
+            isClosable=True,
+            position=InfoBarPosition.TOP,
+            duration=5000,
+            parent=self.window()
+        )
 
         logger.info("Done")
 
@@ -332,12 +351,13 @@ class HomeInterface(ScrollArea):
             return url, version
 
         app_name = app_card.app_info.name
+        app_title = app_card.app_info.title
         # logger.info(app_card.app_info.name)
 
-        title = self.tr('Install ') + f"{app_name}"
+        title = self.tr('Install ') + f"{app_title}"
         w = CustomMessageBox(title=title, app_name=app_name, parent=self.window())
         if w.exec():
-            logger.info("Start to install {}".format(app_name))
+            logger.info("Start to install {}".format(app_title))
 
             url, version = get_url(app_name)
             logger.info(f"{url}, {version}")
@@ -363,13 +383,14 @@ class HomeInterface(ScrollArea):
 
     def software_uninstall(self, app_card: AppCard):
         app_name = app_card.app_info.name
+        app_title = app_card.app_info.title
 
         title = self.tr('Uninstall')
-        content = self.tr("Do you want to uninstall ") + f"{app_name} ?"
+        content = self.tr("Do you want to uninstall ") + f"{app_title} ?"
         w = MessageBox(title, content, self.window())
 
         if w.exec():
-            logger.info("Start to uninstall {}".format(app_name))
+            logger.info("Start to uninstall {}".format(app_title))
 
             thread = UninstallWorker(app_name , cfg.get(cfg.install_folder))
             thread.progress.connect(app_card.update_progress_bar)
@@ -384,14 +405,15 @@ class HomeInterface(ScrollArea):
 
     def on_install_thread_finished(self, thread, app_card: AppCard):
         app_name = app_card.app_info.name
+        app_title = app_card.app_info.title
 
         self.install_threads.remove(thread)
 
         app_card.set_state('install_completed')
         app_card.refreshSig.emit()
 
-        title = self.tr('Successful installation ') + f"{app_name}"
-        content = self.tr(f"Do you want to run ") + f"{app_name}?"
+        title = self.tr('Successful installation ') + f"{app_title}"
+        content = self.tr(f"Do you want to run ") + f"{app_title}?"
         w = MessageBox(title, content, self.window())
         if w.exec():
             # title = self.tr('Run ' + app_card.app_info.name)
@@ -401,13 +423,16 @@ class HomeInterface(ScrollArea):
             # if w.exec():
             #     print("run")
        
+            self.software_run(app_card)
+            # command = f"{cfg.get(cfg.install_folder)}/{app_name}/run_{app_name}.bat"
+            # start_directory = f"{cfg.get(cfg.install_folder)}/{app_name}"
+            # process = subprocess.Popen(command, shell=True, text=True, cwd=start_directory, encoding='utf-8')
+            # # logger.info("Return code:", result.code)
+            # # logger.info("Output:", result.stdout)
+            # # logger.error("Error:", result.stderr)
 
-            command = f"{cfg.get(cfg.install_folder)}/{app_name}/run_{app_name}.bat"
-            start_directory = f"{cfg.get(cfg.install_folder)}/{app_name}"
-            process = subprocess.Popen(command, shell=True, text=True, cwd=start_directory, encoding='utf-8')
-            # logger.info("Return code:", result.code)
-            # logger.info("Output:", result.stdout)
-            # logger.error("Error:", result.stderr)
+            # app_card.set_state('running')
+            # app_card.refreshSig.emit()
 
 
     def on_uninstall_thread_finished(self, thread, app_card):

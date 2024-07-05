@@ -11,7 +11,7 @@ from qfluentwidgets import (CardWidget, setTheme, Theme, IconWidget, BodyLabel, 
                             ImageLabel, isDarkTheme, FlowLayout, MSFluentTitleBar, SimpleCardWidget,
                             HeaderCardWidget, InfoBarIcon, HyperlinkLabel, HorizontalFlipView,
                             PrimaryPushButton, TitleLabel, PillPushButton, setFont, SingleDirectionScrollArea,
-                            VerticalSeparator, MSFluentWindow, ProgressRing,ProgressBar,MessageBox)
+                            VerticalSeparator, MSFluentWindow, ProgressRing,ProgressBar,MessageBox,InfoBar, InfoBarIcon, FluentIcon, InfoBarPosition,)
 
 from qfluentwidgets.components.widgets.acrylic_label import AcrylicBrush
 

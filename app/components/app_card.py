@@ -2,7 +2,7 @@
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtWidgets import QWidget, QFrame, QLabel, QVBoxLayout, QHBoxLayout,QPushButton, QSpacerItem, QSizePolicy
 
-from qfluentwidgets import IconWidget, TextWrap, FlowLayout, CardWidget,PushButton,PrimaryPushButton,ProgressRing,SimpleCardWidget
+from qfluentwidgets import IconWidget, TextWrap, FlowLayout, CardWidget,PushButton,PrimaryPushButton,ProgressRing,SimpleCardWidget,InfoBar, InfoBarIcon, FluentIcon, InfoBarPosition
 
 from app.database.entity.app_info import AppInfo
 from app.database.library import Library
