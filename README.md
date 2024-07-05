@@ -2,7 +2,7 @@
  * @Author: Firmin.Sun fmsunyh@gmail.com
  * @Date: 2024-06-14 18:28:18
  * @LastEditors: Firmin.Sun fmsunyh@gmail.com
- * @LastEditTime: 2024-06-26 10:43:55
+ * @LastEditTime: 2024-07-05 14:34:24
  * @FilePath: \aistore\README.md
  * @Description: Content of readme
 -->
@@ -97,3 +97,5 @@ pyrcc5 -o ./app/common/resource.py ./app/resource/resource.qrc
 [button.clicked.connect(lambda checked, i=i: self.on_button_clicked(i))](https://stackoverflow.com/questions/35819538/using-lambda-expression-to-connect-slots-in-pyqt)
 
 [超全的VSCode快捷键，收藏！](https://juejin.cn/post/7258140838139641917)
+
+[chsf](https://github.com/ods-im/CuteHttpFileServer)
