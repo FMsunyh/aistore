@@ -2,7 +2,7 @@
  * @Author: Firmin.Sun fmsunyh@gmail.com
  * @Date: 2024-07-01 10:56:29
  * @LastEditors: Firmin.Sun fmsunyh@gmail.com
- * @LastEditTime: 2024-07-01 11:52:33
+ * @LastEditTime: 2024-07-05 15:31:27
  * @FilePath: \aistore\Release.md
  * @Description: 发布版本
 -->
@@ -53,6 +53,14 @@ cd D:\aistore\.install
 ```sh
 makensis ./aistore.nsi
 ```
+
+4. 发布到线上
+```sh
+cd D:\aistore
+python uploader_installer.py
+
+```
+
 
 最终脚本:
 ```sh

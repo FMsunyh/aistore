@@ -25,5 +25,12 @@ Write-Host "Step 3: Compiling installer with NSIS"
 cd D:\aistore\.install
 makensis ./aistore.nsi
 
+
+# 4. 发布到线上
+Write-Host "Step 4: Upload the new version to http server"
+cd D:\aistore
+python uploader_installer.py
+
+
 cd D:\aistore
 Write-Host "Publishing completed"

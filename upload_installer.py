@@ -9,6 +9,7 @@ import os
 from version import __author__,__version__
 
 from app.common.config import SERVER_IP, SERVER_PORT
+from app.common.logger import logger
 # import ptvsd
 
 class FileUploaderThread(QThread):
@@ -47,7 +48,7 @@ class FileUploaderThread(QThread):
         # ptvsd.debug_this_thread()
         try:
             filename = os.path.basename(self.file_path)
-            print(filename)
+            logger.info(filename)
             with open(self.file_path, 'rb') as file:
                 data = file.read()
 
@@ -75,43 +76,59 @@ def rewrite_version(version_info_path):
     with open(version_info_path, 'w') as file:
         json.dump(data, file, indent=4)
 
+    logger.info(f"latest_version_info: {data['version']}")
+
 
 def on_delete_finished(success, message):
     if success:
-        print("Success:", message)
+        logger.info(f"Success: {message}")
     else:
-        print("Error:", message)
+        logger.info("Error: {message}")
     
 
 def on_upload_finished(success, message):
     if success:
-        print("Success:", message)
+        logger.info(f"Success: {message}")
     else:
-        print("Error:", message)
-    QCoreApplication.quit()
+        logger.info("Error: {message}")
 
-def main(file_path, url, folder):
-    upload_thread = FileUploaderThread(file_path, url, folder)
-    upload_thread.delete_finished.connect(on_delete_finished)
-    upload_thread.upload_finished.connect(on_upload_finished)
-    upload_thread.start()
 
+def create_thread(file_path, url, folder):
+    thread = FileUploaderThread(file_path, url, folder)
+    thread.delete_finished.connect(on_delete_finished)
+    thread.upload_finished.connect(on_upload_finished)
+    return thread
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Upload a file to a specified URL.')
-    # parser.add_argument('file_path', type=str, help='The path to the file to upload.')
-    # parser.add_argument('version_info_path', type=str, help='The path to the file to upload.')
-    # args = parser.parse_args()
-
     app = QCoreApplication(sys.argv)
-
     url = f'http://{SERVER_IP}:{SERVER_PORT}/chfs'
-    file_path = f'.install\AIStoreInstaller_{__version__}.exe'
-    version_info_path = f'.install\latest_version_info.json'
+
+    file_path = f'.install/AIStoreInstaller_{__version__}.exe'
+    version_info_path = f'.install/latest_version_info.json'
 
     rewrite_version(version_info_path)
+    
+    threads = []
+    t1 = create_thread(file_path, url, '/aistore_installer')
+    t2 = create_thread(version_info_path, url, '/')
 
-    main(file_path, url,'/aistore_installer')
-    main(version_info_path, url,'/')
+    threads.append(t1)
+    threads.append(t2)
+
+    def check_threads():
+        for t in threads:
+            if t.isRunning():
+                return False
+        return True
+
+    def quit_if_threads_finished():
+        if check_threads():
+            app.quit()
+
+    for t in threads:
+        t.finished.connect(quit_if_threads_finished)
+
+    for t in threads:
+        t.start()
 
     sys.exit(app.exec_())
