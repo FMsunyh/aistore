@@ -86,7 +86,7 @@ SERVER_IP = "183.232.235.52"
 # SERVER_IP = "172.30.9.84" # local test
 SERVER_PORT = "7860"
 
-UPDATE_INFO_URL = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/latest_version_info.txt"  # Replace with your URL
+UPDATE_INFO_URL = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/latest_version_info.json"  # Replace with your URL
 
 cfg = Config()
 cfg.themeMode.value = Theme.AUTO

@@ -71,7 +71,7 @@ def rewrite_version(version_info_path):
     with open(version_info_path, 'r') as file:
         data = json.load(file)
         data['version'] = __version__
-        data['download_url'] = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/AIStoreInstaller_{__version__}.exe"
+        data['download_url'] = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/aistore_installer/AIStoreInstaller_{__version__}.exe"
 
     with open(version_info_path, 'w') as file:
         json.dump(data, file, indent=4)
