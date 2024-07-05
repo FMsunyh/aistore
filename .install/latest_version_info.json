@@ -1,5 +1,5 @@
 {
-    "version": "1.1.1",
-    "download_url": "http://183.232.235.52:7860/chfs/shared/aistore_installer/AIStoreInstaller_1.1.1.exe",
+    "version": "1.1.2",
+    "download_url": "http://183.232.235.52:7860/chfs/shared/aistore_installer/AIStoreInstaller_1.1.2.exe",
     "release_notes": "This update includes several bug fixes and performance improvements."
 }
