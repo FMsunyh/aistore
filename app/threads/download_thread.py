@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-07-05 16:27:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-05 17:33:53
+LastEditTime: 2024-07-05 18:15:26
 Description: download thread
 
 '''
@@ -20,7 +20,7 @@ from app.common.logger import logger
 import urllib.request
 from functools import lru_cache
 
-import ptvsd
+# import ptvsd
 
 class DownloadThread(QThread):
     download_progress = pyqtSignal(int)
@@ -35,7 +35,7 @@ class DownloadThread(QThread):
         self._download_file()
 
     def _download_file(self):
-        ptvsd.debug_this_thread()
+        # ptvsd.debug_this_thread()
         filename = os.path.basename(self.url)
 
         if self.output_dir=='':

@@ -57,8 +57,8 @@ class UpdateManager(QObject):
         self.update_checker_thread = UpdateChecker(parent=self)
         self.download_thread = None
         self.start_up = start_up
-        self.progress_window = ProgressWindow(self.main_window)
-
+        
+        self.progress_window = None
         self.connectSignalToSlot()
 
     def connectSignalToSlot(self):
@@ -159,6 +159,7 @@ class UpdateManager(QObject):
         w = MessageBox(title, content, self.main_window)
         w.hideCancelButton()
         if w.exec():
+            
             try:
                 command = [update_file_path]
                 process = subprocess.Popen(command, creationflags=subprocess.CREATE_NO_WINDOW)
@@ -174,7 +175,10 @@ class UpdateManager(QObject):
             except Exception as e:
                 logger.error(f'An unexpected error occurred: {e}')
 
+            QApplication.quit()   
+
     def start_download(self,download_url):
+        self.progress_window = ProgressWindow(self.main_window)
         self.download_thread = DownloadThread(download_url,output_dir='', parent=self)
         self.download_thread.download_progress.connect(self.progress_window.set_progress)
         self.download_thread.download_complete.connect(self.on_install_update)
