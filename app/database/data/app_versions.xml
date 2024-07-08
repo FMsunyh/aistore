@@ -7,6 +7,7 @@
         <changelog>
         Continuously optimize to create the most amazing products and bring you a better user experience
         Initial release
+        @Stable Diffusion WebUI
         </changelog>
     </version>
     <version>
@@ -17,6 +18,7 @@
         <changelog>
         * Continuously optimize to create the most amazing products and bring you a better user experience
         * Bug fixes and improvements
+        @Stable Diffusion WebUI
         </changelog>
     </version>
     <version>
@@ -37,6 +39,40 @@
         <changelog>
         * Continuously optimize to create the most amazing products and bring you a better user experience
         * New features added
+        </changelog>
+    </version>
+        <version>
+        <id>5</id>
+        <softwareId>1</softwareId>
+        <versionNumber>1.1</versionNumber>
+        <releaseDate>2024-07-08</releaseDate>
+        <changelog>
+        * Update to Stable Diffusion WebUI 1.9.4
+        * Continuously optimize to create the most amazing products and bring you a better user experience
+        * Bug fixes and improvements
+        @Stable Diffusion WebUI
+        </changelog>
+    </version>
+    <version>
+        <id>6</id>
+        <softwareId>3</softwareId>
+        <versionNumber>2.6.1</versionNumber>
+        <releaseDate>2024-07-06</releaseDate>
+        <changelog>
+        * Update to FaceFusion 2.6.1
+        * Continuously optimize to create the most amazing products and bring you a better user experience
+        * New features added
+        @FaceFusion
+        </changelog>
+    </version>
+        <version>
+        <id>7</id>
+        <softwareId>4</softwareId>
+        <versionNumber>1.0.0</versionNumber>
+        <releaseDate>2024-01-15</releaseDate>
+        <changelog>
+        Initial release
+        @LookUp
         </changelog>
     </version>
 </app_versions>

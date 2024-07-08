@@ -14,7 +14,7 @@ cd D:\aistore
 
 # 重新编译资源
 Write-Host "Recompiling resources"
-# pyrcc5 -o ./app/common/resource.py ./app/resource/resource.qrc
+pyrcc5 -o ./app/common/resource.py ./app/resource/resource.qrc
 
 Write-Host "Creating PyInstaller package"
 pyinstaller --onefile --noconsole --distpath .\.pyInstaller --icon=.\aistore.ico .\aistore.py

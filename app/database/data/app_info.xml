@@ -3,8 +3,8 @@
         <id>1</id>
         <name>sd_webui</name>
         <title>Stable Diffusion WebUI</title>
-        <icon>:/gallery/images/app_icons/stable_diffusion_webui.ico</icon>
-        <typeId>3</typeId>
+        <icon>:/gallery/images/app_icons/sd_webui.ico</icon>
+        <typeId>1</typeId>
         <developerId>1</developerId>
         <briefIntroduction>A web interface for Stable Diffusion.</briefIntroduction>
         <description>Stable Diffusion WebUI is a browser interface based on the Gradio library, which integrates a variety of open source AI painting models, such as NovelAi/Stable Diffusion, etc. Through Stable Diffusion WebUI, users can easily configure and generate AI paintings, implement various refined settings, and help users easily generate high-quality paintings.</description>
@@ -16,7 +16,7 @@
         <name>kohya_ss</name>
         <title>Kohya_ss GUI</title>
         <icon>:/gallery/images/app_icons/kohya_ss.ico</icon>
-        <typeId>2</typeId>
+        <typeId>1</typeId>
         <developerId>1</developerId>
         <briefIntroduction>Kohya's Stable Diffusion trainers.</briefIntroduction>
         <description>Kohya_ss GUI is an open source Stable Diffusion large model training and LoRA model training tool. It provides data labeling function and a friendly training parameter setting interface. It is easy to operate and easy for novices to get started.</description>
@@ -28,10 +28,22 @@
         <name>facefusion</name>
         <title>FaceFusion</title>
         <icon>:/gallery/images/app_icons/facefusion.ico</icon>
-        <typeId>1</typeId>
+        <typeId>2</typeId>
         <developerId>1</developerId>
         <briefIntroduction>Next generation face swapper and enhancer.</briefIntroduction>
         <description>FaceFusion is an open source AI video/image face-swapping tool that can replace one person's facial features with another person's body, synchronizing facial expressions and movements. The UI interface design is similar to Stable Diffuison. It is easy to operate and even a novice can easily get started.</description>
+        <cn_description>FaceFusion是一款开源的AI视频/图片换脸工具，它能够将一个人的脸部特征替换到另一个人的身体上，实现面部表情和动作的同步。UI界面设计，类似像Stable Diffuison一样，在网页打开操作页面，操作方便，小白轻松上手。</cn_description>
+        <releaseDate>2023-01-15</releaseDate>
+    </item>
+    <item>
+        <id>4</id>
+        <name>lookup</name>
+        <title>LookUp</title>
+        <icon>:/gallery/images/logo.png</icon>
+        <typeId>3</typeId>
+        <developerId>1</developerId>
+        <briefIntroduction>LookUp.</briefIntroduction>
+        <description>LookUp is an open source AI video/image processing tool.</description>
         <cn_description>FaceFusion是一款开源的AI视频/图片换脸工具，它能够将一个人的脸部特征替换到另一个人的身体上，实现面部表情和动作的同步。UI界面设计，类似像Stable Diffuison一样，在网页打开操作页面，操作方便，小白轻松上手。</cn_description>
         <releaseDate>2023-01-15</releaseDate>
     </item>

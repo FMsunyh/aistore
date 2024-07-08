@@ -3,8 +3,8 @@ $ScriptDirectory = Split-Path -Path $MyInvocation.MyCommand.Definition -Parent
 
 # 定义快捷方式的路径和目标文件路径
 $ShortcutPath = [System.IO.Path]::Combine([System.Environment]::GetFolderPath('Desktop'), 'facefusion.lnk')
-$TargetPath = [System.IO.Path]::Combine($ScriptDirectory, 'facefusion.bat')
-$IconPath = [System.IO.Path]::Combine($ScriptDirectory, 'facefusion.ico')
+$TargetPath = [System.IO.Path]::Combine($ScriptDirectory, 'facefusion.exe')
+# $IconPath = [System.IO.Path]::Combine($ScriptDirectory, 'facefusion.ico')
 
 # 创建一个Shell对象
 $WScriptShell = New-Object -ComObject WScript.Shell
@@ -22,7 +22,7 @@ $Shortcut.WorkingDirectory = $ScriptDirectory
 # $Shortcut.Description = '指向example.txt的快捷方式'
 
 # 可选：设置快捷方式的图标
-$Shortcut.IconLocation = "$IconPath, 0"
+# $Shortcut.IconLocation = "$IconPath, 0"
 
 # 保存快捷方式
 $Shortcut.Save()

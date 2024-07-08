@@ -260,7 +260,7 @@ class HomeInterface(ScrollArea):
         # if w.exec():
         #     print("run")
 
-        command = f"{cfg.get(cfg.install_folder)}/{app_name}/run_{app_name}.bat"
+        command = f"{cfg.get(cfg.install_folder)}/{app_name}/launch.bat"
         start_directory = f"{cfg.get(cfg.install_folder)}/{app_name}"
         try:
             app_card.process = subprocess.Popen(command, shell=True, text=True, cwd=start_directory, encoding='utf-8')
@@ -424,15 +424,6 @@ class HomeInterface(ScrollArea):
             #     print("run")
        
             self.software_run(app_card)
-            # command = f"{cfg.get(cfg.install_folder)}/{app_name}/run_{app_name}.bat"
-            # start_directory = f"{cfg.get(cfg.install_folder)}/{app_name}"
-            # process = subprocess.Popen(command, shell=True, text=True, cwd=start_directory, encoding='utf-8')
-            # # logger.info("Return code:", result.code)
-            # # logger.info("Output:", result.stdout)
-            # # logger.error("Error:", result.stderr)
-
-            # app_card.set_state('running')
-            # app_card.refreshSig.emit()
 
 
     def on_uninstall_thread_finished(self, thread, app_card):
