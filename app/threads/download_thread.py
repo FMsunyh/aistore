@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-07-05 16:27:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-05 18:15:26
+LastEditTime: 2024-07-08 17:55:05
 Description: download thread
 
 '''
@@ -48,7 +48,8 @@ class DownloadThread(QThread):
         if initial_size < total_size:
             try:
                 command = [ 'curl', '--create-dirs', '--silent', '--insecure', '--location', '--continue-at', '-', '--output', ouput_path, self.url ]
-                process = subprocess.Popen(command, creationflags=subprocess.CREATE_NO_WINDOW)
+                # process = subprocess.Popen(command, creationflags=subprocess.CREATE_NO_WINDOW)
+                process = subprocess.Popen(command)
                 logger.info(f'Run {command}, return: {process.pid}')
                 current_size = initial_size
                 while current_size < total_size:
