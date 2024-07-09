@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-24 14:14:17
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-08 17:57:18
+LastEditTime: 2024-07-08 18:53:28
 FilePath: \aistore\app\core\install_worker.py
 Description: install worker
 '''
@@ -175,8 +175,7 @@ class InstallWorker(QThread):
 	
 	def _run_subprocess(self, command):
 		try:
-			# result = subprocess.run(command, capture_output=True, text=True, creationflags=subprocess.CREATE_NO_WINDOW)
-			result = subprocess.run(command, capture_output=True, text=True)
+			result = subprocess.run(command, capture_output=True, text=True, creationflags=subprocess.CREATE_NO_WINDOW)
 			logger.info(f'Run {command}, return: {result}')
 		except subprocess.CalledProcessError as e:
 			logger.error(f'Command failed with exit status {e.returncode}')

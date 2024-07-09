@@ -167,3 +167,4 @@ config
 .PyInstaller
 *.exe
 cache
+lookup

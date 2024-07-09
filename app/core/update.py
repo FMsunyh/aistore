@@ -162,8 +162,8 @@ class UpdateManager(QObject):
             
             try:
                 command = [update_file_path]
-                # process = subprocess.Popen(command, creationflags=subprocess.CREATE_NO_WINDOW)
-                process = subprocess.Popen(command)
+                process = subprocess.Popen(command, creationflags=subprocess.CREATE_NO_WINDOW)
+                # process = subprocess.Popen(command)
                 logger.info(f'Run {command}, return: {process.pid}')
             except subprocess.CalledProcessError as e:
                 logger.error(f'Command failed with exit status {e.returncode}')
