@@ -265,9 +265,8 @@ class HomeInterface(ScrollArea):
         start_directory = f"{cfg.get(cfg.install_folder)}/{app_name}"
         try:
             # app_card.process = subprocess.Popen(command, shell=True, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=start_directory, encoding='utf-8', creationflags=subprocess.CREATE_NEW_CONSOLE)
-            app_card.process = subprocess.Popen(command,  shell=True, text=True, cwd=start_directory, creationflags=subprocess.CREATE_NEW_CONSOLE, encoding='utf-8', )
+            app_card.process = subprocess.Popen(command,  text=True, cwd=start_directory, creationflags=subprocess.CREATE_NEW_CONSOLE, encoding='utf-8')
 
-            # subprocess.Popen(command,  shell=True, text=True, cwd=start_directory)
             logger.info(f'Run {command}, pid: {app_card.process.pid}')
             # logger.info(f'output, return: {output}')
             # logger.info(f'error, return: {error}')
