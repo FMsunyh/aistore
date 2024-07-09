@@ -31,7 +31,55 @@
         <id>5</id>
         <softwareId>3</softwareId>
         <imageURL>:/gallery/images/app_screenshots/facefusion_1.png</imageURL>
-        <description>kohya_ss screenshot 3</description>
+        <description>facefusion screenshot 3</description>
         <uploadDate>2024-07-03</uploadDate>
+    </screenshot>
+    <screenshot>
+        <id>6</id>
+        <softwareId>4</softwareId>
+        <softwareName>comfyui</softwareName>
+        <imageURL>:/gallery/images/app_screenshots/comfyui_screenshot_1.png</imageURL>
+        <description>comfyui screenshot 1</description>
+        <uploadDate>2024-07-09</uploadDate>
+    </screenshot>
+    <screenshot>
+        <id>7</id>
+        <softwareId>4</softwareId>
+        <softwareName>comfyui</softwareName>
+        <imageURL>:/gallery/images/app_screenshots/comfyui_screenshot_2.png</imageURL>
+        <description>comfyui screenshot 2</description>
+        <uploadDate>2024-07-09</uploadDate>
+    </screenshot>
+    <screenshot>
+        <id>8</id>
+        <softwareId>4</softwareId>
+        <softwareName>comfyui</softwareName>
+        <imageURL>:/gallery/images/app_screenshots/comfyui_screenshot_3.png</imageURL>
+        <description>comfyui screenshot 3</description>
+        <uploadDate>2024-07-09</uploadDate>
+    </screenshot>
+    <screenshot>
+        <id>9</id>
+        <softwareId>4</softwareId>
+        <softwareName>comfyui</softwareName>
+        <imageURL>:/gallery/images/app_screenshots/comfyui_screenshot_4.png</imageURL>
+        <description>comfyui screenshot 4</description>
+        <uploadDate>2024-07-09</uploadDate>
+    </screenshot>
+    <screenshot>
+        <id>10</id>
+        <softwareId>4</softwareId>
+        <softwareName>comfyui</softwareName>
+        <imageURL>:/gallery/images/app_screenshots/comfyui_screenshot_5.png</imageURL>
+        <description>comfyui screenshot 5</description>
+        <uploadDate>2024-07-09</uploadDate>
+    </screenshot>
+    <screenshot>
+        <id>11</id>
+        <softwareId>4</softwareId>
+        <softwareName>comfyui</softwareName>
+        <imageURL>:/gallery/images/app_screenshots/comfyui_screenshot_6.png</imageURL>
+        <description>comfyui screenshot 6</description>
+        <uploadDate>2024-07-09</uploadDate>
     </screenshot>
 </screenshots>

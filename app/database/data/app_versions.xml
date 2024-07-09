@@ -65,8 +65,21 @@
         @FaceFusion
         </changelog>
     </version>
-        <version>
+    <version>
         <id>7</id>
+        <softwareId>4</softwareId>
+        <softwareName>comfyui</softwareName>
+        <versionNumber>1.0.0</versionNumber>
+        <releaseDate>2024-07-09</releaseDate>
+        <changelog>
+        The builds in this release will always be relatively up to date with the latest code.
+        pytorch 2.3 cu121
+        @ComfyUI
+        </changelog>
+    </version>
+
+    <version>
+        <id>100</id>
         <softwareId>4</softwareId>
         <versionNumber>1.0.0</versionNumber>
         <releaseDate>2024-01-15</releaseDate>

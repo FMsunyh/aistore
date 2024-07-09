@@ -136,11 +136,18 @@
         <file>images/app_screenshots/kohya_ss_3.jpg</file>
         <file>images/app_screenshots/facefusion_1.png</file>
         <file>images/app_screenshots/stable_diffusion_webui_1.png</file>
+        <file>images/app_screenshots/comfyui_screenshot_1.png</file>
+        <file>images/app_screenshots/comfyui_screenshot_2.png</file>
+        <file>images/app_screenshots/comfyui_screenshot_3.png</file>
+        <file>images/app_screenshots/comfyui_screenshot_4.png</file>
+        <file>images/app_screenshots/comfyui_screenshot_5.png</file>
+        <file>images/app_screenshots/comfyui_screenshot_6.png</file>
 
 
         <file>images/app_icons/sd_webui.ico</file>
         <file>images/app_icons/kohya_ss.ico</file>
         <file>images/app_icons/facefusion.ico</file>
+        <file>images/app_icons/comfyui.ico</file>
 
 
         <file>qss/dark/gallery_interface.qss</file>

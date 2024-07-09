@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-24 14:14:17
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-08 18:53:28
+LastEditTime: 2024-07-09 10:55:22
 FilePath: \aistore\app\core\install_worker.py
 Description: install worker
 '''
@@ -71,7 +71,10 @@ class InstallWorker(QThread):
 		download_size = self._get_download_size(self.url)
 		if initial_size < download_size:
 			with tqdm(total = download_size, initial = initial_size, desc = 'downloading', unit = 'B', unit_scale = True, unit_divisor = 1024, ascii = ' =', disable = log_level in [ 'warn', 'error' ]) as progress:
-				process = subprocess.Popen([ 'curl', '--create-dirs', '--silent', '--insecure', '--location', '--continue-at', '-', '--output', self.download_file_path, self.url ], creationflags=CREATE_NO_WINDOW)
+				command = ['curl', '--create-dirs', '--silent', '--insecure', '--location', '--continue-at', '-', '--output', self.download_file_path, self.url]
+				process = subprocess.Popen(command, creationflags=CREATE_NO_WINDOW)
+				logger.info(f'Run {command}, pid: {process.pid}')
+
 				# stdout, stderr = process.communicate()
 				current_size = initial_size
 				while current_size < download_size:

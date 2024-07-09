@@ -37,6 +37,18 @@
     </item>
     <item>
         <id>4</id>
+        <name>comfyui</name>
+        <title>ComfyUI</title>
+        <icon>:/gallery/images/app_icons/comfyui.ico</icon>
+        <typeId>1</typeId>
+        <developerId>1</developerId>
+        <briefIntroduction>The most powerful and modular stable diffusion GUI and backend.</briefIntroduction>
+        <description>ComfyUI is an open source AI video/image processing tool, the most powerful and modular ui will let you design and execute advanced stable diffusion pipelines using a graph/nodes/flowchart based interface.</description>
+        <cn_description></cn_description>
+        <releaseDate>2024-07-01</releaseDate>
+    </item>
+    <item>
+        <id>100</id>
         <name>lookup</name>
         <title>LookUp</title>
         <icon>:/gallery/images/logo.png</icon>
