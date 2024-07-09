@@ -23,7 +23,7 @@ class SettingInterface(ScrollArea):
         super().__init__(parent=parent)
         
         self.scrollWidget = QWidget()
-        self.update_manager = UpdateManager(self.scrollWidget)
+        self.update_manager = UpdateManager(self.parent())
 
         self.expandLayout = ExpandLayout(self.scrollWidget)
 
