@@ -77,15 +77,35 @@
         @ComfyUI
         </changelog>
     </version>
-
     <version>
-        <id>100</id>
-        <softwareId>4</softwareId>
+        <id>8</id>
+        <softwareId>5</softwareId>
+        <softwareName>lookup</softwareName>
         <versionNumber>1.0.0</versionNumber>
         <releaseDate>2024-01-15</releaseDate>
         <changelog>
         Initial release
         @LookUp
+        </changelog>
+    </version>
+    <version>
+        <id>9</id>
+        <softwareId>6</softwareId>
+        <versionNumber>2.4.3</versionNumber>
+        <softwareName>fooocus</softwareName>
+        <releaseDate>2024-06-07</releaseDate>
+        <changelog>
+        Continuously optimize to create the most amazing products and bring you a better user experience.
+        </changelog>
+    </version>
+    <version>
+        <id>10</id>
+        <softwareId>7</softwareId>
+        <versionNumber>1.0.0</versionNumber>
+        <softwareName>svd</softwareName>
+        <releaseDate>2024-03-18</releaseDate>
+        <changelog>
+        Continuously optimize to create the most amazing products and bring you a better user experience.
         </changelog>
     </version>
 </app_versions>

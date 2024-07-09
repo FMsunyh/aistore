@@ -48,7 +48,7 @@
         <releaseDate>2024-07-01</releaseDate>
     </item>
     <item>
-        <id>100</id>
+        <id>5</id>
         <name>lookup</name>
         <title>LookUp</title>
         <icon>:/gallery/images/logo.png</icon>
@@ -58,5 +58,27 @@
         <description>LookUp is an open source AI video/image processing tool.</description>
         <cn_description>FaceFusion是一款开源的AI视频/图片换脸工具，它能够将一个人的脸部特征替换到另一个人的身体上，实现面部表情和动作的同步。UI界面设计，类似像Stable Diffuison一样，在网页打开操作页面，操作方便，小白轻松上手。</cn_description>
         <releaseDate>2023-01-15</releaseDate>
+    </item>
+    <item>
+        <id>6</id>
+        <name>fooocus</name>
+        <title>Fooocus</title>
+        <icon>:/gallery/images/app_icons/fooocus.ico</icon>
+        <typeId>1</typeId>
+        <developerId>1</developerId>
+        <briefIntroduction>Fooocus is an image generating software.</briefIntroduction>
+        <description>Fooocus is an open source AI video/image processing tool. It is a rethinking of Stable Diffusion and Midjourney’s designs.</description>
+        <releaseDate>2024-07-09</releaseDate>
+    </item>
+    <item>
+        <id>7</id>
+        <name>svd</name>
+        <title>Stable Video Diffusion</title>
+        <icon>:/gallery/images/app_icons/stable_video_diffusion.ico</icon>
+        <typeId>4</typeId>
+        <developerId>1</developerId>
+        <briefIntroduction>Stable Video Diffusion is state-of-the-art generative AI video model.</briefIntroduction>
+        <description>Stable Video Diffusion is an open source AI video/image processing tool. which for generative video based on the image model Stable Diffusion. </description>
+        <releaseDate>2024-07-09</releaseDate>
     </item>
 </app_info>

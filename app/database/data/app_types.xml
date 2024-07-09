@@ -11,4 +11,8 @@
         <id>3</id>
         <name>Machine Learning</name>
     </type>
+    <type>
+        <id>4</id>
+        <name>AI Video</name>
+    </type>
 </app_types>

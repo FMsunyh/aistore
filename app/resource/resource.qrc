@@ -148,6 +148,8 @@
         <file>images/app_icons/kohya_ss.ico</file>
         <file>images/app_icons/facefusion.ico</file>
         <file>images/app_icons/comfyui.ico</file>
+        <file>images/app_icons/fooocus.ico</file>
+        <file>images/app_icons/stable_video_diffusion.ico</file>
 
 
         <file>qss/dark/gallery_interface.qss</file>
