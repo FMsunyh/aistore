@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-19 17:19:07
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-21 14:22:47
+LastEditTime: 2024-07-10 14:53:46
 FilePath: \aistore\app\core\registry.py
 Description: read and write registry
 '''
@@ -77,7 +77,7 @@ def read_all_installed_software_from_registry(reg_path):
             try:
                 subkey_name = winreg.EnumKey(key, index)
                 subkey_path = f"{reg_path}\\{subkey_name}"
-                print(subkey_path)
+                logger.info(subkey_path)
                 software_list += read_installed_software_from_registry(subkey_path)
             except Exception as e:
                 break  # 如果无法获取某些值，跳过继续下一个

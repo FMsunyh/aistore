@@ -1,9 +1,12 @@
 # coding:utf-8
+import random
 from PyQt5.QtCore import Qt, pyqtSignal
 from PyQt5.QtWidgets import QWidget, QFrame, QLabel, QVBoxLayout, QHBoxLayout,QPushButton, QSpacerItem, QSizePolicy
 
-from qfluentwidgets import IconWidget, TextWrap, FlowLayout, CardWidget,PushButton,PrimaryPushButton,ProgressRing,SimpleCardWidget,InfoBar, InfoBarIcon, FluentIcon, InfoBarPosition
+from qfluentwidgets import IconWidget, TextWrap, FlowLayout, CardWidget,PushButton,PrimaryPushButton,ProgressRing,SimpleCardWidget,InfoBar, InfoBarIcon, FluentIcon, InfoBarPosition,SmoothScrollArea
 
+from app.common.logger import logger
+from app.common.trie import Trie
 from app.database.entity.app_info import AppInfo
 from app.database.library import Library
 from ..common.signal_bus import signalBus
@@ -64,7 +67,7 @@ class AppCard(SimpleCardWidget):
         self.vbuttonLayout = QVBoxLayout()
         # self.vbuttonLayout.setContentsMargins(0, 20, 0, 20)
 
-        self.setFixedSize(500, 120)
+        self.setFixedSize(800, 120)
         self.iconWidget.setFixedSize(48, 48)
 
         self.initLayout()
@@ -190,28 +193,67 @@ class AppCardView(QWidget):
 
     def __init__(self, title: str, parent=None):
         super().__init__(parent=parent)
+        self.cards = []
+        self.trie = Trie()
+        
         self.titleLabel = QLabel(title, self)
         self.vBoxLayout = QVBoxLayout(self)
-        self.flowLayout = FlowLayout()
+        self.flowLayout = FlowLayout(isTight=True)
 
+        self.__initWidget()
+
+
+    def __initWidget(self):
         self.vBoxLayout.setContentsMargins(36, 0, 36, 0)
         self.vBoxLayout.setSpacing(10)
         self.flowLayout.setContentsMargins(0, 0, 0, 0)
         self.flowLayout.setHorizontalSpacing(12)
         self.flowLayout.setVerticalSpacing(12)
 
+
         self.vBoxLayout.addWidget(self.titleLabel)
         self.vBoxLayout.addLayout(self.flowLayout, 1)
 
+        self.__setQss()
+
+
+    def __setQss(self):
         self.titleLabel.setObjectName('viewTitleLabel')
         StyleSheet.APP_CARD.apply(self)
 
     def addAppCard(self, library: Library, app_info: AppInfo, state: AppState, routeKey, index):
         """ add app card """
         card = AppCard(library, app_info, routeKey, index, state,  self)
+
+        self.trie.insert(app_info.title.replace(" ", "").replace("_", ""), len(self.cards))
+        self.cards.append(card)
         self.flowLayout.addWidget(card)
 
     def refresh(self):
         count = self.flowLayout.count()
         for index in range(count):
             self.flowLayout.itemAt(index).widget().refresh()
+
+    def showAllApps(self):
+        self.flowLayout.removeAllWidgets()
+        for card in self.cards:
+            card.show()
+            self.flowLayout.addWidget(card)
+
+        self.flowLayout.update()
+        
+
+    def show_condition(self, keyWord: str):
+        logger.info(f"search application keyWord: {keyWord}")
+        items = self.trie.items(keyWord.lower())
+        indexes = {i[1] for i in items}
+        self.flowLayout.removeAllWidgets()
+
+        for i, card in enumerate(self.cards):
+            isVisible = i in indexes
+            card.setVisible(isVisible)
+            if isVisible:
+                self.flowLayout.addWidget(card)
+
+        self.flowLayout.update()
+        

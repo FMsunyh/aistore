@@ -7,7 +7,7 @@ from PyQt5.QtCore import Qt, QRectF
 from PyQt5.QtGui import QPixmap, QPainter, QColor, QBrush, QPainterPath, QLinearGradient
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel,QLabel, QVBoxLayout, QHBoxLayout,QFileDialog
 
-from qfluentwidgets import ScrollArea, isDarkTheme, FluentIcon,MessageBox,MessageBoxBase,SubtitleLabel,LineEdit,PushButton,CheckBox,StrongBodyLabel,InfoBar, InfoBarIcon, FluentIcon, InfoBarPosition
+from qfluentwidgets import ScrollArea, isDarkTheme, FluentIcon,MessageBox,MessageBoxBase,SubtitleLabel,LineEdit,PushButton,CheckBox,StrongBodyLabel,InfoBar, InfoBarIcon, FluentIcon, InfoBarPosition,SearchLineEdit,PrimaryPushButton
 import requests
 
 from app.components.app_card import AppCard, AppCardView
@@ -124,7 +124,10 @@ class HomeInterface(ScrollArea):
         self.banner = BannerWidget(self)
         self.view = QWidget(self)
         self.vBoxLayout = QVBoxLayout(self.view)
+        self.hBoxLayout = QHBoxLayout()
+        self.searchLineEdit = SearchLineEdit(self)
 
+        
         self.__initWidget()
         self.loadApps3()
         self.__connectSignalToSlot()
@@ -141,6 +144,15 @@ class HomeInterface(ScrollArea):
         self.vBoxLayout.setContentsMargins(0, 0, 0, 36)
         self.vBoxLayout.setSpacing(40)
         self.vBoxLayout.addWidget(self.banner)
+
+        self.searchLineEdit.setPlaceholderText(self.tr('Search application'))
+        self.searchLineEdit.setFixedWidth(304)
+
+        self.hBoxLayout.setContentsMargins(36, 0, 0, 0)
+        self.hBoxLayout.addWidget(self.searchLineEdit)
+        self.hBoxLayout.setAlignment(Qt.AlignLeft)
+
+        self.vBoxLayout.addLayout(self.hBoxLayout)
         self.vBoxLayout.setAlignment(Qt.AlignTop)
 
     def loadApps3(self):
@@ -151,9 +163,7 @@ class HomeInterface(ScrollArea):
         # Popular Tools
         self.type_views = []
         for app_type in self.library.app_types:
-
             type_view = AppCardView(self.tr(f'{app_type.name}'), self.view)
-
             app_infos = self.library.app_info_controller.get_app_infos_by_type_id(app_type.id)
             
             for app_info in app_infos:
@@ -174,69 +184,8 @@ class HomeInterface(ScrollArea):
             self.vBoxLayout.addWidget(type_view)
             self.type_views.append(type_view)
 
-
-    def loadApps2(self):
-        """ load apps """
-
-        # Popular Tools
-        self.popularView = AppCardView(self.tr('Popular Tools'), self.view)
-
-        for item in self.library.app_infos:
-            name = item.name
-            icon = item.icon
-            title = item.title
-            content = item.description
-
-            # app_info, 
-            self.popularView.addAppCard(
-                name=name,
-                icon=icon,
-                title=title,
-                content=self.tr(content),
-                routeKey="navigationViewInterface",
-                index=0,
-                
-            )
-
-        self.vBoxLayout.addWidget(self.popularView)
-
-    def loadApps(self):
-        """ load apps """
-
-        # Popular Tools
-        self.popularView = AppCardView(self.tr('Popular Tools'), self.view)
-        self.popularView.addAppCard(
-            icon=":/gallery/images/controls/CommandBarFlyout.png",
-            title="Stable Diffusion WebUI",
-            content=self.tr("A web interface for Stable Diffusion WebUI."),
-            routeKey="navigationViewInterface",
-            index=0,
-            name="sd_webui"
-        )
-
-        self.popularView.addAppCard(
-            icon=":/gallery/images/controls/CommandBar.png",
-            title="Kohya_ss GUI",
-            content=self.tr("A web interface for training stable diffusion model, base model or lora."),
-            routeKey="navigationViewInterface",
-            index=0,
-            name="kohya_ss"
-        )
-
-        self.popularView.addAppCard(
-            icon=":/gallery/images/controls/MenuFlyout.png",
-            title="FaceFusion",
-            content=self.tr("A web interface for FaceFusion."),
-            routeKey="navigationViewInterface",
-            index=0,
-            name="facefusion"
-        )
-        
-        self.vBoxLayout.addWidget(self.popularView)
-
     def set_registry(self, registry):
         self.registry = registry
-
 
     def _aboutCardClick(self):
         print("__connectSignalToSlot")
@@ -246,6 +195,10 @@ class HomeInterface(ScrollArea):
         signalBus.software_uninstallSig.connect(self.software_uninstall)
         signalBus.software_runSig.connect(self.software_run)
         signalBus.software_stopSig.connect(self.software_stop)
+        self.searchLineEdit.clearSignal.connect(self.showAllApps)
+        self.searchLineEdit.searchSignal.connect(self.search)
+        self.searchLineEdit.textChanged.connect(self.search)
+
 
     def software_run(self, app_card):
         app_name = app_card.app_info.name
@@ -442,10 +395,16 @@ class HomeInterface(ScrollArea):
         app_card.set_state('uninstall_completed')
         app_card.refreshSig.emit()
 
-    # def refresh(self):
-    #     for view in self.type_views:
-    #         view.refresh()
-        
+
+    def showAllApps(self):
+        logger.info("show all appps")
+        for type_view in self.type_views:
+            type_view.showAllApps()
+
+    def search(self, keyWord: str):
+        for type_view in self.type_views:
+            type_view.show_condition(keyWord)
+
 
 class CustomMessageBox(MessageBoxBase):
     """ Custom message box """

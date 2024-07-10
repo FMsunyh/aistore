@@ -1,3 +1,11 @@
+'''
+Author: Firmin.Sun fmsunyh@gmail.com
+Date: 2024-06-14 18:28:18
+LastEditors: Firmin.Sun fmsunyh@gmail.com
+LastEditTime: 2024-07-10 14:51:18
+FilePath: \aistore\app\common\trie.py
+Description: 
+'''
 # coding: utf-8
 from queue import Queue
 
@@ -19,7 +27,7 @@ class Trie:
         for c in key:
             i = ord(c) - 97
             if not 0 <= i < 26:
-                return
+                break
 
             if not node.children[i]:
                 node.children[i] = Trie()
