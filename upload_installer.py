@@ -83,14 +83,14 @@ def on_delete_finished(success, message):
     if success:
         logger.info(f"Success: {message}")
     else:
-        logger.info("Error: {message}")
+        logger.info(f"Error: {message}")
     
 
 def on_upload_finished(success, message):
     if success:
         logger.info(f"Success: {message}")
     else:
-        logger.info("Error: {message}")
+        logger.info(f"Error: {message}")
 
 
 def create_thread(file_path, url, folder):
