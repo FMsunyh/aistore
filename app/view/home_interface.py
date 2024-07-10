@@ -126,7 +126,7 @@ class HomeInterface(ScrollArea):
         self.vBoxLayout = QVBoxLayout(self.view)
         self.hBoxLayout = QHBoxLayout()
         self.searchLineEdit = SearchLineEdit(self)
-
+        self.installed_checkbox =  CheckBox(self.tr('Installed'))
         
         self.__initWidget()
         self.loadApps3()
@@ -150,6 +150,7 @@ class HomeInterface(ScrollArea):
 
         self.hBoxLayout.setContentsMargins(36, 0, 0, 0)
         self.hBoxLayout.addWidget(self.searchLineEdit)
+        self.hBoxLayout.addWidget(self.installed_checkbox)
         self.hBoxLayout.setAlignment(Qt.AlignLeft)
 
         self.vBoxLayout.addLayout(self.hBoxLayout)
@@ -195,10 +196,10 @@ class HomeInterface(ScrollArea):
         signalBus.software_uninstallSig.connect(self.software_uninstall)
         signalBus.software_runSig.connect(self.software_run)
         signalBus.software_stopSig.connect(self.software_stop)
-        self.searchLineEdit.clearSignal.connect(self.showAllApps)
-        self.searchLineEdit.searchSignal.connect(self.search)
-        self.searchLineEdit.textChanged.connect(self.search)
-
+        self.searchLineEdit.clearSignal.connect(self.show_condition)
+        self.searchLineEdit.searchSignal.connect(self.show_condition)
+        self.searchLineEdit.textChanged.connect(self.show_condition)
+        self.installed_checkbox.stateChanged.connect(self.show_condition)
 
     def software_run(self, app_card):
         app_name = app_card.app_info.name
@@ -396,6 +397,18 @@ class HomeInterface(ScrollArea):
         app_card.refreshSig.emit()
 
 
+    def show_condition(self):
+        search_text = self.searchLineEdit.text().lower()
+        filter_installed = self.installed_checkbox.isChecked()
+
+        self.showAllApps()
+
+        if search_text != "":
+            self.search(search_text)
+
+        if filter_installed:
+            self.filter_installed(filter_installed)
+
     def showAllApps(self):
         logger.info("show all appps")
         for type_view in self.type_views:
@@ -403,9 +416,13 @@ class HomeInterface(ScrollArea):
 
     def search(self, keyWord: str):
         for type_view in self.type_views:
-            type_view.show_condition(keyWord)
+            type_view.search(keyWord)
 
+    def filter_installed(self, installed_checkbox: bool):
+        for type_view in self.type_views:
+            type_view.filter_installed(installed_checkbox)
 
+        
 class CustomMessageBox(MessageBoxBase):
     """ Custom message box """
 

@@ -243,17 +243,28 @@ class AppCardView(QWidget):
         self.flowLayout.update()
         
 
-    def show_condition(self, keyWord: str):
+    def search(self, keyWord: str):
         logger.info(f"search application keyWord: {keyWord}")
         items = self.trie.items(keyWord.lower())
         indexes = {i[1] for i in items}
         self.flowLayout.removeAllWidgets()
 
         for i, card in enumerate(self.cards):
-            isVisible = i in indexes
+            isVisible = card.isVisible() and i in indexes
             card.setVisible(isVisible)
             if isVisible:
                 self.flowLayout.addWidget(card)
 
         self.flowLayout.update()
         
+    def filter_installed(self, installed_checkbox: bool):
+        logger.info(f"show installed application : {installed_checkbox}")
+        self.flowLayout.removeAllWidgets()
+
+        for card in self.cards:
+            isVisible = card.isVisible() and card.state == "installed" or card.state == "running" or card.state == "stop"
+            card.setVisible(isVisible)
+            if isVisible:
+                self.flowLayout.addWidget(card)
+
+        self.flowLayout.update()
