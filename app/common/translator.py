@@ -19,3 +19,4 @@ class Translator(QObject):
         self.basicInput = self.tr('Basic input')
         self.statusInfo = self.tr('Status & info')
         self.price = self.tr("Price")
+        self.model = self.tr("Model library")

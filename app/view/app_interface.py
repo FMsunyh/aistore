@@ -78,10 +78,10 @@ class AppInfoCard(SimpleCardWidget):
         self.brief_introductionLabel = BodyLabel(f'{self.app_info.brief_introduction}', self)
         self.brief_introductionLabel.setWordWrap(True)
 
-        self.tagButton = PillPushButton(self.tr('Component Library'), self)
-        self.tagButton.setCheckable(False)
-        setFont(self.tagButton, 12)
-        self.tagButton.setFixedSize(130, 32)
+        self.model_library_button = PillPushButton(self.tr('Model Library'), self)
+        self.model_library_button.setCheckable(False)
+        setFont(self.model_library_button, 12)
+        self.model_library_button.setFixedSize(130, 32)
 
         self.shareButton = TransparentToolButton(FluentIcon.SHARE, self)
         self.shareButton.setFixedSize(32, 32)
@@ -97,10 +97,8 @@ class AppInfoCard(SimpleCardWidget):
 
         self.initLayout()
 
-        self.button_install.clicked.connect(self.on_button_clicked)
-        self.button_run.clicked.connect(self.on_button_run_clicked)
-        self.button_stop.clicked.connect(self.on_button_stop_clicked)
-        self.button_uninstall.clicked.connect(self.on_button_uninstall_clicked)
+        self.__connectSignalToSlot()
+        
 
 
     def initLayout(self):
@@ -151,8 +149,15 @@ class AppInfoCard(SimpleCardWidget):
         self.vBoxLayout.addSpacing(12)
         self.buttonLayout.setContentsMargins(0, 0, 0, 0)
         self.vBoxLayout.addLayout(self.buttonLayout)
-        self.buttonLayout.addWidget(self.tagButton, 0, Qt.AlignLeft)
+        self.buttonLayout.addWidget(self.model_library_button, 0, Qt.AlignLeft)
         self.buttonLayout.addWidget(self.shareButton, 0, Qt.AlignRight)
+
+    def __connectSignalToSlot(self):
+        self.button_install.clicked.connect(self.on_button_clicked)
+        self.button_run.clicked.connect(self.on_button_run_clicked)
+        self.button_stop.clicked.connect(self.on_button_stop_clicked)
+        self.button_uninstall.clicked.connect(self.on_button_uninstall_clicked)
+        self.model_library_button.clicked.connect(self.on_button_model_library_clicked)
 
     def update_window(self, app_card : AppCard):
         self.app_card = app_card
@@ -182,6 +187,9 @@ class AppInfoCard(SimpleCardWidget):
     # def update_progress_bar(self, file, value):
     #     # 更新进度条
     #     self.ring.setValue(value)
+
+    def on_button_model_library_clicked(self):
+        signalBus.switchToModelLibraryInterfaceSig.emit(self)
 
     def set_state(self, state : AppState):
         self.state = state

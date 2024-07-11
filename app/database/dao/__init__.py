@@ -8,3 +8,6 @@ from app.database.dao.licenses_dao import LicensesDao
 from app.database.dao.ratings_reviews_dao import RatingsReviewsDao
 from app.database.dao.screenshots_dao import ScreenshotsDao
 from app.database.dao.user_app_dao import UserAppDao
+from app.database.dao.model_info_dao import ModelInfoDao
+from app.database.dao.model_types_dao import ModelTypesDao
+from app.database.dao.app_models_dao import AppModelsDao

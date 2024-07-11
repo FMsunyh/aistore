@@ -2,11 +2,11 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-28 14:27:05
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-28 17:22:10
+LastEditTime: 2024-07-11 17:21:40
 FilePath: \aistore\app\database\service\app_types_service.py
 Description: service of app types
 '''
-from app.database.dao.app_types_dao import AppTypesDao
+from app.database.dao import AppTypesDao
 from ..entity import AppTypes
 from PyQt5.QtSql import QSqlDatabase
 from typing import List

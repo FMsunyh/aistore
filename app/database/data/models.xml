@@ -1,0 +1,22 @@
+<models>
+    <model>
+        <id>1</id>
+        <name>Image Enhancer</name>
+        <typeId>1</typeId>
+        <author>Firmin.Sun</author>
+        <downloadURL>http://example.com/image_enhancer</downloadURL>
+        <file_name>file_name.pt</file_name>
+        <description>Enhances image quality.</description>
+        <size>3</size>
+    </model>
+    <model>
+        <id>2</id>
+        <name>Text Summarizer</name>
+        <typeId>2</typeId>
+        <author>Firmin.Sun</author>
+        <downloadURL>http://example.com/text_summarizer</downloadURL>
+        <file_name>file_name.pt</file_name>
+        <description>Summarizes text documents.</description>
+        <size>3</size>
+    </model>
+</models>

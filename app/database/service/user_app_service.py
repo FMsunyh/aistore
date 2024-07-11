@@ -1,4 +1,4 @@
-from app.database.dao.user_app_dao import UserAppDao
+from app.database.dao import UserAppDao
 from ..entity import UserApp
 from PyQt5.QtSql import QSqlDatabase
 from typing import List

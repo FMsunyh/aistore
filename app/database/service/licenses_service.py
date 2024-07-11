@@ -1,4 +1,4 @@
-from app.database.dao.licenses_dao import LicensesDao
+from app.database.dao import LicensesDao
 from ..entity import Licenses
 from PyQt5.QtSql import QSqlDatabase
 from typing import List

@@ -22,6 +22,7 @@ class SignalBus(QObject):
     supportSignal = pyqtSignal()
     
     switchToAppInterfaceSig = pyqtSignal(object)
+    switchToModelLibraryInterfaceSig = pyqtSignal(object)
 
     # FaceFusion
     facefusion_progressSig = pyqtSignal()

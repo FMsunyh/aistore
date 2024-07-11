@@ -8,7 +8,7 @@ Description: service of user
 '''
 
 # coding:utf-8
-from app.database.dao.user_dao import UserDao
+from app.database.dao import UserDao
 from ..entity import User
 from PyQt5.QtSql import QSqlDatabase
 from typing import List

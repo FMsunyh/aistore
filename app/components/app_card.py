@@ -37,7 +37,7 @@ class AppCard(SimpleCardWidget):
 
         self.iconWidget = IconWidget(self.app_info.icon, self)
         self.titleLabel = QLabel(self.app_info.title, self)
-        self.brief_introductionLabel = QLabel(TextWrap.wrap(self.brief_introduction, 45, False)[0], self)
+        self.brief_introductionLabel = QLabel(TextWrap.wrap(self.brief_introduction, 80, False)[0], self)
 
         self.button_install = PrimaryPushButton(self.tr('Install'), self)
         self.button_install.setFixedSize(100, 30)
@@ -67,7 +67,7 @@ class AppCard(SimpleCardWidget):
         self.vbuttonLayout = QVBoxLayout()
         # self.vbuttonLayout.setContentsMargins(0, 20, 0, 20)
 
-        self.setFixedSize(800, 120)
+        self.setFixedSize(600, 120)
         self.iconWidget.setFixedSize(48, 48)
 
         self.initLayout()

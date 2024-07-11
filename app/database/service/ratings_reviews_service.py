@@ -2,11 +2,11 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-28 14:27:05
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-28 14:32:24
+LastEditTime: 2024-07-11 17:23:00
 FilePath: \aistore\app\database\service\ratings_reviews_service.py
 Description: service of ratings and reviews
 '''
-from app.database.dao.ratings_reviews_dao import RatingsReviewsDao
+from app.database.dao import RatingsReviewsDao
 from ..entity import RatingsReviews
 from PyQt5.QtSql import QSqlDatabase
 from typing import List

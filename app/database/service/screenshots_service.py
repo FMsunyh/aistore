@@ -6,7 +6,7 @@ LastEditTime: 2024-06-28 14:33:28
 FilePath: \aistore\app\database\service\screenshots_service.py
 Description: service of screenshots
 '''
-from app.database.dao.screenshots_dao import ScreenshotsDao
+from app.database.dao import ScreenshotsDao
 from ..entity import Screenshots
 from PyQt5.QtSql import QSqlDatabase
 from typing import List

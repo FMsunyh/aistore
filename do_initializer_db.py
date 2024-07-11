@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-28 15:34:31
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-03 18:16:39
+LastEditTime: 2024-07-11 17:29:11
 FilePath: \aistore\do_initializer_db.py
 Description: initialize db
 '''
@@ -153,6 +153,45 @@ def insert_app_versions(cursor, root):
         VALUES (?, ?, ?, ?, ?)
         ''', (version_id, software_id, version_number, release_date, change_log))
 
+# 插入模型类型数据
+def insert_model_types(cursor, root):
+    for type in root.findall('type'):
+        type_id = int(type.find('id').text)
+        name = type.find('name').text
+        
+        cursor.execute('''
+        INSERT INTO tbl_model_types (id, name)
+        VALUES (?, ?)
+        ''', (type_id, name))
+
+# 插入模型数据
+def insert_models(cursor, root):
+    for model in root.findall('model'):
+        model_id = int(model.find('id').text)
+        name = model.find('name').text
+        type_id = int(model.find('typeId').text)
+        author = model.find('author').text
+        download_url = model.find('downloadURL').text
+        file_name = model.find('file_name').text
+        description = model.find('description').text
+        size = model.find('size').text
+        
+        cursor.execute('''
+        INSERT INTO tbl_model_info (id, name, type_id, author, download_url,file_name,description,size)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (model_id, name, type_id, author, download_url, file_name,  description , size))
+
+# 插入软件模型关系数据
+def insert_app_models(cursor, root):
+    for entry in root.findall('entry'):
+        software_id = int(entry.find('softwareId').text)
+        model_id = int(entry.find('modelId').text)
+        
+        cursor.execute('''
+        INSERT INTO tbl_app_models (software_id, model_id)
+        VALUES (?, ?)
+        ''', (software_id, model_id))
+
 # 主程序
 def init_from_xml(CACHE_FILE):
     # 连接到 SQLite 数据库
@@ -186,6 +225,16 @@ def init_from_xml(CACHE_FILE):
 
     app_versions_root = parse_xml(r'app\database\data\app_versions.xml')
     insert_app_versions(cursor, app_versions_root)
+
+    model_types_root = parse_xml(r'app\database\data\model_types.xml')
+    insert_model_types(cursor, model_types_root)
+
+    models_root = parse_xml(r'app\database\data\models.xml')
+    insert_models(cursor, models_root)
+    
+    app_models_root = parse_xml(r'app\database\data\app_models.xml')
+    insert_app_models(cursor, app_models_root)
+
 
     # 提交更改并关闭连接
     conn.commit()

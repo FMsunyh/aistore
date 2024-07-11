@@ -2,11 +2,11 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-28 14:27:05
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-28 14:30:12
+LastEditTime: 2024-07-11 17:21:30
 FilePath: \aistore\app\database\service\developers_service.py
 Description: service of developers
 '''
-from app.database.dao.developers_dao import DevelopersDao
+from app.database.dao import DevelopersDao
 from ..entity import Developers
 from PyQt5.QtSql import QSqlDatabase
 from typing import List

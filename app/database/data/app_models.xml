@@ -1,0 +1,10 @@
+<software_models>
+    <entry>
+        <softwareId>1</softwareId>
+        <modelId>1</modelId>
+    </entry>
+    <entry>
+        <softwareId>2</softwareId>
+        <modelId>2</modelId>
+    </entry>
+</software_models>

@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-27 16:19:41
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-06-28 15:11:35
+LastEditTime: 2024-07-11 17:10:27
 FilePath: \aistore\app\database\entity\__init__.py
 Description: 
 '''
@@ -16,6 +16,10 @@ from app.database.entity.licenses import Licenses
 from app.database.entity.ratings_reviews import RatingsReviews
 from app.database.entity.screenshots import Screenshots
 from app.database.entity.user_app import UserApp
+from app.database.entity.model_info import ModelInfo
+from app.database.entity.model_types import ModelTypes
+from app.database.entity.app_models import AppModels
+
 
 
 class EntityFactory:
@@ -45,6 +49,9 @@ class EntityFactory:
             "tbl_ratings_reviews": RatingsReviews,
             "tbl_screenshots": Screenshots,
             "tbl_user_app": UserApp,
+            "tbl_model_info": ModelInfo,
+            "tbl_model_types": ModelTypes,
+            "tbl_app_models": AppModels,
         }
         if table not in tables:
             raise ValueError(f"Table name `{table}` is illegal")

@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 05:28:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-04 23:29:53
+LastEditTime: 2024-07-11 15:00:46
 FilePath: \aistore\app\view\main_window.py
 Description: main windows
 '''
@@ -16,11 +16,13 @@ from qfluentwidgets import (NavigationAvatarWidget, NavigationItemPosition, Mess
                             SplashScreen)
 from qfluentwidgets import FluentIcon as FIF
 
+from app.common.icon import Icon
 from app.core.registry import read_all_installed_software_from_registry
 from app.core.update import UpdateManager
 from app.database.db_initializer import DBInitializer
 from app.database.library import Library
 from app.view.app_interface import AppInterface
+from app.view.model_interface import ModelInterface
 
 from .gallery_interface import GalleryInterface
 from .home_interface import HomeInterface
@@ -59,6 +61,7 @@ class MainWindow(FluentWindow):
         # create sub interface
         self.homeInterface = HomeInterface(library = self.library, registry=self.registry, parent=self)
         self.navigationViewInterface = NavigationViewInterface(self)
+        self.modelInterface = ModelInterface(self)
         self.settingInterface = SettingInterface(self)
 
         if len(self.library.app_infos) > 0:
@@ -74,10 +77,10 @@ class MainWindow(FluentWindow):
         # self.addSubInterface(self.aistoreInterface, Icon.EMOJI_TAB_SYMBOLS, t.icons)
         
         # self.addSubInterface(self.iconInterface, Icon.EMOJI_TAB_SYMBOLS, t.icons)
-        # self.navigationInterface.addSeparator()
+        self.navigationInterface.addSeparator()
 
         pos = NavigationItemPosition.SCROLL
-        # self.addSubInterface(self.basicInputInterface, FIF.CHECKBOX,t.basicInput, pos)
+        self.addSubInterface(self.modelInterface, Icon.EMOJI_TAB_SYMBOLS,t.model, pos)
         # self.addSubInterface(self.dateTimeInterface, FIF.DATE_TIME, t.dateTime, pos)
         # self.addSubInterface(self.dialogInterface, FIF.MESSAGE, t.dialogs, pos)
         # self.addSubInterface(self.layoutInterface, FIF.LAYOUT, t.layout, pos)
@@ -180,9 +183,15 @@ class MainWindow(FluentWindow):
                 self.stackedWidget.setCurrentWidget(w, False)
                 w.scrollToCard(index)
 
+    def switchToModelLibraryInterface(self, app_card):
+
+        # self.appInterface.update_window(app_card)
+        self.stackedWidget.setCurrentWidget(self.modelInterface, False)
+
     def switchToAppInterface(self, app_card):
         self.appInterface.update_window(app_card)
         self.stackedWidget.setCurrentWidget(self.appInterface, False)
+    
 
     def connectSignalToSlot(self):
         signalBus.micaEnableChanged.connect(self.setMicaEffectEnabled)
@@ -190,6 +199,7 @@ class MainWindow(FluentWindow):
         signalBus.supportSignal.connect(self.onSupport)
         # signalBus.software_uninstallSig.connect(self.software_uninstall)
         signalBus.switchToAppInterfaceSig.connect(self.switchToAppInterface)
+        signalBus.switchToModelLibraryInterfaceSig.connect(self.switchToModelLibraryInterface)
 
         signalBus.appMessageSig.connect(self.onAppMessage)
         signalBus.appErrorSig.connect(self.onAppError)

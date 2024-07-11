@@ -1,4 +1,4 @@
-from app.database.dao.app_versions_dao import AppVersionsDao
+from app.database.dao import AppVersionsDao
 from ..entity import AppVersions
 from PyQt5.QtSql import QSqlDatabase
 from typing import List

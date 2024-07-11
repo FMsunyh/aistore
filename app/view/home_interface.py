@@ -146,7 +146,7 @@ class HomeInterface(ScrollArea):
         self.vBoxLayout.addWidget(self.banner)
 
         self.searchLineEdit.setPlaceholderText(self.tr('Search application'))
-        self.searchLineEdit.setFixedWidth(304)
+        self.searchLineEdit.setFixedWidth(300)
 
         self.hBoxLayout.setContentsMargins(36, 0, 0, 0)
         self.hBoxLayout.addWidget(self.searchLineEdit)
