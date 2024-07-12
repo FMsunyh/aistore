@@ -13,3 +13,6 @@ class ModelTypesController:
         types = self.service.listAll()
 
         return types
+    
+    def get_model_types_by_ids(self, ids: list):
+        return self.service.listByIds(ids=ids)

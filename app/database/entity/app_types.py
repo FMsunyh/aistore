@@ -10,7 +10,7 @@ from app.database.entity import Entity
 from dataclasses import dataclass
 @dataclass
 class AppTypes(Entity):
-    id : str = None
+    id : int = 0
     name : str = None 
 
     def __str__(self):

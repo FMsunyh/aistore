@@ -161,7 +161,7 @@ class AppInfoCard(SimpleCardWidget):
 
     def update_window(self, app_card : AppCard):
         self.app_card = app_card
-
+        self.app_info = self.app_card.app_info
         self.icon_label.setImage(self.app_card.app_info.icon) 
         self.nameLabel.setText(f'{self.app_card.app_info.title}')
         self.brief_introductionLabel.setText(f'{self.app_card.app_info.brief_introduction}')
@@ -189,7 +189,7 @@ class AppInfoCard(SimpleCardWidget):
     #     self.ring.setValue(value)
 
     def on_button_model_library_clicked(self):
-        signalBus.switchToModelLibraryInterfaceSig.emit(self)
+        signalBus.switchToModelLibraryInterfaceSig.emit(self.app_card)
 
     def set_state(self, state : AppState):
         self.state = state

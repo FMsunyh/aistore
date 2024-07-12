@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-07-11 17:15:17
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-11 17:27:48
+LastEditTime: 2024-07-12 18:10:27
 FilePath: \aistore\app\database\service\models_service.py
 Description:
 '''
@@ -29,3 +29,11 @@ class ModelInfoService:
 
     def listBy(self, **condition) -> List[ModelInfo]:
         return self.model_info_dao.listBy(**condition)
+    
+    def listByIds(self, **condition) -> List[ModelInfo]:
+        return self.model_info_dao.listByIds(**condition)
+    
+    def get_fields(self) -> List[str]:
+        return self.model_info_dao.fields
+    
+    

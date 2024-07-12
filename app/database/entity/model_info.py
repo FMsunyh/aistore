@@ -10,7 +10,7 @@ from app.database.entity import Entity
 from dataclasses import dataclass
 @dataclass
 class ModelInfo(Entity):
-    id : str = None
+    id : int = 0
     name : str = None
     type_id : int = 0
     author : str = None

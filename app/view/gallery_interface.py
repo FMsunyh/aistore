@@ -93,6 +93,10 @@ class ToolBar(QWidget):
 
         self.subtitleLabel.setTextColor(QColor(96, 96, 96), QColor(216, 216, 216))
 
+        self.documentButton .hide()
+        self.sourceButton.hide()
+        self.supportButton.hide()
+        self.feedbackButton.hide()
 
 class ExampleCard(QWidget):
     """ Example card """

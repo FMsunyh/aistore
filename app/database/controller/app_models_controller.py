@@ -12,3 +12,11 @@ class AppModelsController:
         app_models = self.service.listAll()
 
         return app_models
+    
+    def get_models_by_app_id(self, software_id: int):
+        return self.service.listBy(software_id=software_id)
+    
+
+    # def get_model_types_by_app_id(self, software_id: str):
+    #     pass
+        

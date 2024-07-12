@@ -184,13 +184,14 @@ def insert_models(cursor, root):
 # 插入软件模型关系数据
 def insert_app_models(cursor, root):
     for entry in root.findall('entry'):
+        id = int(entry.find('id').text)
         software_id = int(entry.find('softwareId').text)
         model_id = int(entry.find('modelId').text)
         
         cursor.execute('''
-        INSERT INTO tbl_app_models (software_id, model_id)
-        VALUES (?, ?)
-        ''', (software_id, model_id))
+        INSERT INTO tbl_app_models (id, software_id, model_id)
+        VALUES (?, ?, ?)
+        ''', (id, software_id, model_id))
 
 # 主程序
 def init_from_xml(CACHE_FILE):

@@ -1,10 +1,23 @@
 <model_types>
     <type>
         <id>1</id>
-        <name>StableDiffusion</name>
+        <name>Stable Diffusion</name>
     </type>
     <type>
         <id>2</id>
+        <name>Lora</name>
+    </type>
+    <type>
+        <id>3</id>
         <name>VAE</name>
     </type>
+    <type>
+        <id>4</id>
+        <name>Embedding</name>
+    </type>
+    <type>
+        <id>5</id>
+        <name>Hypernetwork</name>
+    </type>
+
 </model_types>

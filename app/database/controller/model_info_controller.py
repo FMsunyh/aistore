@@ -14,6 +14,14 @@ class ModelInfoController:
 
         return model_infos
 
+    # def find_model_infos_by_ids(self, ids: list):
+    #     return self.service.findBy(ids=ids)
+
+    def get_model_infos_by_type_id(self, type_id: int):
+        return self.service.listBy(type_id=type_id)
+
+    def get_model_infos_by_ids(self, ids: list):
+        return self.service.listByIds(ids=ids) 
     
-    # def listBy(self, **condition) -> List[AppInfo]:
-    #     return self.app_info_dao.listBy(**condition)
+    def get_fields(self):
+        return self.service.get_fields() 

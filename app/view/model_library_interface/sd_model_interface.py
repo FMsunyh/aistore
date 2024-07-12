@@ -6,22 +6,32 @@ from qfluentwidgets import (Pivot, qrouter, SegmentedWidget, TabBar, CheckBox, C
                             SegmentedToggleToolWidget, FluentIcon,TableWidget)
 from qfluentwidgets.components.widgets.line_edit import SearchLineEdit
 
-from .gallery_interface import GalleryInterface
-from ..common.translator import Translator
-from ..common.style_sheet import StyleSheet
+from app.database.entity.model_info import ModelInfo
+from app.database.entity.model_types import ModelTypes
+from app.view.gallery_interface import GalleryInterface
+from app.common.translator import Translator
+from app.common.style_sheet import StyleSheet
 from qfluentwidgets import FluentIcon as FIF
 
-class ModelInterface(GalleryInterface):
+from app.common.logger import logger
+from app.database.library import Library
+
+class SDModelInterface(GalleryInterface):
     """ Navigation view interface """
 
-    def __init__(self, parent=None):
+    def __init__(self, library : Library=None, registry=None, parent=None):
         t = Translator()
         super().__init__(
             title=t.model,
-            subtitle="Model library",
+            subtitle="SD Model library",
             parent=parent
         )
-        self.setObjectName('navigationViewInterface')
+
+        self.library = library
+        self.registry = registry
+
+
+        self.setObjectName('sdModelInterface')
 
         self.hBoxLayout = QHBoxLayout()
 
@@ -32,10 +42,27 @@ class ModelInterface(GalleryInterface):
         self.refresh = PushButton(self.tr('Refresh'), self, FIF.SYNC)
         self.add_model = PushButton(self.tr('Add model'), self, FIF.ADD)
 
-        self.widget=PivotInterface(self)
+        
+        self.__init_data()
+
+        model_types, model_infos = self.get_tab_name()
+        self.widget=TabInterface(library=library, model_types=model_types, model_infos=model_infos, parent=self)
 
         self.__initWidget()
+    
+    def get_tab_name(self):
+        app_models = self.library.app_models_controller.get_models_by_app_id(1)
+        model_types = self.library.model_types_controller.get_model_types_by_ids([item.id for item in app_models])
+
+        model_infos =  self.library.model_info_controller.get_model_infos_by_ids([item.model_id for item in app_models])
+
+        return model_types, model_infos
+    
+    def __init_data(self):
+        pass
         
+
+
     def __initWidget(self):
         self.hBoxLayout.setContentsMargins(0, 0, 0, 0)
         self.hBoxLayout.addWidget(self.searchLineEdit)
@@ -52,82 +79,22 @@ class ModelInterface(GalleryInterface):
         self.vBoxLayout.addLayout(self.hBoxLayout)
         self.vBoxLayout.addWidget(self.widget) 
         
-    def createToggleToolWidget(self):
-        w = SegmentedToggleToolWidget(self)
-        w.addItem('k1', FluentIcon.TRANSPARENT)
-        w.addItem('k2', FluentIcon.CHECKBOX)
-        w.addItem('k3', FluentIcon.CONSTRACT)
-        w.setCurrentItem('k1')
-        return w
     
     def update_window(self):
         pass
 
-class PivotInterface(QWidget):
-    """ Pivot interface """
-
-    Nav = Pivot
-
-    def __init__(self, parent=None):
-        super().__init__(parent=parent)
-        # self.setFixedSize(300, 140)
-
-        self.pivot = self.Nav(self)
-        self.stackedWidget = QStackedWidget(self)
-        self.vBoxLayout = QVBoxLayout(self)
-
-        self.songInterface = TableFrame(self)
-        self.albumInterface = TableFrame(self)
-        self.artistInterface =TableFrame(self)
-
-        # add items to pivot
-        self.addSubInterface(self.songInterface, 'songInterface', self.tr('Stable Diffusion'))
-        self.addSubInterface(self.albumInterface, 'albumInterface', self.tr('Embedding'))
-        self.addSubInterface(self.artistInterface, 'artistInterface', self.tr('VAE'))
-
-        self.vBoxLayout.addWidget(self.pivot, 0, Qt.AlignLeft)
-        self.vBoxLayout.addWidget(self.stackedWidget)
-        self.vBoxLayout.setContentsMargins(0, 0, 0, 0)
-        StyleSheet.NAVIGATION_VIEW_INTERFACE.apply(self)
-
-        self.stackedWidget.currentChanged.connect(self.onCurrentIndexChanged)
-        self.stackedWidget.setCurrentWidget(self.songInterface)
-        self.pivot.setCurrentItem(self.songInterface.objectName())
-
-        qrouter.setDefaultRouteKey(self.stackedWidget, self.songInterface.objectName())
-
-    def addSubInterface(self, widget: QLabel, objectName, text):
-        widget.setObjectName(objectName)
-        # widget.setAlignment(Qt.AlignTop | Qt.AlignLeft)
-        self.stackedWidget.addWidget(widget)
-        self.pivot.addItem(
-            routeKey=objectName,
-            text=text,
-            onClick=lambda: self.stackedWidget.setCurrentWidget(widget)
-        )
-
-    def onCurrentIndexChanged(self, index):
-        widget = self.stackedWidget.widget(index)
-        self.pivot.setCurrentItem(widget.objectName())
-        qrouter.push(self.stackedWidget, widget.objectName())
-
-
-class SegmentedInterface(PivotInterface):
-
-    Nav = SegmentedWidget
-
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.vBoxLayout.removeWidget(self.pivot)
-        self.vBoxLayout.insertWidget(0, self.pivot)
-
-
 class TabInterface(QWidget):
     """ Tab interface """
 
-    def __init__(self, parent=None):
+    def __init__(self, library: Library=None, model_types: ModelTypes=None, model_infos: ModelInfo=None, parent=None):
         super().__init__(parent=parent)
         self.tabCount = 1
+        self.library = library
+        self.model_types = model_types 
+
+        self.model_infos = model_infos
+
+        self.tabs = []
 
         self.tabBar = TabBar(self)
         self.stackedWidget = QStackedWidget(self)
@@ -139,19 +106,25 @@ class TabInterface(QWidget):
         self.shadowEnabledCheckBox = CheckBox(self.tr('IsTabShadowEnabled'), self)
         self.tabMaxWidthLabel = BodyLabel(self.tr('TabMaximumWidth'), self)
         self.tabMaxWidthSpinBox = SpinBox(self)
-        self.closeDisplayModeLabel = BodyLabel(self.tr('TabCloseButtonDisplayMode'), self)
-        self.closeDisplayModeComboBox = ComboBox(self)
 
         self.hBoxLayout = QHBoxLayout(self)
         self.vBoxLayout = QVBoxLayout(self.tabView)
         self.panelLayout = QVBoxLayout(self.controlPanel)
 
-        self.songInterface = QLabel('Song Interface', self)
-        self.albumInterface = QLabel('Album Interface', self)
-        self.artistInterface = QLabel('Artist Interface', self)
+        self.create_tabs(self.library, self.model_types, self.model_infos)
+        
 
         # add items to pivot
         self.__initWidget()
+
+
+    def create_tabs(self, library, model_types, model_infos):
+        for model_type in model_types:
+            model_infos_with_type = [item for item in model_infos if item.id == model_type.id]
+
+            table = TableFrame(library, model_infos_with_type, self)
+            self.tabs.append(table)
+            self.addSubInterface(table, model_type.name, self.tr(f'{model_type.name}'), None)
 
     def __initWidget(self):
         self.initLayout()
@@ -161,25 +134,17 @@ class TabInterface(QWidget):
         self.tabMaxWidthSpinBox.setRange(60, 400)
         self.tabMaxWidthSpinBox.setValue(self.tabBar.tabMaximumWidth())
 
-        self.closeDisplayModeComboBox.addItem(self.tr('Always'), userData=TabCloseButtonDisplayMode.ALWAYS)
-        self.closeDisplayModeComboBox.addItem(self.tr('OnHover'), userData=TabCloseButtonDisplayMode.ON_HOVER)
-        self.closeDisplayModeComboBox.addItem(self.tr('Never'), userData=TabCloseButtonDisplayMode.NEVER)
-        self.closeDisplayModeComboBox.currentIndexChanged.connect(self.onDisplayModeChanged)
+        self.tabBar.setCloseButtonDisplayMode(TabCloseButtonDisplayMode.NEVER)
 
-        self.addSubInterface(self.songInterface,
-                             'tabSongInterface', self.tr('Song'), ':/gallery/images/MusicNote.png')
-        self.addSubInterface(self.albumInterface,
-                             'tabAlbumInterface', self.tr('Album'), ':/gallery/images/Dvd.png')
-        self.addSubInterface(self.artistInterface,
-                             'tabArtistInterface', self.tr('Artist'), ':/gallery/images/Singer.png')
 
         self.controlPanel.setObjectName('controlPanel')
         StyleSheet.NAVIGATION_VIEW_INTERFACE.apply(self)
 
         self.connectSignalToSlot()
 
-        qrouter.setDefaultRouteKey(
-            self.stackedWidget, self.songInterface.objectName())
+        if len(self.tabs) > 0:
+            qrouter.setDefaultRouteKey(
+                self.stackedWidget, self.tabs[0].objectName())
 
     def connectSignalToSlot(self):
         self.movableCheckBox.stateChanged.connect(
@@ -197,10 +162,10 @@ class TabInterface(QWidget):
         self.stackedWidget.currentChanged.connect(self.onCurrentIndexChanged)
 
     def initLayout(self):
-        self.tabBar.setTabMaximumWidth(200)
+        # self.tabBar.setTabMaximumWidth(200)
 
-        self.setFixedHeight(280)
-        self.controlPanel.setFixedWidth(220)
+        # self.setFixedHeight(280)
+        # self.controlPanel.setFixedWidth(220)
         self.hBoxLayout.addWidget(self.tabView, 1)
         self.hBoxLayout.addWidget(self.controlPanel, 0, Qt.AlignRight)
         self.hBoxLayout.setContentsMargins(0, 0, 0, 0)
@@ -222,12 +187,10 @@ class TabInterface(QWidget):
         self.panelLayout.addWidget(self.tabMaxWidthSpinBox)
 
         self.panelLayout.addSpacing(4)
-        self.panelLayout.addWidget(self.closeDisplayModeLabel)
-        self.panelLayout.addWidget(self.closeDisplayModeComboBox)
 
     def addSubInterface(self, widget: QLabel, objectName, text, icon):
         widget.setObjectName(objectName)
-        widget.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+        # widget.setAlignment(Qt.AlignTop | Qt.AlignLeft)
         self.stackedWidget.addWidget(widget)
         self.tabBar.addTab(
             routeKey=objectName,
@@ -238,7 +201,7 @@ class TabInterface(QWidget):
 
     def onDisplayModeChanged(self, index):
         mode = self.closeDisplayModeComboBox.itemData(index)
-        self.tabBar.setCloseButtonDisplayMode(mode)
+        self.tabBar.setCloseButtonDisplayMode(TabCloseButtonDisplayMode.NEVER)
 
     def onCurrentIndexChanged(self, index):
         widget = self.stackedWidget.widget(index)
@@ -263,56 +226,28 @@ class TabInterface(QWidget):
 
 class TableFrame(TableWidget):
 
-    def __init__(self, parent=None):
+    def __init__(self, library: Library=None, model_infos: ModelInfo=None, parent=None):
         super().__init__(parent)
+        self.library = library
+        self.model_infos = model_infos
 
         self.verticalHeader().hide()
         self.setBorderRadius(8)
         self.setBorderVisible(True)
 
-        self.setColumnCount(5)
-        self.setRowCount(60)
-        self.setHorizontalHeaderLabels([
-            self.tr('Title'), self.tr('Artist'), self.tr('Album'),
-            self.tr('Year'), self.tr('Duration')
-        ])
+        header_labels = self.library.model_info_controller.get_fields()
 
-        songInfos = [
-            ['かばん', 'aiko', 'かばん', '2004', '5:04'],
-            ['爱你', '王心凌', '爱你', '2004', '3:39'],
-            ['星のない世界', 'aiko', '星のない世界/横顔', '2007', '5:30'],
-            ['横顔', 'aiko', '星のない世界/横顔', '2007', '5:06'],
-            ['秘密', 'aiko', '秘密', '2008', '6:27'],
-            ['シアワセ', 'aiko', '秘密', '2008', '5:25'],
-            ['二人', 'aiko', '二人', '2008', '5:00'],
-            ['スパークル', 'RADWIMPS', '君の名は。', '2016', '8:54'],
-            ['なんでもないや', 'RADWIMPS', '君の名は。', '2016', '3:16'],
-            ['前前前世', 'RADWIMPS', '人間開花', '2016', '4:35'],
-            ['恋をしたのは', 'aiko', '恋をしたのは', '2016', '6:02'],
-            ['夏バテ', 'aiko', '恋をしたのは', '2016', '4:41'],
-            ['もっと', 'aiko', 'もっと', '2016', '4:50'],
-            ['問題集', 'aiko', 'もっと', '2016', '4:18'],
-            ['半袖', 'aiko', 'もっと', '2016', '5:50'],
-            ['ひねくれ', '鎖那', 'Hush a by little girl', '2017', '3:54'],
-            ['シュテルン', '鎖那', 'Hush a by little girl', '2017', '3:16'],
-            ['愛は勝手', 'aiko', '湿った夏の始まり', '2018', '5:31'],
-            ['ドライブモード', 'aiko', '湿った夏の始まり', '2018', '3:37'],
-            ['うん。', 'aiko', '湿った夏の始まり', '2018', '5:48'],
-            ['キラキラ', 'aikoの詩。', '2019', '5:08', 'aiko'],
-            ['恋のスーパーボール', 'aiko', 'aikoの詩。', '2019', '4:31'],
-            ['磁石', 'aiko', 'どうしたって伝えられないから', '2021', '4:24'],
-            ['食べた愛', 'aiko', '食べた愛/あたしたち', '2021', '5:17'],
-            ['列車', 'aiko', '食べた愛/あたしたち', '2021', '4:18'],
-            ['花の塔', 'さユり', '花の塔', '2022', '4:35'],
-            ['夏恋のライフ', 'aiko', '夏恋のライフ', '2022', '5:03'],
-            ['あかときリロード', 'aiko', 'あかときリロード', '2023', '4:04'],
-            ['荒れた唇は恋を失くす', 'aiko', '今の二人をお互いが見てる', '2023', '4:07'],
-            ['ワンツースリー', 'aiko', '今の二人をお互いが見てる', '2023', '4:47'],
-        ]
-        songInfos += songInfos
-        for i, songInfo in enumerate(songInfos):
+        self.setColumnCount(len(header_labels))
+        self.setRowCount(60)
+        self.setHorizontalHeaderLabels([self.tr(f'{label}') for label in header_labels])
+
+        model_infos = [[str(getattr(instance, attr)) for attr in vars(instance)] for instance in self.model_infos]
+
+        # model_infos = [[str(getattr(instance, attr)) for attr in dir(instance) if not callable(getattr(instance, attr)) and not attr.startswith("__")] for instance in self.model_infos]
+        
+        for i, model_info in enumerate(model_infos):
             for j in range(5):
-                self.setItem(i, j, QTableWidgetItem(songInfo[j]))
+                self.setItem(i, j, QTableWidgetItem(model_info[j]))
 
         # self.setFixedSize(625, 440)
         self.resizeColumnsToContents()

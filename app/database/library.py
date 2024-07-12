@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-28 17:06:35
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-03 18:24:25
+LastEditTime: 2024-07-12 14:20:06
 FilePath: \aistore\app\database\db_sqlite.py
 Description: library
 '''
@@ -43,6 +43,9 @@ class Library(QObject):
         self.screenshots = []
         self.licenses = []
         self.ratings_reviews = []
+        self.model_types = []
+        self.model_infos = []
+        self.app_models = []
 
         self.app_types_controller = AppTypesController(db)
         self.app_info_controller = AppInfoController(db)
@@ -53,6 +56,9 @@ class Library(QObject):
         self.screenshots_controller = ScreenshotsController(db)
         self.licenses_controller = LicensesController(db)
         self.ratings_reviews_controller = RatingsReviewsController(db)
+        self.model_types_controller = ModelTypesController(db)
+        self.model_info_controller = ModelInfoController(db)
+        self.app_models_controller = AppModelsController(db)
 
         self.load()
 
@@ -61,6 +67,9 @@ class Library(QObject):
         self.app_types = self.app_types_controller.list_all()
         self.app_infos = self.app_info_controller.list_all()
         self.developers = self.developers_controller.list_all()
+        self.model_types = self.model_types_controller.list_all()
+        self.model_infos = self.model_info_controller.list_all()
+        self.app_models = self.app_models_controller.list_all()
         
         self.loadFinished.emit()
 

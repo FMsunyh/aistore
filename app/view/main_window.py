@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 05:28:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-11 15:00:46
+LastEditTime: 2024-07-12 16:16:08
 FilePath: \aistore\app\view\main_window.py
 Description: main windows
 '''
@@ -23,6 +23,7 @@ from app.database.db_initializer import DBInitializer
 from app.database.library import Library
 from app.view.app_interface import AppInterface
 from app.view.model_interface import ModelInterface
+from app.view.model_library_interface import SDModelInterface, ComfyUIModelInterface
 
 from .gallery_interface import GalleryInterface
 from .home_interface import HomeInterface
@@ -67,6 +68,9 @@ class MainWindow(FluentWindow):
         if len(self.library.app_infos) > 0:
             app_info = self.library.app_infos[0]
             self.appInterface = AppInterface(library = self.library, app_info = app_info, parent=self)
+        
+        self.sdModelInterface = SDModelInterface(library = self.library, registry=self.registry, parent=self)
+        self.comfyuiModelInterface = ComfyUIModelInterface(self)
 
     def initNavigation(self):
         # add navigation items
@@ -129,6 +133,8 @@ class MainWindow(FluentWindow):
 
     def initWidget(self):
         self.stackedWidget.addWidget(self.appInterface)
+        self.stackedWidget.addWidget(self.sdModelInterface)
+        self.stackedWidget.addWidget(self.comfyuiModelInterface)
 
     def init_data(self):
         DBInitializer.init()
@@ -186,7 +192,12 @@ class MainWindow(FluentWindow):
     def switchToModelLibraryInterface(self, app_card):
 
         # self.appInterface.update_window(app_card)
-        self.stackedWidget.setCurrentWidget(self.modelInterface, False)
+        # self.stackedWidget.setCurrentWidget(self.modelInterface, False)
+        if app_card.app_info.name == 'sd_webui':
+            self.stackedWidget.setCurrentWidget(self.sdModelInterface, False)
+
+        if app_card.app_info.name == 'comfyui':
+            self.stackedWidget.setCurrentWidget(self.comfyuiModelInterface, False)
 
     def switchToAppInterface(self, app_card):
         self.appInterface.update_window(app_card)

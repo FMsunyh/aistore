@@ -1,10 +1,27 @@
 <software_models>
     <entry>
+        <id>1</id>
         <softwareId>1</softwareId>
         <modelId>1</modelId>
     </entry>
     <entry>
-        <softwareId>2</softwareId>
+        <id>2</id>
+        <softwareId>1</softwareId>
         <modelId>2</modelId>
+    </entry>
+    <entry>
+        <id>3</id>
+        <softwareId>1</softwareId>
+        <modelId>3</modelId>
+    </entry>
+    <entry>
+        <id>4</id>
+        <softwareId>1</softwareId>
+        <modelId>4</modelId>
+    </entry>
+    <entry>
+        <id>5</id>
+        <softwareId>1</softwareId>
+        <modelId>5</modelId>
     </entry>
 </software_models>

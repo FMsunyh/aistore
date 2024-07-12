@@ -1,7 +1,7 @@
 <models>
     <model>
         <id>1</id>
-        <name>Image Enhancer</name>
+        <name>Stable Diffusion Model</name>
         <typeId>1</typeId>
         <author>Firmin.Sun</author>
         <downloadURL>http://example.com/image_enhancer</downloadURL>
@@ -11,8 +11,38 @@
     </model>
     <model>
         <id>2</id>
-        <name>Text Summarizer</name>
+        <name>Lore Model</name>
         <typeId>2</typeId>
+        <author>Firmin.Sun</author>
+        <downloadURL>http://example.com/text_summarizer</downloadURL>
+        <file_name>file_name.pt</file_name>
+        <description>Summarizes text documents.</description>
+        <size>3</size>
+    </model>
+    <model>
+        <id>3</id>
+        <name>VAE Model</name>
+        <typeId>3</typeId>
+        <author>Firmin.Sun</author>
+        <downloadURL>http://example.com/text_summarizer</downloadURL>
+        <file_name>file_name.pt</file_name>
+        <description>Summarizes text documents.</description>
+        <size>3</size>
+    </model>
+    <model>
+        <id>4</id>
+        <name>Embedding Model</name>
+        <typeId>4</typeId>
+        <author>Firmin.Sun</author>
+        <downloadURL>http://example.com/text_summarizer</downloadURL>
+        <file_name>file_name.pt</file_name>
+        <description>Summarizes text documents.</description>
+        <size>3</size>
+    </model>
+    <model>
+        <id>5</id>
+        <name>Hypernetwork Model</name>
+        <typeId>5</typeId>
         <author>Firmin.Sun</author>
         <downloadURL>http://example.com/text_summarizer</downloadURL>
         <file_name>file_name.pt</file_name>

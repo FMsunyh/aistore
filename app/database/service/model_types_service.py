@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-28 14:27:05
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-11 17:27:37
+LastEditTime: 2024-07-12 15:33:19
 FilePath: \aistore\app\database\service\app_types_service.py
 Description: service of app types
 '''
@@ -22,3 +22,6 @@ class ModelTypesService:
     
     def listAll(self) -> List[ModelTypes]:
         return self.model_types_dao.listAll()
+    
+    def listByIds(self, ids: list) -> List[ModelTypes]:
+        return self.model_types_dao.listByIds(ids=ids)
