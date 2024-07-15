@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 05:28:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-15 16:51:58
+LastEditTime: 2024-07-15 17:37:28
 FilePath: \aistore\app\view\main_window.py
 Description: main windows
 '''
@@ -190,14 +190,16 @@ class MainWindow(FluentWindow):
                 w.scrollToCard(index)
 
     def switchToModelLibraryInterface(self, app_card):
+        self.sdModelInterface.update_window(app_card)
+        self.stackedWidget.setCurrentWidget(self.sdModelInterface, False)
+
 
         # self.appInterface.update_window(app_card)
         # self.stackedWidget.setCurrentWidget(self.modelInterface, False)
-        if app_card.app_info.name == 'sd_webui':
-            self.stackedWidget.setCurrentWidget(self.sdModelInterface, False)
 
-        if app_card.app_info.name == 'comfyui':
-            self.stackedWidget.setCurrentWidget(self.comfyuiModelInterface, False)
+        # if app_card.app_info.name == 'comfyui':
+        #     self.sdModelInterface.update_window(app_card)
+        #     self.stackedWidget.setCurrentWidget(self.comfyuiModelInterface, False)
 
     def switchToAppInterface(self, app_card):
         self.appInterface.update_window(app_card)

@@ -34,4 +34,9 @@
         <softwareId>1</softwareId>
         <modelId>7</modelId>
     </entry>
+    <entry>
+        <id>8</id>
+        <softwareId>4</softwareId>
+        <modelId>8</modelId>
+    </entry>
 </software_models>

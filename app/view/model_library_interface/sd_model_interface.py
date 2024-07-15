@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-07-11 15:11:16
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-15 16:55:37
+LastEditTime: 2024-07-15 18:37:07
 FilePath: \aistore\app\view\model_library_interface\sd_model_interface.py
 Description: 
 '''
@@ -32,7 +32,7 @@ class SDModelInterface(GalleryInterface):
         t = Translator()
         super().__init__(
             title=t.model,
-            subtitle="SD Model library",
+            subtitle="Model library",
             parent=parent
         )
 
@@ -57,11 +57,19 @@ class SDModelInterface(GalleryInterface):
         self.__initWidget()
         self.__connectSignalToSlot()
     
-    def get_tab_name(self):
-        app_models = self.library.app_models_controller.get_models_by_app_id(1)
-        model_types = self.library.model_types_controller.get_model_types_by_ids([item.id for item in app_models])
+    def get_tab_name(self, app_card=None):
+
+        if app_card==None:
+            app_id = 1
+        else:
+            app_id = app_card.app_info.id
+
+        app_models = self.library.app_models_controller.get_models_by_app_id(app_id)
 
         model_infos =  self.library.model_info_controller.get_model_infos_by_ids([item.model_id for item in app_models])
+
+        model_types = self.library.model_types_controller.get_model_types_by_ids([item.type_id for item in model_infos])
+
 
         return model_types, model_infos
     
@@ -103,21 +111,6 @@ class SDModelInterface(GalleryInterface):
         if filter_remove:
             self.filter_remove(filter_remove)
 
-
-    # def show_all(self):
-    #     for i in range(self.tab_widget.stackedWidget.count()):
-    #         table = self.tab_widget.stackedWidget.widget(i)
-    #         for row in range(table.rowCount()):
-    #             match = False
-    #             for col in range(table.columnCount()):
-    #                 item = table.item(row, col)
-    #                 # if search_term in item.text().lower():
-    #                 import random
-    #                 if random.randint(1,10) < 5:
-    #                     match = True
-    #                     break
-    #             table.setRowHidden(row, not match)
-
     def show_all(self):
         for i in range(self.tab_widget.stackedWidget.count()):
             table = self.tab_widget.stackedWidget.widget(i)
@@ -138,9 +131,16 @@ class SDModelInterface(GalleryInterface):
         # if true, show the remove
         pass
 
-    def update_window(self):
-        pass
+    def update_window(self,app_card):
+        model_types, model_infos = self.get_tab_name(app_card)
 
+        # self.tab_widget = TabInterface(library=self.library, model_types=model_types, model_infos=model_infos, parent=self)
+        for i in range(self.tab_widget.stackedWidget.count()):
+            self.tab_widget.removeTab(0)
+
+        self.tab_widget.update_window(model_types, model_infos)
+        self.toolBar.titleLabel.setText(f"{app_card.app_info.title}")
+        
 class TabInterface(QWidget):
     """ Tab interface """
 
@@ -169,17 +169,17 @@ class TabInterface(QWidget):
         self.vBoxLayout = QVBoxLayout(self.tabView)
         self.panelLayout = QVBoxLayout(self.controlPanel)
 
-        self.create_tab(self.library, self.model_types, self.model_infos)
+        self.__create_tab(self.model_types, self.model_infos)
 
         # add items to pivot
         self.__initWidget()
 
 
-    def create_tab(self, library, model_types, model_infos):
+    def __create_tab(self,  model_types, model_infos):
         for model_type in model_types:
             model_infos_with_type = [item for item in model_infos if item.type_id == model_type.id]
 
-            table = TableFrame(library, model_infos_with_type, self)
+            table = TableFrame(self.library, model_infos_with_type, self)
             self.tabels.append(table)
             self.addSubInterface(table, model_type.name, self.tr(f'{model_type.name}'), None)
 
@@ -245,7 +245,7 @@ class TabInterface(QWidget):
 
         self.panelLayout.addSpacing(4)
 
-    def addSubInterface(self, widget: QLabel, objectName, text, icon):
+    def addSubInterface(self, widget: TableFrame, objectName, text, icon):
         widget.setObjectName(objectName)
         # widget.setAlignment(Qt.AlignTop | Qt.AlignLeft)
         self.stackedWidget.addWidget(widget)
@@ -273,10 +273,13 @@ class TabInterface(QWidget):
     #     self.addSubInterface(QLabel('🥰 ' + text), text, text, ':/gallery/images/Smiling_with_heart.png')
     #     self.tabCount += 1
 
-    # def removeTab(self, index):
-    #     item = self.tabBar.tabItem(index)
-    #     widget = self.findChild(QLabel, item.routeKey())
+    def removeTab(self, index):
+        item = self.tabBar.tabItem(index)
+        widget = self.findChild(TableFrame, item.routeKey())
 
-    #     self.stackedWidget.removeWidget(widget)
-    #     self.tabBar.removeTab(index)
-    #     widget.deleteLater()
+        self.stackedWidget.removeWidget(widget)
+        self.tabBar.removeTab(index)
+        widget.deleteLater()
+
+    def update_window(self, model_types, model_infos):
+        self.__create_tab(model_types, model_infos)
