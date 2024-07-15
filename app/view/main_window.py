@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 05:28:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-15 11:47:00
+LastEditTime: 2024-07-15 16:51:58
 FilePath: \aistore\app\view\main_window.py
 Description: main windows
 '''
@@ -62,12 +62,12 @@ class MainWindow(FluentWindow):
         # create sub interface
         self.homeInterface = HomeInterface(library = self.library, registry=self.registry, parent=self)
         self.navigationViewInterface = NavigationViewInterface(self)
-        self.modelInterface = ModelInterface(self)
+        self.modelInterface = ModelInterface(library=self.library, parent=self)
         self.settingInterface = SettingInterface(self)
 
         if len(self.library.app_infos) > 0:
             app_info = self.library.app_infos[0]
-            self.appInterface = AppInterface(library = self.library, app_info = app_info, parent=self)
+            self.appInterface = AppInterface(library=self.library, app_info=app_info, parent=self)
         
         self.sdModelInterface = SDModelInterface(library = self.library, registry=self.registry, parent=self)
         self.comfyuiModelInterface = ComfyUIModelInterface(self)

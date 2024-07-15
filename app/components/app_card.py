@@ -67,7 +67,7 @@ class AppCard(SimpleCardWidget):
         self.vbuttonLayout = QVBoxLayout()
         # self.vbuttonLayout.setContentsMargins(0, 20, 0, 20)
 
-        self.setFixedSize(600, 120)
+        self.setFixedSize(500, 120)
         self.iconWidget.setFixedSize(48, 48)
 
         self.initLayout()
