@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 05:28:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-12 16:16:08
+LastEditTime: 2024-07-15 11:47:00
 FilePath: \aistore\app\view\main_window.py
 Description: main windows
 '''

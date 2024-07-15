@@ -6,6 +6,7 @@ from qfluentwidgets import (Pivot, qrouter, SegmentedWidget, TabBar, CheckBox, C
                             SegmentedToggleToolWidget, FluentIcon,TableWidget)
 from qfluentwidgets.components.widgets.line_edit import SearchLineEdit
 
+from app.common.fuzzy import FuzzyWuzzy
 from app.database.entity.model_info import ModelInfo
 from app.database.entity.model_types import ModelTypes
 from app.view.gallery_interface import GalleryInterface
@@ -42,13 +43,11 @@ class SDModelInterface(GalleryInterface):
         self.refresh = PushButton(self.tr('Refresh'), self, FIF.SYNC)
         self.add_model = PushButton(self.tr('Add model'), self, FIF.ADD)
 
-        
-        self.__init_data()
-
         model_types, model_infos = self.get_tab_name()
-        self.widget=TabInterface(library=library, model_types=model_types, model_infos=model_infos, parent=self)
+        self.tab_widget = TabInterface(library=library, model_types=model_types, model_infos=model_infos, parent=self)
 
         self.__initWidget()
+        self.__connectSignalToSlot()
     
     def get_tab_name(self):
         app_models = self.library.app_models_controller.get_models_by_app_id(1)
@@ -58,10 +57,6 @@ class SDModelInterface(GalleryInterface):
 
         return model_types, model_infos
     
-    def __init_data(self):
-        pass
-        
-
 
     def __initWidget(self):
         self.hBoxLayout.setContentsMargins(0, 0, 0, 0)
@@ -77,9 +72,64 @@ class SDModelInterface(GalleryInterface):
         self.searchLineEdit.setFixedWidth(300)
         
         self.vBoxLayout.addLayout(self.hBoxLayout)
-        self.vBoxLayout.addWidget(self.widget) 
+        self.vBoxLayout.addWidget(self.tab_widget) 
         
-    
+    def __connectSignalToSlot(self):
+        self.searchLineEdit.clearSignal.connect(self.show_condition)
+        self.searchLineEdit.searchSignal.connect(self.show_condition)
+        self.searchLineEdit.textChanged.connect(self.show_condition)
+
+    def show_condition(self):
+        search_text = self.searchLineEdit.text().lower()
+        filter_local = self.local.isChecked()
+        filter_remove = self.remove.isChecked()
+
+        self.show_all()
+
+        if search_text != "":
+            self.search(search_text)
+
+        if filter_local:
+            self.filter_local(filter_local)
+
+        if filter_remove:
+            self.filter_remove(filter_remove)
+
+
+    # def show_all(self):
+    #     for i in range(self.tab_widget.stackedWidget.count()):
+    #         table = self.tab_widget.stackedWidget.widget(i)
+    #         for row in range(table.rowCount()):
+    #             match = False
+    #             for col in range(table.columnCount()):
+    #                 item = table.item(row, col)
+    #                 # if search_term in item.text().lower():
+    #                 import random
+    #                 if random.randint(1,10) < 5:
+    #                     match = True
+    #                     break
+    #             table.setRowHidden(row, not match)
+
+    def show_all(self):
+        for i in range(self.tab_widget.stackedWidget.count()):
+            table = self.tab_widget.stackedWidget.widget(i)
+            for row in range(table.rowCount()):
+                    table.setRowHidden(row, False)
+            # table.update()        
+
+    def search(self, keyWord: str):
+        for i in range(self.tab_widget.stackedWidget.count()):
+            table = self.tab_widget.stackedWidget.widget(i)
+            table.search(keyWord)
+
+    def filter_local(self, is_show: bool):
+        # if true, show the local
+        pass
+
+    def filter_remove(self, is_show: bool):
+        # if true, show the remove
+        pass
+
     def update_window(self):
         pass
 
@@ -88,13 +138,13 @@ class TabInterface(QWidget):
 
     def __init__(self, library: Library=None, model_types: ModelTypes=None, model_infos: ModelInfo=None, parent=None):
         super().__init__(parent=parent)
-        self.tabCount = 1
+        # self.tabCount = 1
         self.library = library
         self.model_types = model_types 
 
         self.model_infos = model_infos
 
-        self.tabs = []
+        self.tabels = []
 
         self.tabBar = TabBar(self)
         self.stackedWidget = QStackedWidget(self)
@@ -111,19 +161,18 @@ class TabInterface(QWidget):
         self.vBoxLayout = QVBoxLayout(self.tabView)
         self.panelLayout = QVBoxLayout(self.controlPanel)
 
-        self.create_tabs(self.library, self.model_types, self.model_infos)
-        
+        self.create_tab(self.library, self.model_types, self.model_infos)
 
         # add items to pivot
         self.__initWidget()
 
 
-    def create_tabs(self, library, model_types, model_infos):
+    def create_tab(self, library, model_types, model_infos):
         for model_type in model_types:
-            model_infos_with_type = [item for item in model_infos if item.id == model_type.id]
+            model_infos_with_type = [item for item in model_infos if item.type_id == model_type.id]
 
             table = TableFrame(library, model_infos_with_type, self)
-            self.tabs.append(table)
+            self.tabels.append(table)
             self.addSubInterface(table, model_type.name, self.tr(f'{model_type.name}'), None)
 
     def __initWidget(self):
@@ -142,9 +191,9 @@ class TabInterface(QWidget):
 
         self.connectSignalToSlot()
 
-        if len(self.tabs) > 0:
+        if len(self.tabels) > 0:
             qrouter.setDefaultRouteKey(
-                self.stackedWidget, self.tabs[0].objectName())
+                self.stackedWidget, self.tabels[0].objectName())
 
     def connectSignalToSlot(self):
         self.movableCheckBox.stateChanged.connect(
@@ -156,8 +205,8 @@ class TabInterface(QWidget):
 
         self.tabMaxWidthSpinBox.valueChanged.connect(self.tabBar.setTabMaximumWidth)
 
-        self.tabBar.tabAddRequested.connect(self.addTab)
-        self.tabBar.tabCloseRequested.connect(self.removeTab)
+        # self.tabBar.tabAddRequested.connect(self.addTab)
+        # self.tabBar.tabCloseRequested.connect(self.removeTab)
 
         self.stackedWidget.currentChanged.connect(self.onCurrentIndexChanged)
 
@@ -200,7 +249,7 @@ class TabInterface(QWidget):
         )
 
     def onDisplayModeChanged(self, index):
-        mode = self.closeDisplayModeComboBox.itemData(index)
+        # mode = self.closeDisplayModeComboBox.itemData(index)
         self.tabBar.setCloseButtonDisplayMode(TabCloseButtonDisplayMode.NEVER)
 
     def onCurrentIndexChanged(self, index):
@@ -211,18 +260,18 @@ class TabInterface(QWidget):
         self.tabBar.setCurrentTab(widget.objectName())
         qrouter.push(self.stackedWidget, widget.objectName())
 
-    def addTab(self):
-        text = f'硝子酱一级棒卡哇伊×{self.tabCount}'
-        self.addSubInterface(QLabel('🥰 ' + text), text, text, ':/gallery/images/Smiling_with_heart.png')
-        self.tabCount += 1
+    # def addTab(self):
+    #     text = f'硝子酱一级棒卡哇伊×{self.tabCount}'
+    #     self.addSubInterface(QLabel('🥰 ' + text), text, text, ':/gallery/images/Smiling_with_heart.png')
+    #     self.tabCount += 1
 
-    def removeTab(self, index):
-        item = self.tabBar.tabItem(index)
-        widget = self.findChild(QLabel, item.routeKey())
+    # def removeTab(self, index):
+    #     item = self.tabBar.tabItem(index)
+    #     widget = self.findChild(QLabel, item.routeKey())
 
-        self.stackedWidget.removeWidget(widget)
-        self.tabBar.removeTab(index)
-        widget.deleteLater()
+    #     self.stackedWidget.removeWidget(widget)
+    #     self.tabBar.removeTab(index)
+    #     widget.deleteLater()
 
 class TableFrame(TableWidget):
 
@@ -231,23 +280,47 @@ class TableFrame(TableWidget):
         self.library = library
         self.model_infos = model_infos
 
+        # import copy
+        # self.model_infos = [copy.deepcopy(model_infos[0]) for _ in range(100)] 
+        # for i in range(len(self.model_infos)):
+        #     self.model_infos[i].id = i+1
+        
+        self.header_labels = []
+        self.data = [[]]
+        self.fuzzy = FuzzyWuzzy()
+
+        self.__init_table()
+        self.__init_fuzzy()
+
+    def __init_table(self):
         self.verticalHeader().hide()
         self.setBorderRadius(8)
         self.setBorderVisible(True)
+    
+        self.header_labels = self.library.model_info_controller.get_fields()
+        self.setColumnCount(len(self.header_labels))
 
-        header_labels = self.library.model_info_controller.get_fields()
+        self.setRowCount(len(self.model_infos))
+        self.setHorizontalHeaderLabels([self.tr(f'{label}') for label in self.header_labels])
 
-        self.setColumnCount(len(header_labels))
-        self.setRowCount(60)
-        self.setHorizontalHeaderLabels([self.tr(f'{label}') for label in header_labels])
-
-        model_infos = [[str(getattr(instance, attr)) for attr in vars(instance)] for instance in self.model_infos]
+        self.data = [[str(getattr(instance, attr)) for attr in vars(instance)] for instance in self.model_infos]
 
         # model_infos = [[str(getattr(instance, attr)) for attr in dir(instance) if not callable(getattr(instance, attr)) and not attr.startswith("__")] for instance in self.model_infos]
         
-        for i, model_info in enumerate(model_infos):
-            for j in range(5):
+        for i, model_info in enumerate(self.data):
+            for j in range(len(self.header_labels)):
                 self.setItem(i, j, QTableWidgetItem(model_info[j]))
 
         # self.setFixedSize(625, 440)
         self.resizeColumnsToContents()
+
+    def __init_fuzzy(self):
+        model_names = [instance.name for instance in self.model_infos]
+        self.fuzzy.add_keys(model_names)
+
+    def search(self, keyWord: str):
+        logger.info(f"search model keyWord: {keyWord}")
+        matched_indices = self.fuzzy.search(keyWord.lower())
+        for row in range(self.rowCount()):
+            if row not in matched_indices:
+                self.setRowHidden(row, True)
