@@ -2,11 +2,12 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-07-11 15:11:16
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-17 16:27:33
+LastEditTime: 2024-07-17 18:45:07
 FilePath: \aistore\app\view\model_library_interface\sd_model_interface.py
 Description: 
 '''
 # coding:utf-8
+import os
 from PyQt5.QtCore import Qt, QEasingCurve
 from PyQt5.QtWidgets import QWidget, QStackedWidget, QVBoxLayout, QLabel, QHBoxLayout, QFrame, QSizePolicy,QTableWidgetItem
 from qfluentwidgets import (Pivot, qrouter, SegmentedWidget, TabBar, CheckBox, ComboBox,
@@ -25,6 +26,8 @@ from qfluentwidgets import FluentIcon as FIF
 from app.common.logger import logger
 from app.database.library import Library
 
+from app.common.config import cfg
+
 class SDModelInterface(GalleryInterface):
     """ Navigation view interface """
 
@@ -38,7 +41,7 @@ class SDModelInterface(GalleryInterface):
 
         self.library = library
         self.registry = registry
-
+        self.app_card = None
 
         self.setObjectName('sdModelInterface')
 
@@ -47,12 +50,12 @@ class SDModelInterface(GalleryInterface):
         self.searchLineEdit = SearchLineEdit(self)
         self.local =  CheckBox(self.tr('local'))
         self.remove =  CheckBox(self.tr('remove'))
-        self.open_folder = PushButton(self.tr('Open folder'), self, FIF.FOLDER)
+        self.open_folder_button = PushButton(self.tr('Open folder'), self, FIF.FOLDER)
         self.refresh = PushButton(self.tr('Refresh'), self, FIF.SYNC)
         self.add_model = PushButton(self.tr('Add model'), self, FIF.ADD)
 
-        model_types, model_infos = self.get_tab_name()
-        self.tab_widget = TabInterface(library=library, model_types=model_types, model_infos=model_infos, parent=self)
+        self.model_types, self.model_infos = self.get_tab_name()
+        self.tab_widget = TabInterface(library=library, model_types=self.model_types, model_infos=self.model_infos, parent=self)
 
         self.__initWidget()
         self.__connectSignalToSlot()
@@ -78,7 +81,7 @@ class SDModelInterface(GalleryInterface):
         self.hBoxLayout.addWidget(self.searchLineEdit)
         self.hBoxLayout.addWidget(self.local)
         self.hBoxLayout.addWidget(self.remove)
-        self.hBoxLayout.addWidget(self.open_folder)
+        self.hBoxLayout.addWidget(self.open_folder_button)
         self.hBoxLayout.addWidget(self.refresh)
         self.hBoxLayout.addWidget(self.add_model)
         self.hBoxLayout.setAlignment(Qt.AlignLeft)
@@ -93,6 +96,9 @@ class SDModelInterface(GalleryInterface):
         self.searchLineEdit.clearSignal.connect(self.show_condition)
         self.searchLineEdit.searchSignal.connect(self.show_condition)
         self.searchLineEdit.textChanged.connect(self.show_condition)
+        self.searchLineEdit.textChanged.connect(self.show_condition)
+
+        self.open_folder_button.clicked.connect(self.open_folder)
 
     def show_condition(self):
         search_text = self.searchLineEdit.text().lower()
@@ -130,15 +136,44 @@ class SDModelInterface(GalleryInterface):
         # if true, show the remove
         pass
 
-    def update_window(self,app_card):
-        model_types, model_infos = self.get_tab_name(app_card)
+    def update_window(self, app_card):
+        self.app_card = app_card
+        self.model_types, self.model_infos = self.get_tab_name(self.app_card)
 
         # self.tab_widget = TabInterface(library=self.library, model_types=model_types, model_infos=model_infos, parent=self)
         for i in range(self.tab_widget.stackedWidget.count()):
             self.tab_widget.removeTab(0)
 
-        self.tab_widget.update_window(model_types, model_infos)
-        self.toolBar.titleLabel.setText(f"{app_card.app_info.title}")
+        self.tab_widget.update_window(self.model_types, self.model_infos)
+        self.toolBar.titleLabel.setText(f"{self.app_card.app_info.title}")
+
+    def open_folder(self):
+        logger.info("open folder")
+        tab_name = self.tab_widget.tabBar.currentTab().text()
+
+        model_type_id = -1
+        for item in self.model_types:
+            if item.name == tab_name:
+                model_type_id = item.id
+                break
+
+        model_folders = self.library.model_folder_controller.get_model_folders_by_app_id(self.app_card.app_info.id)
+
+        directory = ''
+        if model_type_id != -1:
+            for item in model_folders:
+                if item.model_type_id == model_type_id:
+                    directory = item.folder
+                    break
+
+        if directory != '':
+            try:
+                directory = f"{cfg.get(cfg.install_folder)}/{self.app_card.app_info.name}/{directory}"
+                # os.makedirs(directory)
+                os.startfile( directory)
+                logger.info(f"Open directory: {directory}")
+            except Exception as e:
+                logger.error(f"An unexpected error occurred: {e}")
         
 class TabInterface(QWidget):
     """ Tab interface """

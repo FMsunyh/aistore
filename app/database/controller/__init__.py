@@ -19,3 +19,4 @@ from app.database.controller.user_app_controller import UserAppController
 from app.database.controller.model_types_controller import ModelTypesController
 from app.database.controller.model_info_controller import ModelInfoController
 from app.database.controller.app_models_controller import AppModelsController
+from app.database.controller.model_folder_controller import ModelFolderController

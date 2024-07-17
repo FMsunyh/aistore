@@ -22,3 +22,6 @@ class ModelFolderService:
     
     def listAll(self) -> List[ModelFolder]:
         return self.dao.listAll()
+
+    def listBy(self, **condition) -> List[ModelFolder]:
+        return self.dao.listBy(**condition)

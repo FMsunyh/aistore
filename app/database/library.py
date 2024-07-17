@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-28 17:06:35
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-12 14:20:06
+LastEditTime: 2024-07-17 18:02:14
 FilePath: \aistore\app\database\db_sqlite.py
 Description: library
 '''
@@ -59,6 +59,7 @@ class Library(QObject):
         self.model_types_controller = ModelTypesController(db)
         self.model_info_controller = ModelInfoController(db)
         self.app_models_controller = AppModelsController(db)
+        self.model_folder_controller = ModelFolderController(db)
 
         self.load()
 
@@ -70,6 +71,7 @@ class Library(QObject):
         self.model_types = self.model_types_controller.list_all()
         self.model_infos = self.model_info_controller.list_all()
         self.app_models = self.app_models_controller.list_all()
+        self.model_folders = self.model_folder_controller.list_all()
         
         self.loadFinished.emit()
 
