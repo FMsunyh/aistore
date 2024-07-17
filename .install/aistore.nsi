@@ -1,5 +1,5 @@
 ; Define the name of the installer and the version number
-!define VERSION "1.2.0"
+!define VERSION "1.2.1"
 Name "AIStore"
 OutFile "AIStoreInstaller_${VERSION}.exe"
 

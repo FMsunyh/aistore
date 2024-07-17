@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-07-05 16:27:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-08 17:55:05
+LastEditTime: 2024-07-17 14:12:54
 Description: download thread
 
 '''
@@ -26,16 +26,18 @@ class DownloadThread(QThread):
     download_progress = pyqtSignal(int)
     download_complete = pyqtSignal(str)
 
-    def __init__(self, url, output_dir='', parent=None):
+    def __init__(self, url, output_dir='', creationflags=subprocess.CREATE_NO_WINDOW, parent=None):
         super().__init__(parent)
         self.url = url
         self.output_dir = output_dir
 
+        self.creationflags = creationflags
+        
     def run(self):
+        # ptvsd.debug_this_thread()
         self._download_file()
 
     def _download_file(self):
-        # ptvsd.debug_this_thread()
         filename = os.path.basename(self.url)
 
         if self.output_dir=='':
@@ -47,9 +49,9 @@ class DownloadThread(QThread):
         total_size = self._get_download_size(self.url)
         if initial_size < total_size:
             try:
-                command = [ 'curl', '--create-dirs', '--silent', '--insecure', '--location', '--continue-at', '-', '--output', ouput_path, self.url ]
-                process = subprocess.Popen(command, creationflags=subprocess.CREATE_NO_WINDOW)
-                # process = subprocess.Popen(command)
+                # command = [ 'curl', '--create-dirs', '--silent', '--insecure', '--location', '--continue-at', '-', '--output', ouput_path, self.url ]
+                command = [ 'curl', '--create-dirs',  '--insecure', '--location', '--continue-at', '-', '--output', ouput_path, self.url ]
+                process = subprocess.Popen(command, text=True, creationflags=self.creationflags) # subprocess.CREATE_NEW_CONSOLE or subprocess.CREATE_NO_WINDOW
                 logger.info(f'Run {command}, return: {process.pid}')
                 current_size = initial_size
                 while current_size < total_size:
