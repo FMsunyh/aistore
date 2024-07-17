@@ -1,0 +1,37 @@
+<model_folders>
+    <model_folder>
+        <id>1</id>
+        <softwareId>1</softwareId>
+        <modelTypeId>1</modelTypeId>
+        <folder>models/Stable-diffusion</folder>
+        <description></description>
+    </model_folder>
+    <model_folder>
+        <id>2</id>
+        <softwareId>1</softwareId>
+        <modelTypeId>2</modelTypeId>
+        <folder>models/Lora</folder>
+        <description></description>
+    </model_folder>
+    <model_folder>
+        <id>3</id>
+        <softwareId>1</softwareId>
+        <modelTypeId>3</modelTypeId>
+        <folder>models/VAE</folder>
+        <description></description>
+    </model_folder>
+    <model_folder>
+        <id>4</id>
+        <softwareId>1</softwareId>
+        <modelTypeId>4</modelTypeId>
+        <folder>embeddings</folder>
+        <description></description>
+    </model_folder>
+    <model_folder>
+        <id>5</id>
+        <softwareId>1</softwareId>
+        <modelTypeId>5</modelTypeId>
+        <folder>models/hypernetworks</folder>
+        <description></description>
+    </model_folder>
+</model_folders>

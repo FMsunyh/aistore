@@ -19,6 +19,7 @@ from app.database.entity.user_app import UserApp
 from app.database.entity.model_info import ModelInfo
 from app.database.entity.model_types import ModelTypes
 from app.database.entity.app_models import AppModels
+from app.database.entity.model_folder import ModelFolder
 
 
 
@@ -52,6 +53,7 @@ class EntityFactory:
             "tbl_model_info": ModelInfo,
             "tbl_model_types": ModelTypes,
             "tbl_app_models": AppModels,
+            "tbl_model_folder": ModelFolder,
         }
         if table not in tables:
             raise ValueError(f"Table name `{table}` is illegal")

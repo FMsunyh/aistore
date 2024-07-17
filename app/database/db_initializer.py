@@ -14,7 +14,7 @@ from PyQt5.QtWidgets import qApp
 
 from app.database.service import (UserService,AppInfoService,AppTypesService,AppVersionsService,
                                   DevelopersService,LicensesService,ScreenshotsService,
-                                  UserAppService,RatingsReviewsService, ModelTypesService,ModelInfoService,AppModelsService)
+                                  UserAppService,RatingsReviewsService, ModelTypesService,ModelInfoService,AppModelsService,ModelFolderService)
 
 from  app.common.config import cfg
 
@@ -46,3 +46,4 @@ class DBInitializer:
         ModelTypesService(db).createTable()
         ModelInfoService(db).createTable()
         AppModelsService(db).createTable()
+        ModelFolderService(db).createTable()

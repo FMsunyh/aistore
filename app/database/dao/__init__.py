@@ -11,3 +11,4 @@ from app.database.dao.user_app_dao import UserAppDao
 from app.database.dao.model_info_dao import ModelInfoDao
 from app.database.dao.model_types_dao import ModelTypesDao
 from app.database.dao.app_models_dao import AppModelsDao
+from app.database.dao.model_folder_dao import ModelFolderDao

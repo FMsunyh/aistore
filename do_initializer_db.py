@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-28 15:34:31
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-11 17:29:11
+LastEditTime: 2024-07-17 17:40:41
 FilePath: \aistore\do_initializer_db.py
 Description: initialize db
 '''
@@ -193,6 +193,20 @@ def insert_app_models(cursor, root):
         VALUES (?, ?, ?)
         ''', (id, software_id, model_id))
 
+# 插入软件模型文件夹关系数据
+def insert_model_folder(cursor, root):
+    for entry in root.findall('model_folder'):
+        id = int(entry.find('id').text)
+        software_id = int(entry.find('softwareId').text)
+        model_type_id = int(entry.find('modelTypeId').text)
+        folder = entry.find('folder').text
+        description = entry.find('description').text
+
+        cursor.execute('''
+        INSERT INTO tbl_model_folder (id, software_id, model_type_id, folder, description)
+        VALUES (?, ?, ?, ?, ?)
+        ''', (id, software_id, model_type_id, folder, description))
+
 # 主程序
 def init_from_xml(CACHE_FILE):
     # 连接到 SQLite 数据库
@@ -236,7 +250,9 @@ def init_from_xml(CACHE_FILE):
     app_models_root = parse_xml(r'app\database\data\app_models.xml')
     insert_app_models(cursor, app_models_root)
 
-
+    app_models_root = parse_xml(r'app\database\data\model_folder.xml')
+    insert_model_folder(cursor, app_models_root)
+    
     # 提交更改并关闭连接
     conn.commit()
     conn.close()

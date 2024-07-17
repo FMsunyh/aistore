@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-27 16:19:41
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-11 17:51:08
+LastEditTime: 2024-07-17 17:03:29
 FilePath: \aistore\app\database\service\__init__.py
 Description: 
 '''
@@ -18,3 +18,4 @@ from app.database.service.ratings_reviews_service import RatingsReviewsService
 from app.database.service.model_types_service import ModelTypesService
 from app.database.service.model_info_service import ModelInfoService
 from app.database.service.app_models_service import AppModelsService
+from app.database.service.model_folder_service import ModelFolderService

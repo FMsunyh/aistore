@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-07-11 15:11:16
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-15 18:37:07
+LastEditTime: 2024-07-17 16:27:33
 FilePath: \aistore\app\view\model_library_interface\sd_model_interface.py
 Description: 
 '''
@@ -69,7 +69,6 @@ class SDModelInterface(GalleryInterface):
         model_infos =  self.library.model_info_controller.get_model_infos_by_ids([item.model_id for item in app_models])
 
         model_types = self.library.model_types_controller.get_model_types_by_ids([item.type_id for item in model_infos])
-
 
         return model_types, model_infos
     
