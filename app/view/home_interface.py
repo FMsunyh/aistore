@@ -25,7 +25,7 @@ from app.common.config import SERVER_IP,SERVER_PORT
 import os
 
 from app.common.logger import logger
-
+from app.core import wording
 class BannerWidget(QWidget):
     """ Banner widget """
 
@@ -164,7 +164,7 @@ class HomeInterface(ScrollArea):
         # Popular Tools
         self.type_views = []
         for app_type in self.library.app_types:
-            type_view = AppCardView(self.tr(f'{app_type.name}'), self.view)
+            type_view = AppCardView(wording.get(f'{app_type.name}'), self.view)
             app_infos = self.library.app_info_controller.get_app_infos_by_type_id(app_type.id)
             
             for app_info in app_infos:

@@ -88,8 +88,7 @@
         <briefIntroduction>强大的图像生成工具。
         Fooocus is an image generating software.
         </briefIntroduction>
-        <description>
-        Fooocus 是一款开源 AI 视频/图像处理工具，它是对 Stable Diffusion 和 Midjourney 设计的重新思考。
+        <description>Fooocus 是一款开源 AI 视频/图像处理工具，它是对 Stable Diffusion 和 Midjourney 设计的重新思考。
         Fooocus is an open source AI video/image processing tool. It is a rethinking of Stable Diffusion and Midjourney’s designs.
         </description>
         <releaseDate>2024-07-09</releaseDate>

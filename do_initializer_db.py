@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-28 15:34:31
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-18 11:53:48
+LastEditTime: 2024-07-18 14:05:53
 FilePath: \aistore\do_initializer_db.py
 Description: initialize db
 '''
@@ -18,7 +18,17 @@ from pathlib import Path
 from app.common.config import cfg
 from app.common.logger import logger
 import os
+import re
 
+def remove_spaces(xml_string):
+    # 保留换行符并删除空格
+    xml_string = re.sub(r'[ \t]+', '', xml_string)
+    return xml_string
+
+def remove_leading_spaces(xml_string):
+    # 删除每行开头的空格
+    xml_string = re.sub(r'^[ \t]+', '', xml_string, flags=re.MULTILINE)
+    return xml_string
 
 # 解析 XML 文件
 def parse_xml(file):
@@ -58,8 +68,13 @@ def insert_app(cursor, root):
         title = item.find('title').text
         type_id = int(item.find('typeId').text)
         developer_id = int(item.find('developerId').text)
+        
         brief_introduction = item.find('briefIntroduction').text
+        brief_introduction = remove_leading_spaces(brief_introduction)
+
         description = item.find('description').text
+        description = remove_leading_spaces(description)
+
         release_date = item.find('releaseDate').text
         
         cursor.execute('''

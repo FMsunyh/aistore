@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-14 18:28:18
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-18 10:40:50
+LastEditTime: 2024-07-18 14:37:16
 FilePath: \aistore\app\common\config.py
 Description: config for aistore
 '''
