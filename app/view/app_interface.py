@@ -272,13 +272,13 @@ class GalleryCard(HeaderCardWidget):
         self.flipView.addImages([obj.image_url for obj in screenshots])
 
 class WhatsNewCard(HeaderCardWidget):
-    """ Description card """
+    """ WhatsNew card """
 
-    def __init__(self, library: Library = None, app_info: AppInfo=None, title: str='', parent=None):
+    def __init__(self, library: Library = None, app_info: AppInfo=None, parent=None):
         super().__init__(parent)
         self.library = library
-
-        self.title = title
+        self.title = self.tr('What New')
+        
         app_version = self.library.app_versions_controller.get_last_app_version_by_app_id(app_info.id)
         self.versionWidget = HStatisticsWidget(self.tr('Version'), app_version.version_number, app_version.release_date, self)
         self.descriptionLabel = BodyLabel(
@@ -288,6 +288,8 @@ class WhatsNewCard(HeaderCardWidget):
         self.vBoxLayout.insertWidget(2, self.versionWidget)
 
         self.viewLayout.addWidget(self.descriptionLabel)
+
+        # self.setTitle(self.title)
         self.setTitle(self.tr(f'{self.title}'))
 
     def set_description(self, value):
@@ -520,7 +522,7 @@ class AppInterface(SingleDirectionScrollArea):
 
         self.vBoxLayout = QVBoxLayout(self.view)
         self.appInfoCard = AppInfoCard(self.app_info, self)
-        self.whatNewCard = WhatsNewCard(self.library, app_info, 'What\'s New', self)
+        self.whatNewCard = WhatsNewCard(self.library, app_info, self)
         self.galleryCard = GalleryCard(self.library, app_info, self)
         self.descriptionCard = DescriptionCard(self.library, app_info, self)
         self.systemCard = SystemRequirementCard(self)

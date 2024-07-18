@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 05:28:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-15 17:37:28
+LastEditTime: 2024-07-18 10:40:59
 FilePath: \aistore\app\view\main_window.py
 Description: main windows
 '''
@@ -23,11 +23,10 @@ from app.database.db_initializer import DBInitializer
 from app.database.library import Library
 from app.view.app_interface import AppInterface
 from app.view.model_interface import ModelInterface
-from app.view.model_library_interface import SDModelInterface, ComfyUIModelInterface
+from app.view.model_library_interface import SDModelInterface
 
 from .gallery_interface import GalleryInterface
 from .home_interface import HomeInterface
-from .navigation_view_interface import NavigationViewInterface
 from .setting_interface import SettingInterface
 from ..common.config import ZH_SUPPORT_URL, EN_SUPPORT_URL, cfg, REGISTY_PATH,HELP_URL
 from ..common.signal_bus import signalBus
@@ -61,7 +60,7 @@ class MainWindow(FluentWindow):
     def createWidgets(self):
         # create sub interface
         self.homeInterface = HomeInterface(library = self.library, registry=self.registry, parent=self)
-        self.navigationViewInterface = NavigationViewInterface(self)
+        # self.navigationViewInterface = NavigationViewInterface(self)
         self.modelInterface = ModelInterface(library=self.library, parent=self)
         self.settingInterface = SettingInterface(self)
 
@@ -70,7 +69,7 @@ class MainWindow(FluentWindow):
             self.appInterface = AppInterface(library=self.library, app_info=app_info, parent=self)
         
         self.sdModelInterface = SDModelInterface(library = self.library, registry=self.registry, parent=self)
-        self.comfyuiModelInterface = ComfyUIModelInterface(self)
+        # self.comfyuiModelInterface = ComfyUIModelInterface(self)
 
     def initNavigation(self):
         # add navigation items
@@ -134,7 +133,7 @@ class MainWindow(FluentWindow):
     def initWidget(self):
         self.stackedWidget.addWidget(self.appInterface)
         self.stackedWidget.addWidget(self.sdModelInterface)
-        self.stackedWidget.addWidget(self.comfyuiModelInterface)
+        # self.stackedWidget.addWidget(self.comfyuiModelInterface)
 
     def init_data(self):
         DBInitializer.init()
