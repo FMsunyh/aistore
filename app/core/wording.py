@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-07-18 14:23:17
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-18 14:44:03
+LastEditTime: 2024-07-18 16:40:53
 FilePath: \aistore\app\core\wording.py
 Description: 
 '''
@@ -15,6 +15,13 @@ WORDING_CN: Dict[str, Any] = \
     "Face Processing": "人脸处理",
     "Machine Learning": "机器学习",
     "AI Video": "AI 生成视频",
+    "id": "序号",
+    "name": "名称",
+    "type_id": "类型ID",
+    "download_url": "下载地址",
+    "file_name": "文件名称",
+    "description": "描述",
+    "size": "大小",
 }
 
 WORDING_EN: Dict[str, Any] = \
@@ -22,7 +29,14 @@ WORDING_EN: Dict[str, Any] = \
     "AI Painting": "AI Painting",
     "Face Processing": "Face Processing",
     "Machine Learning": "Machine Learning",
-    "AI Video": "AI Video"
+    "AI Video": "AI Video",
+    "id": "ID",
+    "name": "name",
+    "type_id": "type ID",
+    "download_url": "download url",
+    "file_name": "file name",
+    "description": "description",
+    "size": "size",
 }
 def get(key : str) -> Optional[str]:
     language = cfg.get(cfg.language) 

@@ -379,7 +379,7 @@
     <message>
         <location filename="../../view/app_interface.py" line="319"/>
         <source>Description</source>
-        <translation type="unfinished">描述</translation>
+        <translation>描述</translation>
     </message>
     <message>
         <location filename="../../view/app_interface.py" line="322"/>
@@ -1131,7 +1131,7 @@ In that case, I would accept it no matter which side the ball falls on.</source>
     <message>
         <location filename="../../view/model_library_interface/sd_model_interface.py" line="52"/>
         <source>remove</source>
-        <translation>删除</translation>
+        <translation>远程</translation>
     </message>
     <message>
         <location filename="../../view/model_library_interface/sd_model_interface.py" line="53"/>

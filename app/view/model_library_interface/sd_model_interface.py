@@ -2,14 +2,14 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-07-11 15:11:16
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-17 18:45:07
+LastEditTime: 2024-07-18 16:53:09
 FilePath: \aistore\app\view\model_library_interface\sd_model_interface.py
 Description: 
 '''
 # coding:utf-8
 import os
 from PyQt5.QtCore import Qt, QEasingCurve
-from PyQt5.QtWidgets import QWidget, QStackedWidget, QVBoxLayout, QLabel, QHBoxLayout, QFrame, QSizePolicy,QTableWidgetItem
+from PyQt5.QtWidgets import QWidget, QStackedWidget, QVBoxLayout, QLabel, QHBoxLayout, QFrame, QSizePolicy,QTableWidgetItem,QSpacerItem
 from qfluentwidgets import (Pivot, qrouter, SegmentedWidget, TabBar, CheckBox, ComboBox,
                             TabCloseButtonDisplayMode, BodyLabel, SpinBox, BreadcrumbBar,PushButton,
                             SegmentedToggleToolWidget, FluentIcon,TableWidget)
@@ -52,7 +52,7 @@ class SDModelInterface(GalleryInterface):
         self.remove =  CheckBox(self.tr('remove'))
         self.open_folder_button = PushButton(self.tr('Open folder'), self, FIF.FOLDER)
         self.refresh = PushButton(self.tr('Refresh'), self, FIF.SYNC)
-        self.add_model = PushButton(self.tr('Add model'), self, FIF.ADD)
+        # self.add_model = PushButton(self.tr('Add model'), self, FIF.ADD)
 
         self.model_types, self.model_infos = self.get_tab_name()
         self.tab_widget = TabInterface(library=library, model_types=self.model_types, model_infos=self.model_infos, parent=self)
@@ -77,13 +77,19 @@ class SDModelInterface(GalleryInterface):
     
 
     def __initWidget(self):
+        self.open_folder_button.setFixedSize(150, 30)
+        self.refresh.setFixedSize(100, 30)
+
         self.hBoxLayout.setContentsMargins(0, 0, 0, 0)
         self.hBoxLayout.addWidget(self.searchLineEdit)
+        spacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.hBoxLayout.addItem(spacer)
+        
         self.hBoxLayout.addWidget(self.local)
         self.hBoxLayout.addWidget(self.remove)
         self.hBoxLayout.addWidget(self.open_folder_button)
         self.hBoxLayout.addWidget(self.refresh)
-        self.hBoxLayout.addWidget(self.add_model)
+        # self.hBoxLayout.addWidget(self.add_model)
         self.hBoxLayout.setAlignment(Qt.AlignLeft)
     
         self.searchLineEdit.setPlaceholderText(self.tr('Search model'))

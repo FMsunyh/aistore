@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-07-15 16:38:51
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-17 13:59:18
+LastEditTime: 2024-07-18 16:43:39
 FilePath: \aistore\app\components\table_frame.py
 Description: 
 '''
@@ -18,7 +18,7 @@ from PyQt5.QtCore import Qt
 from qfluentwidgets import PushButton,PrimaryPushButton
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout ,QHeaderView               
 from app.common.signal_bus import signalBus
-
+from app.core import wording
 class TableFrame(TableWidget):
 
     def __init__(self, library: Library=None, model_infos: ModelInfo=None, parent=None):
@@ -47,7 +47,7 @@ class TableFrame(TableWidget):
         self.setColumnCount(len(self.header_labels))
 
         self.setRowCount(len(self.model_infos))
-        self.setHorizontalHeaderLabels([self.tr(f'{label}') for label in self.header_labels])
+        self.setHorizontalHeaderLabels([wording.get(f'{label}') for label in self.header_labels])
 
         self.data = [[str(getattr(instance, attr)) for attr in vars(instance)] for instance in self.model_infos]
 
@@ -87,7 +87,7 @@ class TableFrame(TableWidget):
 
     def add_download_button(self, row, column):
         button =  PrimaryPushButton(self.tr("Download"))
-        button.setFixedSize(100, 30)
+        button.setFixedSize(60, 30)
 
         button.clicked.connect(lambda: self.download_data(row))
 
