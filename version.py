@@ -6,5 +6,5 @@ LastEditTime: 2024-07-18 15:36:57
 FilePath: \aistore\version.py
 Description: 
 '''
-__version__ = "1.3.0"
+__version__ = "1.3.1"
 __author__ = "ZhongJu GPU Cloud"
