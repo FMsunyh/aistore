@@ -275,9 +275,11 @@ class WhatsNewCard(HeaderCardWidget):
     """ WhatsNew card """
 
     def __init__(self, library: Library = None, app_info: AppInfo=None, parent=None):
+
         super().__init__(parent)
         self.library = library
-        self.title = self.tr('What New')
+
+        self.title = self.tr('What\'s New')
         
         app_version = self.library.app_versions_controller.get_last_app_version_by_app_id(app_info.id)
         self.versionWidget = HStatisticsWidget(self.tr('Version'), app_version.version_number, app_version.release_date, self)

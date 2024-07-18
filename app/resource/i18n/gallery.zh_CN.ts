@@ -377,17 +377,17 @@
 <context>
     <name>DescriptionCard</name>
     <message>
-        <location filename="../../view/app_interface.py" line="317"/>
+        <location filename="../../view/app_interface.py" line="319"/>
         <source>Description</source>
-        <translation>描述</translation>
+        <translation type="unfinished">描述</translation>
     </message>
     <message>
-        <location filename="../../view/app_interface.py" line="320"/>
+        <location filename="../../view/app_interface.py" line="322"/>
         <source>{self.description}</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../view/app_interface.py" line="324"/>
+        <location filename="../../view/app_interface.py" line="326"/>
         <source>{self.title}</source>
         <translation></translation>
     </message>
@@ -658,12 +658,12 @@ In that case, I would accept it no matter which side the ball falls on.</source>
 <context>
     <name>LightBox</name>
     <message>
-        <location filename="../../view/app_interface.py" line="385"/>
+        <location filename="../../view/app_interface.py" line="387"/>
         <source>Screenshots 1</source>
         <translation>预览 1</translation>
     </message>
     <message>
-        <location filename="../../view/app_interface.py" line="412"/>
+        <location filename="../../view/app_interface.py" line="414"/>
         <source>Screenshots</source>
         <translation>预览</translation>
     </message>
@@ -1548,17 +1548,17 @@ In that case, I would accept it no matter which side the ball falls on.</source>
 <context>
     <name>SystemRequirementCard</name>
     <message>
-        <location filename="../../view/app_interface.py" line="340"/>
+        <location filename="../../view/app_interface.py" line="342"/>
         <source>System Requirements</source>
         <translation>系统要求</translation>
     </message>
     <message>
-        <location filename="../../view/app_interface.py" line="341"/>
+        <location filename="../../view/app_interface.py" line="343"/>
         <source>windows 10</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../view/app_interface.py" line="343"/>
+        <location filename="../../view/app_interface.py" line="345"/>
         <source>Details</source>
         <translation>详情</translation>
     </message>
@@ -1935,24 +1935,32 @@ Do you want to update?</source>
 <context>
     <name>WhatsNewCard</name>
     <message>
-        <location filename="../../view/app_interface.py" line="282"/>
         <source>What New</source>
+        <translation type="vanished">新特性</translation>
+    </message>
+    <message>
+        <source>What New/新特性</source>
+        <translation type="vanished">新特性ssssss</translation>
+    </message>
+    <message>
+        <location filename="../../view/app_interface.py" line="284"/>
+        <source>What&apos;s New</source>
         <translation>新特性</translation>
     </message>
     <message>
-        <location filename="../../view/app_interface.py" line="283"/>
-        <location filename="../../view/app_interface.py" line="305"/>
+        <location filename="../../view/app_interface.py" line="285"/>
+        <location filename="../../view/app_interface.py" line="307"/>
         <source>Version</source>
         <translation>当前版本</translation>
     </message>
     <message>
-        <location filename="../../view/app_interface.py" line="285"/>
-        <location filename="../../view/app_interface.py" line="306"/>
+        <location filename="../../view/app_interface.py" line="287"/>
+        <location filename="../../view/app_interface.py" line="308"/>
         <source>{app_version.change_log}</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="../../view/app_interface.py" line="293"/>
+        <location filename="../../view/app_interface.py" line="295"/>
         <source>{self.title}</source>
         <translation></translation>
     </message>

@@ -6,8 +6,13 @@
         <icon>:/gallery/images/app_icons/sd_webui.ico</icon>
         <typeId>1</typeId>
         <developerId>1</developerId>
-        <briefIntroduction>A web interface for Stable Diffusion.</briefIntroduction>
-        <description>Stable Diffusion WebUI is a browser interface based on the Gradio library, which integrates a variety of open source AI painting models, such as NovelAi/Stable Diffusion, etc. Through Stable Diffusion WebUI, users can easily configure and generate AI paintings, implement various refined settings, and help users easily generate high-quality paintings.</description>
+        <briefIntroduction>最受欢迎的Stable Diffusion WebUI。
+        A web interface for Stable Diffusion.
+        </briefIntroduction>
+        <description>
+        Stable Diffusion WebUI是一个基于Gradio库的浏览器界面，它集成了多种开源AI绘画模型，如NovelAi/Stable Diffusion等。通过Stable Diffusion WebUI，用户可以方便地进行AI绘画的配置和生成，实现各种精细化的设置，帮助用户轻松生成高质量的绘画作品。
+        Stable Diffusion WebUI is a browser interface based on the Gradio library, which integrates a variety of open source AI painting models, such as NovelAi/Stable Diffusion, etc. Through Stable Diffusion WebUI, users can easily configure and generate AI paintings, implement various refined settings, and help users easily generate high-quality paintings.
+        </description>
         <cn_description>Stable Diffusion WebUI是一个基于Gradio库的浏览器界面，它集成了多种开源AI绘画模型，如NovelAi/Stable Diffusion等。通过Stable Diffusion WebUI，用户可以方便地进行AI绘画的配置和生成，实现各种精细化的设置，帮助用户轻松生成高质量的绘画作品。</cn_description>
         <releaseDate>2024-07-03</releaseDate>
     </item>
@@ -18,8 +23,12 @@
         <icon>:/gallery/images/app_icons/kohya_ss.ico</icon>
         <typeId>1</typeId>
         <developerId>1</developerId>
-        <briefIntroduction>Kohya's Stable Diffusion trainers.</briefIntroduction>
-        <description>Kohya_ss GUI is an open source Stable Diffusion large model training and LoRA model training tool. It provides data labeling function and a friendly training parameter setting interface. It is easy to operate and easy for novices to get started.</description>
+        <briefIntroduction>Stable Diffusion模型训练工具。
+        Kohya's Stable Diffusion trainers.</briefIntroduction>
+        <description>
+        Kohya_ss GUI是一款开源的Stable Diffusion大模型训练和LoRA模型训练工具，它提供了数据打标功能，已经友好的训练参数设置界面，操作方便，小白轻松上手。
+        Kohya_ss GUI is an open source Stable Diffusion large model training and LoRA model training tool. It provides data labeling function and a friendly training parameter setting interface. It is easy to operate and easy for novices to get started.
+        </description>
         <cn_description>Kohya_ss GUI是一款开源的Stable Diffusion大模型训练和LoRA模型训练工具，它提供了数据打标功能，已经友好的训练参数设置界面，操作方便，小白轻松上手。</cn_description>
         <releaseDate>2023-03-22</releaseDate>
     </item>
@@ -30,8 +39,13 @@
         <icon>:/gallery/images/app_icons/facefusion.ico</icon>
         <typeId>2</typeId>
         <developerId>1</developerId>
-        <briefIntroduction>Next generation face swapper and enhancer.</briefIntroduction>
-        <description>FaceFusion is an open source AI video/image face-swapping tool that can replace one person's facial features with another person's body, synchronizing facial expressions and movements. The UI interface design is similar to Stable Diffuison. It is easy to operate and even a novice can easily get started.</description>
+        <briefIntroduction>下一代换脸神器。
+        Next generation face swapper and enhancer.
+        </briefIntroduction>
+        <description>
+        FaceFusion是一款开源的AI视频/图片换脸工具，它能够将一个人的脸部特征替换到另一个人的身体上，实现面部表情和动作的同步。UI界面设计，类似像Stable Diffuison一样，在网页打开操作页面，操作方便，小白轻松上手。
+        FaceFusion is an open source AI video/image face-swapping tool that can replace one person's facial features with another person's body, synchronizing facial expressions and movements. The UI interface design is similar to Stable Diffuison. It is easy to operate and even a novice can easily get started.
+        </description>
         <cn_description>FaceFusion是一款开源的AI视频/图片换脸工具，它能够将一个人的脸部特征替换到另一个人的身体上，实现面部表情和动作的同步。UI界面设计，类似像Stable Diffuison一样，在网页打开操作页面，操作方便，小白轻松上手。</cn_description>
         <releaseDate>2023-01-15</releaseDate>
     </item>
@@ -42,8 +56,13 @@
         <icon>:/gallery/images/app_icons/comfyui.ico</icon>
         <typeId>1</typeId>
         <developerId>1</developerId>
-        <briefIntroduction>The most powerful and modular stable diffusion GUI and backend.</briefIntroduction>
-        <description>ComfyUI is an open source AI video/image processing tool, the most powerful and modular ui will let you design and execute advanced stable diffusion pipelines using a graph/nodes/flowchart based interface.</description>
+        <briefIntroduction>最强大和模块化的stable diffusion GUI和后端。
+        The most powerful and modular stable diffusion GUI and backend.
+        </briefIntroduction>
+        <description>
+        ComfyUI 是一个开源的 AI 视频/图像处理工具，最强大和模块化的用户界面将允许您使用基于图形/节点/流程图的界面设计和执行高级稳定扩散管道。
+        ComfyUI is an open source AI video/image processing tool, the most powerful and modular ui will let you design and execute advanced stable diffusion pipelines using a graph/nodes/flowchart based interface.
+        </description>
         <cn_description></cn_description>
         <releaseDate>2024-07-01</releaseDate>
     </item>
@@ -66,8 +85,13 @@
         <icon>:/gallery/images/app_icons/fooocus.ico</icon>
         <typeId>1</typeId>
         <developerId>1</developerId>
-        <briefIntroduction>Fooocus is an image generating software.</briefIntroduction>
-        <description>Fooocus is an open source AI video/image processing tool. It is a rethinking of Stable Diffusion and Midjourney’s designs.</description>
+        <briefIntroduction>强大的图像生成工具。
+        Fooocus is an image generating software.
+        </briefIntroduction>
+        <description>
+        Fooocus 是一款开源 AI 视频/图像处理工具，它是对 Stable Diffusion 和 Midjourney 设计的重新思考。
+        Fooocus is an open source AI video/image processing tool. It is a rethinking of Stable Diffusion and Midjourney’s designs.
+        </description>
         <releaseDate>2024-07-09</releaseDate>
     </item>
     <item>
@@ -77,8 +101,13 @@
         <icon>:/gallery/images/app_icons/stable_video_diffusion.ico</icon>
         <typeId>4</typeId>
         <developerId>1</developerId>
-        <briefIntroduction>Stable Video Diffusion is state-of-the-art generative AI video model.</briefIntroduction>
-        <description>Stable Video Diffusion is an open source AI video/image processing tool. which for generative video based on the image model Stable Diffusion. </description>
+        <briefIntroduction>AI视频生成工具。
+        Stable Video Diffusion is state-of-the-art generative AI video model.
+        </briefIntroduction>
+        <description>
+        Stable Video Diffusion 是一个开源的 AI 视频/图像处理工具，用于基于图像模型 Stable Diffusion 生成视频。
+        Stable Video Diffusion is an open source AI video/image processing tool. which for generative video based on the image model Stable Diffusion. 
+        </description>
         <releaseDate>2024-07-09</releaseDate>
     </item>
 </app_info>
