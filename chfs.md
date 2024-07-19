@@ -2,10 +2,13 @@
  * @Author: Firmin.Sun fmsunyh@gmail.com
  * @Date: 2024-07-19 13:48:41
  * @LastEditors: Firmin.Sun fmsunyh@gmail.com
- * @LastEditTime: 2024-07-19 14:08:12
+ * @LastEditTime: 2024-07-19 14:27:21
  * @FilePath: \aistore\chfs.md
  * @Description: 
 -->
+## 官网
+[chfs](http://iscute.cn/chfs)
+
 1.下载
 ```sh
 wget http://iscute.cn/tar/chfs/3.1/chfs-linux-amd64-3.1.zip

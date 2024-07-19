@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-07-11 15:11:16
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-18 16:53:09
+LastEditTime: 2024-07-19 15:35:35
 FilePath: \aistore\app\view\model_library_interface\sd_model_interface.py
 Description: 
 '''
@@ -51,7 +51,7 @@ class SDModelInterface(GalleryInterface):
         self.local =  CheckBox(self.tr('local'))
         self.remove =  CheckBox(self.tr('remove'))
         self.open_folder_button = PushButton(self.tr('Open folder'), self, FIF.FOLDER)
-        self.refresh = PushButton(self.tr('Refresh'), self, FIF.SYNC)
+        self.refresh_button = PushButton(self.tr('Refresh'), self, FIF.SYNC)
         # self.add_model = PushButton(self.tr('Add model'), self, FIF.ADD)
 
         self.model_types, self.model_infos = self.get_tab_name()
@@ -78,7 +78,7 @@ class SDModelInterface(GalleryInterface):
 
     def __initWidget(self):
         self.open_folder_button.setFixedSize(150, 30)
-        self.refresh.setFixedSize(100, 30)
+        self.refresh_button.setFixedSize(100, 30)
 
         self.hBoxLayout.setContentsMargins(0, 0, 0, 0)
         self.hBoxLayout.addWidget(self.searchLineEdit)
@@ -88,7 +88,7 @@ class SDModelInterface(GalleryInterface):
         self.hBoxLayout.addWidget(self.local)
         self.hBoxLayout.addWidget(self.remove)
         self.hBoxLayout.addWidget(self.open_folder_button)
-        self.hBoxLayout.addWidget(self.refresh)
+        self.hBoxLayout.addWidget(self.refresh_button)
         # self.hBoxLayout.addWidget(self.add_model)
         self.hBoxLayout.setAlignment(Qt.AlignLeft)
     
@@ -105,6 +105,7 @@ class SDModelInterface(GalleryInterface):
         self.searchLineEdit.textChanged.connect(self.show_condition)
 
         self.open_folder_button.clicked.connect(self.open_folder)
+        self.refresh_button.clicked.connect(self.refresh)
 
     def show_condition(self):
         search_text = self.searchLineEdit.text().lower()
@@ -180,6 +181,20 @@ class SDModelInterface(GalleryInterface):
                 logger.info(f"Open directory: {directory}")
             except Exception as e:
                 logger.error(f"An unexpected error occurred: {e}")
+
+    def refresh(self):
+        # Enable all download buttons
+        
+        for index in range(self.tab_widget.stackedWidget.count()):
+            table_frame = self.tab_widget.stackedWidget.widget(index)
+            table_frame.refresh()
+            
+            # cell_widget = self.table.cellWidget(row, self.download_column_index)
+            # if cell_widget:
+            #     button = cell_widget.findChild(QPushButton)
+            #     if button:
+            #         button.setEnabled(True)
+
         
 class TabInterface(QWidget):
     """ Tab interface """

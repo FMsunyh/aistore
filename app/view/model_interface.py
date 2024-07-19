@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-07-10 16:25:44
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-17 14:16:24
+LastEditTime: 2024-07-19 15:37:15
 FilePath: \aistore\app\view\model_interface.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -78,6 +78,8 @@ class ModelInterface(GalleryInterface):
         self.searchLineEdit.searchSignal.connect(self.show_condition)
         self.searchLineEdit.textChanged.connect(self.show_condition)
 
+        self.refresh_button.clicked.connect(self.refresh)
+
         signalBus.model_downloadSig.connect(self.download_model)
 
     def show_condition(self):
@@ -104,3 +106,6 @@ class ModelInterface(GalleryInterface):
         # self.download_thread.download_progress.connect(self.progress_window.set_progress)
         # self.download_thread.download_complete.connect(self.on_install_update)
         self.download_thread.start()
+
+    def refresh(self):
+        self.table.refresh() 

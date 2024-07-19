@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-07-15 16:38:51
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-18 16:43:39
+LastEditTime: 2024-07-19 15:32:59
 FilePath: \aistore\app\components\table_frame.py
 Description: 
 '''
@@ -86,22 +86,22 @@ class TableFrame(TableWidget):
         return column_index
 
     def add_download_button(self, row, column):
-        button =  PrimaryPushButton(self.tr("Download"))
-        button.setFixedSize(60, 30)
+        download_button =  PrimaryPushButton(self.tr("Download"))
+        download_button.setFixedSize(60, 30)
 
-        button.clicked.connect(lambda: self.download_data(row))
+        download_button.clicked.connect(lambda: self.on_download_button_clicked(row, download_button))
 
          # Create a QWidget and set QHBoxLayout with alignment to center
         cell_widget = QWidget()
         layout = QHBoxLayout(cell_widget)
-        layout.addWidget(button)
+        layout.addWidget(download_button)
         layout.setAlignment(Qt.AlignCenter)
         layout.setContentsMargins(15, 0, 15, 0)  # Optional: remove margins
         cell_widget.setLayout(layout)
 
         self.setCellWidget(row, column, cell_widget)
 
-    def download_data(self, row):
+    def on_download_button_clicked(self, row, button):
         def get_cell_text_by_row_label(table, row, label):
             header = table.horizontalHeader()
             for column in range(header.count()):
@@ -112,12 +112,13 @@ class TableFrame(TableWidget):
                     break
             return ""
 
-        save_folder = get_cell_text_by_row_label(self, row, 'save_folder')    
-        download_url = get_cell_text_by_row_label(self, row, 'download_url')    
+        save_folder = get_cell_text_by_row_label(self, row, wording.get('save_folder'))
+        download_url = get_cell_text_by_row_label(self, row, wording.get('download_url'))  
 
         signalBus.model_downloadSig.emit(save_folder, download_url)
+        button.setEnabled(False)
         
-        print(f"Downloading data for {save_folder}, {download_url}")
+        logger.info(f"Downloading data for {save_folder}, {download_url}")
 
     def update_buttons(self):
         # Adjust button positions when the section is resized
@@ -132,3 +133,11 @@ class TableFrame(TableWidget):
         for row in range(self.rowCount()):
             if row not in matched_indices:
                 self.setRowHidden(row, True)
+
+    def refresh(self):
+        for row in range(self.rowCount()):
+            cell_widget = self.cellWidget(row, self.download_column_index)
+            if cell_widget:
+                button = cell_widget.findChild(PrimaryPushButton)
+                if button:
+                    button.setEnabled(True)
