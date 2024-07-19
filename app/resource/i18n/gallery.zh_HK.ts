@@ -501,11 +501,6 @@ In that case, I would accept it no matter which side the ball falls on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="167"/>
-        <source>{app_type.name}</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../view/home_interface.py" line="242"/>
         <source>Running {app_card.app_info.title}</source>
         <translation type="unfinished"></translation>
@@ -987,12 +982,17 @@ In that case, I would accept it no matter which side the ball falls on.</source>
 <context>
     <name>ModelInterface</name>
     <message>
-        <location filename="../../view/model_interface.py" line="50"/>
+        <location filename="../../view/model_interface.py" line="52"/>
         <source>refresh</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/model_interface.py" line="70"/>
+        <location filename="../../view/model_interface.py" line="53"/>
+        <source>Open folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/model_interface.py" line="81"/>
         <source>Search model</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1109,12 +1109,7 @@ In that case, I would accept it no matter which side the ball falls on.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/model_library_interface/sd_model_interface.py" line="55"/>
-        <source>Add model</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/model_library_interface/sd_model_interface.py" line="89"/>
+        <location filename="../../view/model_library_interface/sd_model_interface.py" line="96"/>
         <source>Search model</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1531,17 +1526,17 @@ In that case, I would accept it no matter which side the ball falls on.</source>
 <context>
     <name>TabInterface</name>
     <message>
-        <location filename="../../view/model_library_interface/sd_model_interface.py" line="196"/>
+        <location filename="../../view/model_library_interface/sd_model_interface.py" line="218"/>
         <source>IsTabMovable</source>
         <translation>啟用標籤拖拽</translation>
     </message>
     <message>
-        <location filename="../../view/model_library_interface/sd_model_interface.py" line="197"/>
+        <location filename="../../view/model_library_interface/sd_model_interface.py" line="219"/>
         <source>IsTabScrollable</source>
         <translation>啟用標籤滾動</translation>
     </message>
     <message>
-        <location filename="../../view/model_library_interface/sd_model_interface.py" line="218"/>
+        <location filename="../../view/model_library_interface/sd_model_interface.py" line="240"/>
         <source>{model_type.name}</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1574,12 +1569,12 @@ In that case, I would accept it no matter which side the ball falls on.</source>
         <translation type="vanished">歌手</translation>
     </message>
     <message>
-        <location filename="../../view/model_library_interface/sd_model_interface.py" line="198"/>
+        <location filename="../../view/model_library_interface/sd_model_interface.py" line="220"/>
         <source>IsTabShadowEnabled</source>
         <translation>啟用標籤陰影</translation>
     </message>
     <message>
-        <location filename="../../view/model_library_interface/sd_model_interface.py" line="199"/>
+        <location filename="../../view/model_library_interface/sd_model_interface.py" line="221"/>
         <source>TabMaximumWidth</source>
         <translation>標籤最大寬度</translation>
     </message>
@@ -1605,11 +1600,6 @@ In that case, I would accept it no matter which side the ball falls on.</source>
     <message>
         <source>Duration</source>
         <translation type="vanished">時長</translation>
-    </message>
-    <message>
-        <location filename="../../components/table_frame.py" line="50"/>
-        <source>{label}</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../components/table_frame.py" line="75"/>

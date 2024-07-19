@@ -533,11 +533,6 @@ In that case, I would accept it no matter which side the ball falls on.</source>
         <translation>搜索应用</translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="167"/>
-        <source>{app_type.name}</source>
-        <translation></translation>
-    </message>
-    <message>
         <location filename="../../view/home_interface.py" line="242"/>
         <source>Running {app_card.app_info.title}</source>
         <translation>正在运行 {app_card.app_info.title}</translation>
@@ -1022,12 +1017,17 @@ In that case, I would accept it no matter which side the ball falls on.</source>
 <context>
     <name>ModelInterface</name>
     <message>
-        <location filename="../../view/model_interface.py" line="50"/>
+        <location filename="../../view/model_interface.py" line="52"/>
         <source>refresh</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="../../view/model_interface.py" line="70"/>
+        <location filename="../../view/model_interface.py" line="53"/>
+        <source>Open folder</source>
+        <translation>打开文件夹</translation>
+    </message>
+    <message>
+        <location filename="../../view/model_interface.py" line="81"/>
         <source>Search model</source>
         <translation>搜索模型</translation>
     </message>
@@ -1144,12 +1144,11 @@ In that case, I would accept it no matter which side the ball falls on.</source>
         <translation>刷新</translation>
     </message>
     <message>
-        <location filename="../../view/model_library_interface/sd_model_interface.py" line="55"/>
         <source>Add model</source>
-        <translation>添加模型</translation>
+        <translation type="vanished">添加模型</translation>
     </message>
     <message>
-        <location filename="../../view/model_library_interface/sd_model_interface.py" line="89"/>
+        <location filename="../../view/model_library_interface/sd_model_interface.py" line="96"/>
         <source>Search model</source>
         <translation>搜索模型</translation>
     </message>
@@ -1566,17 +1565,17 @@ In that case, I would accept it no matter which side the ball falls on.</source>
 <context>
     <name>TabInterface</name>
     <message>
-        <location filename="../../view/model_library_interface/sd_model_interface.py" line="196"/>
+        <location filename="../../view/model_library_interface/sd_model_interface.py" line="218"/>
         <source>IsTabMovable</source>
         <translation>启用标签拖拽</translation>
     </message>
     <message>
-        <location filename="../../view/model_library_interface/sd_model_interface.py" line="197"/>
+        <location filename="../../view/model_library_interface/sd_model_interface.py" line="219"/>
         <source>IsTabScrollable</source>
         <translation>启用标签滚动</translation>
     </message>
     <message>
-        <location filename="../../view/model_library_interface/sd_model_interface.py" line="218"/>
+        <location filename="../../view/model_library_interface/sd_model_interface.py" line="240"/>
         <source>{model_type.name}</source>
         <translation></translation>
     </message>
@@ -1609,12 +1608,12 @@ In that case, I would accept it no matter which side the ball falls on.</source>
         <translation type="vanished">歌手</translation>
     </message>
     <message>
-        <location filename="../../view/model_library_interface/sd_model_interface.py" line="198"/>
+        <location filename="../../view/model_library_interface/sd_model_interface.py" line="220"/>
         <source>IsTabShadowEnabled</source>
         <translation>启用标签阴影</translation>
     </message>
     <message>
-        <location filename="../../view/model_library_interface/sd_model_interface.py" line="199"/>
+        <location filename="../../view/model_library_interface/sd_model_interface.py" line="221"/>
         <source>TabMaximumWidth</source>
         <translation>标签最大宽度</translation>
     </message>
@@ -1640,11 +1639,6 @@ In that case, I would accept it no matter which side the ball falls on.</source>
     <message>
         <source>Duration</source>
         <translation type="vanished">时长</translation>
-    </message>
-    <message>
-        <location filename="../../components/table_frame.py" line="50"/>
-        <source>{label}</source>
-        <translation></translation>
     </message>
     <message>
         <location filename="../../components/table_frame.py" line="75"/>
