@@ -15,4 +15,8 @@
         <id>4</id>
         <name>AI Video</name>
     </type>
+    <type>
+        <id>5</id>
+        <name>Pytorch</name>
+    </type>
 </app_types>

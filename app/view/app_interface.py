@@ -42,6 +42,8 @@ class AppInfoCard(SimpleCardWidget):
         self.icon_label = ImageLabel(self.app_info.icon, self)
         self.icon_label.setBorderRadius(8, 8, 8, 8)
         self.icon_label.scaledToWidth(120)
+        # self.icon_label.setFixedSize(10, 10)
+
 
         self.state: AppState =  'uninstall'
 
@@ -49,7 +51,7 @@ class AppInfoCard(SimpleCardWidget):
 
         self.button_install = PrimaryPushButton(self.tr('Install'), self)
 
-
+        
         self.ring = ProgressBar(self)
         self.ring.setFixedWidth(200)  
         self.ring.setFixedHeight(20)
@@ -163,6 +165,8 @@ class AppInfoCard(SimpleCardWidget):
         self.app_card = app_card
         self.app_info = self.app_card.app_info
         self.icon_label.setImage(self.app_card.app_info.icon) 
+        self.icon_label.setFixedSize(150,150)
+
         self.nameLabel.setText(f'{self.app_card.app_info.title}')
         self.brief_introductionLabel.setText(f'{self.app_card.app_info.brief_introduction}')
         self.state = self.app_card.state

@@ -164,7 +164,7 @@ class HomeInterface(ScrollArea):
         # Popular Tools
         self.type_views = []
         for app_type in self.library.app_types:
-            type_view = AppCardView(wording.get(f'{app_type.name}'), self.view)
+            type_view = AppCardView(wording.get("app_type."+f'{app_type.name}'), self.view)
             app_infos = self.library.app_info_controller.get_app_infos_by_type_id(app_type.id)
             
             for app_info in app_infos:

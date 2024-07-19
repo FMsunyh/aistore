@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-07-15 16:38:51
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-19 15:32:59
+LastEditTime: 2024-07-19 18:18:48
 FilePath: \aistore\app\components\table_frame.py
 Description: 
 '''
@@ -47,7 +47,7 @@ class TableFrame(TableWidget):
         self.setColumnCount(len(self.header_labels))
 
         self.setRowCount(len(self.model_infos))
-        self.setHorizontalHeaderLabels([wording.get(f'{label}') for label in self.header_labels])
+        self.setHorizontalHeaderLabels([wording.get("table."+f'{label}') for label in self.header_labels])
 
         self.data = [[str(getattr(instance, attr)) for attr in vars(instance)] for instance in self.model_infos]
 

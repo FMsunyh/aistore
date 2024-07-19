@@ -108,4 +108,44 @@
         Continuously optimize to create the most amazing products and bring you a better user experience.
         </changelog>
     </version>
+    <version>
+        <id>11</id>
+        <softwareId>8</softwareId>
+        <versionNumber>1.13.0</versionNumber>
+        <softwareName>Pytorch1.13.0-Cuda11.8</softwareName>
+        <releaseDate>2024-07-19</releaseDate>
+        <changelog>
+        Continuously optimize to create the most amazing products and bring you a better user experience.
+        </changelog>
+    </version>
+    <version>
+        <id>12</id>
+        <softwareId>9</softwareId>
+        <versionNumber>2.1.2</versionNumber>
+        <softwareName>Pytorch2.1.2-Cuda11.8</softwareName>
+        <releaseDate>2024-07-19</releaseDate>
+        <changelog>
+        Continuously optimize to create the most amazing products and bring you a better user experience.
+        </changelog>
+    </version>
+    <version>
+        <id>13</id>
+        <softwareId>10</softwareId>
+        <versionNumber>2.2.2</versionNumber>
+        <softwareName>Pytorch2.2.2-Cuda11.8</softwareName>
+        <releaseDate>2024-07-19</releaseDate>
+        <changelog>
+        Continuously optimize to create the most amazing products and bring you a better user experience.
+        </changelog>
+    </version>
+    <version>
+        <id>14</id>
+        <softwareId>11</softwareId>
+        <versionNumber>2.3.1</versionNumber>
+        <softwareName>Pytorch2.3.1-Cuda11.8</softwareName>
+        <releaseDate>2024-07-19</releaseDate>
+        <changelog>
+        Continuously optimize to create the most amazing products and bring you a better user experience.
+        </changelog>
+    </version>
 </app_versions>
