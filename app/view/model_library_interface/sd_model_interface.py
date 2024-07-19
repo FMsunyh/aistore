@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-07-11 15:11:16
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-19 15:35:35
+LastEditTime: 2024-07-19 15:51:39
 FilePath: \aistore\app\view\model_library_interface\sd_model_interface.py
 Description: 
 '''
@@ -82,13 +82,14 @@ class SDModelInterface(GalleryInterface):
 
         self.hBoxLayout.setContentsMargins(0, 0, 0, 0)
         self.hBoxLayout.addWidget(self.searchLineEdit)
+        self.hBoxLayout.addWidget(self.refresh_button)
+
         spacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
         self.hBoxLayout.addItem(spacer)
         
         self.hBoxLayout.addWidget(self.local)
         self.hBoxLayout.addWidget(self.remove)
         self.hBoxLayout.addWidget(self.open_folder_button)
-        self.hBoxLayout.addWidget(self.refresh_button)
         # self.hBoxLayout.addWidget(self.add_model)
         self.hBoxLayout.setAlignment(Qt.AlignLeft)
     

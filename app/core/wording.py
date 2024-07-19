@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-07-18 14:23:17
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-18 16:40:53
+LastEditTime: 2024-07-19 15:44:54
 FilePath: \aistore\app\core\wording.py
 Description: 
 '''
@@ -17,6 +17,7 @@ WORDING_CN: Dict[str, Any] = \
     "AI Video": "AI 生成视频",
     "id": "序号",
     "name": "名称",
+    "author": "作者",
     "type_id": "类型ID",
     "download_url": "下载地址",
     "file_name": "文件名称",
@@ -32,6 +33,7 @@ WORDING_EN: Dict[str, Any] = \
     "AI Video": "AI Video",
     "id": "ID",
     "name": "name",
+    "author": "author",
     "type_id": "type ID",
     "download_url": "download url",
     "file_name": "file name",
