@@ -2,7 +2,7 @@
  * @Author: Firmin.Sun fmsunyh@gmail.com
  * @Date: 2024-07-01 10:56:29
  * @LastEditors: Firmin.Sun fmsunyh@gmail.com
- * @LastEditTime: 2024-07-18 14:50:39
+ * @LastEditTime: 2024-07-22 14:23:09
  * @FilePath: \aistore\Release.md
  * @Description: 发布版本
 -->
@@ -77,4 +77,10 @@ aistore
 ip：120.233.206.35
 user：ads
 pwd：unaigc2024
+```
+
+测试机
+```
+1697498519
+asd123456
 ```
