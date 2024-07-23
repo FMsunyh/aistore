@@ -14,6 +14,7 @@ from app.components.app_card import AppCard, AppCardView
 from app.core.filesystem import is_directory
 from app.core.install_worker import InstallWorker
 from app.core.uninstall_worker import UninstallWorker
+from app.database.entity.app_versions import AppVersions
 from app.database.library import Library
 from ..common.config import cfg, HELP_URL, REPO_URL, EXAMPLE_URL, FEEDBACK_URL
 from ..common.icon import Icon, FluentIconBase
@@ -295,20 +296,7 @@ class HomeInterface(ScrollArea):
         logger.info("Done")
 
 
-    def software_install(self, app_card: AppCard):
-        def get_url(app_name):
-            info_url = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/{app_name}/info.txt"
-            response = requests.get(info_url)
-            version = ""
-            if response.status_code == 200:
-                app_info = response.json()
-                version = app_info['version']
-                filename = app_info['filename']
-
-            url = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/{app_name}/{filename}"
-
-            return url, version
-
+    def software_install(self, app_card: AppCard, app_version: AppVersions):
         app_name = app_card.app_info.name
         app_title = app_card.app_info.title
         # logger.info(app_card.app_info.name)
@@ -318,14 +306,14 @@ class HomeInterface(ScrollArea):
         if w.exec():
             logger.info("Start to install {}".format(app_title))
 
-            url, version = get_url(app_name)
-            logger.info(f"{url}, {version}")
+            url = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/{app_name}/{app_name}-{app_version.version_number}.zip"
+            logger.info(f"{url}, {app_version.version_number}")
 
             temp_directory_path = os.path.join(tempfile.gettempdir(), 'aistore', app_name)
             Path(temp_directory_path).mkdir(parents = True, exist_ok = True)
             logger.info(f"download folder:{temp_directory_path}")
 
-            thread = InstallWorker(app_name, version, temp_directory_path, url,  cfg.get(cfg.install_folder))
+            thread = InstallWorker(app_name, app_version.version_number, temp_directory_path, url,  cfg.get(cfg.install_folder))
             thread.download_progress.connect(app_card.update_progress_bar)
             # thread.download_completed.connect(self.update_completed)
             thread.unzip_progress.connect(app_card.update_progress_bar)

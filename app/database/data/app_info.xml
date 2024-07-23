@@ -111,19 +111,19 @@
     </item>
     <item>
         <id>8</id>
-        <name>Pytorch1.13.0-Cuda11.8</name>
-        <title>Pytorch1.13.0-Cuda11.8</title>
+        <name>Pytorch-Cuda11.8</name>
+        <title>Pytorch-Cuda11.8</title>
         <icon>:/gallery/images/app_icons/pytorch.png</icon>
         <typeId>5</typeId>
         <developerId>1</developerId>
-        <briefIntroduction>Pytorch 1.13.0, Cuda 11.8 Python 3.10</briefIntroduction>
+        <briefIntroduction>Pytorch, Cuda 11.8 Python 3.10</briefIntroduction>
         <description>
         PyTorch是一个开源的Python机器学习库，基于Torch，用于自然语言，图像处理等应用程序。
         PyTorch is an open source Python machine learning library based on Torch for applications such as natural language, image processing, etc.
         </description>
         <releaseDate>2024-07-19</releaseDate>
     </item>
-    <item>
+    <!-- <item>
         <id>9</id>
         <name>Pytorch2.1.2-Cuda11.8</name>
         <title>Pytorch2.1.2-Cuda11.8</title>
@@ -164,5 +164,5 @@
         PyTorch is an open source Python machine learning library based on Torch for applications such as natural language, image processing, etc.
         </description>
         <releaseDate>2024-07-19</releaseDate>
-    </item>
+    </item> -->
 </app_info>

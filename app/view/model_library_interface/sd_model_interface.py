@@ -148,10 +148,6 @@ class SDModelInterface(GalleryInterface):
         self.app_card = app_card
         self.model_types, self.model_infos = self.get_tab_name(self.app_card)
 
-        # self.tab_widget = TabInterface(library=self.library, model_types=model_types, model_infos=model_infos, parent=self)
-        for i in range(self.tab_widget.stackedWidget.count()):
-            self.tab_widget.removeTab(0)
-
         self.tab_widget.update_window(self.model_types, self.model_infos)
         self.toolBar.titleLabel.setText(f"{self.app_card.app_info.title}")
 
@@ -338,4 +334,8 @@ class TabInterface(QWidget):
         widget.deleteLater()
 
     def update_window(self, model_types, model_infos):
+
+        for _ in range(self.stackedWidget.count()):
+            self.removeTab(0)
+    
         self.__create_tab(model_types, model_infos)

@@ -192,7 +192,7 @@ class AppInfoCard(SimpleCardWidget):
         self.refresh()
 
     def on_button_clicked(self):
-        signalBus.software_installSig.emit(self.app_card)
+        signalBus.software_installSig.emit(self.app_card, self.current_version)
 
     def on_button_uninstall_clicked(self):
         signalBus.software_uninstallSig.emit(self.app_card)
@@ -281,6 +281,8 @@ class GalleryCard(HeaderCardWidget):
         self.headerLayout.addWidget(self.expandButton, 0, Qt.AlignRight)
         self.viewLayout.addWidget(self.flipView)
 
+        self.update_window(app_info)
+
     def update_window(self, app_info: AppInfo=None):
         if app_info is None:
             return
@@ -326,7 +328,7 @@ class WhatsNewCard(HeaderCardWidget):
         app_info = app_info
         app_version = self.library.app_versions_controller.get_last_app_version_by_app_id(app_info.id)
 
-        self.versionWidget.update_window(self.tr('Version'), app_version.version_number, app_version.release_date)
+        # self.versionWidget.update_window(self.tr('Version'), app_version.version_number, app_version.release_date)
         self.set_description(self.tr(f'{app_version.change_log}'))
 
 class DescriptionCard(HeaderCardWidget):
@@ -692,7 +694,18 @@ class TabInterface(QWidget):
         self.stackedWidget.removeWidget(widget)
         self.tabBar.removeTab(index)
         widget.deleteLater()
+    
+    def update_window(self, app_info: AppInfo=None):
+        if app_info is None:
+            return
         
+        self.app_info = app_info
+
+        for _ in range(self.stackedWidget.count()):
+            self.removeTab(0)
+
+        self.__create_tab()
+
 class AppInterface(SingleDirectionScrollArea):
 
     def __init__(self, library: Library = None, app_info: AppInfo=None, parent=None):
@@ -731,6 +744,7 @@ class AppInterface(SingleDirectionScrollArea):
 
     def update_window(self, app_card : AppCard):
         self.appInfoCard.update_window(app_card)
+        self.tab_version.update_window(app_card.app_info)
         # self.whatNewCard.update_window(app_card.app_info)
         # self.descriptionCard.update_window(app_card.app_info)
         # self.galleryCard.update_window(app_card.app_info)
