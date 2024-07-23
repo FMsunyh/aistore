@@ -173,6 +173,8 @@ class AppInfoCard(SimpleCardWidget):
         self.button_uninstall.clicked.connect(self.on_button_uninstall_clicked)
         self.model_library_button.clicked.connect(self.on_button_model_library_clicked)
 
+        signalBus.software_versionSig.connect(self.on_current_version_changed)
+
     def update_window(self, app_card : AppCard):
         self.app_card = app_card
         self.app_info = self.app_card.app_info
@@ -247,6 +249,8 @@ class AppInfoCard(SimpleCardWidget):
             self.button_stop.setVisible(True)
             self.button_uninstall.setVisible(False)
 
+    def on_current_version_changed(self, app_version: AppVersions):
+        self.current_version = app_version
 
 class GalleryCard(HeaderCardWidget):
     """ Gallery card """
@@ -674,6 +678,7 @@ class TabInterface(QWidget):
 
         self.tabBar.setCurrentTab(widget.objectName())
         qrouter.push(self.stackedWidget, widget.objectName())
+        signalBus.software_versionSig.emit(widget.app_version)
 
     def addTab(self):
         text = f'硝子酱一级棒卡哇伊×{self.tabCount}'
