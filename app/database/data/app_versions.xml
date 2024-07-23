@@ -44,7 +44,7 @@
         <version>
         <id>5</id>
         <softwareId>1</softwareId>
-        <versionNumber>1.1</versionNumber>
+        <versionNumber>1.9.4</versionNumber>
         <releaseDate>2024-07-08</releaseDate>
         <changelog>
         * Update to Stable Diffusion WebUI 1.9.4

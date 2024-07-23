@@ -21,7 +21,7 @@ from app.components.app_card import AppCard
 from app.core.typing import AppState
 from ..common.signal_bus import signalBus
 
-from app.database.entity.app_info import AppInfo
+from app.database.entity import AppInfo, AppVersions
 from app.database.library import Library
 
 
@@ -32,7 +32,7 @@ from app.common.style_sheet import StyleSheet
 
 from app.common.logger import logger
 from app.database.library import Library
-
+from packaging import version
 
 def isWin11():
     return sys.platform == 'win32' and sys.getwindowsversion().build >= 22000
@@ -290,20 +290,22 @@ class GalleryCard(HeaderCardWidget):
 class WhatsNewCard(HeaderCardWidget):
     """ WhatsNew card """
 
-    def __init__(self, library: Library = None, app_info: AppInfo=None, parent=None):
+    def __init__(self, library: Library = None, app_info: AppInfo=None, app_version: AppVersions=None, parent=None):
 
         super().__init__(parent)
         self.library = library
+        self.app_info = app_info
+        self.app_version = app_version
 
         self.title = self.tr('What\'s New')
         
-        app_version = self.library.app_versions_controller.get_last_app_version_by_app_id(app_info.id)
-        self.versionWidget = HStatisticsWidget(self.tr('Version'), app_version.version_number, app_version.release_date, self)
+        # app_version = self.library.app_versions_controller.get_last_app_version_by_app_id(app_info.id)
+        # self.versionWidget = HStatisticsWidget(self.tr('Version'), app_version.version_number, app_version.release_date, self)
         self.descriptionLabel = BodyLabel(
-            self.tr(f'{app_version.change_log}'), self)
+            self.tr(f'{self.app_version.change_log}'), self)
 
         self.descriptionLabel.setWordWrap(True)
-        self.vBoxLayout.insertWidget(2, self.versionWidget)
+        # self.vBoxLayout.insertWidget(2, self.versionWidget)
 
         self.viewLayout.addWidget(self.descriptionLabel)
 
@@ -531,6 +533,41 @@ class HStatisticsWidget(QWidget):
         self.set_release_date(release_date)
 
 
+class AppDetailsWidget(QFrame):
+    def __init__(self, library: Library = None, app_info: AppInfo=None, app_version: AppVersions=None, parent=None):
+        super().__init__(parent=parent)
+
+        self.library = library
+        self.app_info = app_info
+        self.app_version = app_version
+
+        self.vBoxLayout = QVBoxLayout(self)
+
+        self.whatNewCard = WhatsNewCard(self.library, self.app_info, self.app_version)
+        self.galleryCard = GalleryCard(self.library, self.app_info)
+        self.descriptionCard = DescriptionCard(self.library, self.app_info)
+        self.systemCard = SystemRequirementCard()
+
+        self.lightBox = LightBox(self.library, self.app_info)
+        self.lightBox.hide()
+        # self.galleryCard.flipView.itemClicked.connect(self.showLightBox)
+
+        # self.setWidget(self.view)
+        # self.setWidgetResizable(True)
+        self.setObjectName("appInterface")
+
+        self.vBoxLayout.setSpacing(10)
+        self.vBoxLayout.setContentsMargins(0, 0, 10, 30)
+
+        self.vBoxLayout.addWidget(self.whatNewCard, 0, Qt.AlignTop)
+        self.vBoxLayout.addWidget(self.galleryCard, 0, Qt.AlignTop)
+        self.vBoxLayout.addWidget(self.descriptionCard, 0, Qt.AlignTop)
+        self.vBoxLayout.addWidget(self.systemCard, 0, Qt.AlignTop)
+
+        self.setStyleSheet("QScrollArea {border: none; background:transparent}")
+        # self.view.setStyleSheet('QWidget {background:transparent}')
+
+
 class TabInterface(QWidget):
     """ Tab interface """
 
@@ -558,37 +595,36 @@ class TabInterface(QWidget):
         self.vBoxLayout = QVBoxLayout(self.tabView)
         # self.panelLayout = QVBoxLayout(self.controlPanel)
 
-        self.songInterface = AppDetailsWidget(self.library, self.app_info, self)
-        self.albumInterface = AppDetailsWidget(self.library, self.app_info, self)
-        self.artistInterface = AppDetailsWidget(self.library, self.app_info, self)
+        # self.songInterface = AppDetailsWidget(self.library, self.app_info, self)
+        # self.albumInterface = AppDetailsWidget(self.library, self.app_info, self)
+        # self.artistInterface = AppDetailsWidget(self.library, self.app_info, self)
 
         # add items to pivot
+
+        self.__create_tab()
+
         self.__initWidget()
+
 
     def __initWidget(self):
         self.initLayout()
-
-
-
         # self.shadowEnabledCheckBox.setChecked(True)
 
         # self.tabMaxWidthSpinBox.setRange(60, 400)
         # self.tabMaxWidthSpinBox.setValue(self.tabBar.tabMaximumWidth())
 
-        self.addSubInterface(self.songInterface,
-                             'tabSongInterface', self.tr('1.9.4'), None)
-        self.addSubInterface(self.albumInterface,
-                             'tabAlbumInterface', self.tr('1.9.3'), None)
-        self.addSubInterface(self.artistInterface,
-                             'tabArtistInterface', self.tr('1.9.2'), None)
-
-        # self.controlPanel.setObjectName('controlPanel')
         StyleSheet.NAVIGATION_VIEW_INTERFACE.apply(self)
-
         self.connectSignalToSlot()
-
         qrouter.setDefaultRouteKey(
-            self.stackedWidget, self.songInterface.objectName())
+            self.stackedWidget, self.stackedWidget.widget(0).objectName())
+
+    def __create_tab(self):
+        app_versions = self.library.app_versions_controller.get_app_versions_by_app_id(self.app_info.id)
+
+        app_versions = sorted(app_versions, key=lambda x: version.parse(x.version_number), reverse=True)
+        for app_version in app_versions:
+            version_tab = AppDetailsWidget(self.library, self.app_info, app_version, self)
+            self.addSubInterface(version_tab, self.app_info.name+app_version.version_number, self.tr(f'{app_version.version_number}'), None)
 
     def connectSignalToSlot(self):
         # self.movableCheckBox.stateChanged.connect(
@@ -615,6 +651,7 @@ class TabInterface(QWidget):
         # self.hBoxLayout.addWidget(self.controlPanel, 0, Qt.AlignRight)
         self.hBoxLayout.setContentsMargins(0, 0, 0, 0)
 
+        # self.vBoxLayout.setSpacing(10)
         self.vBoxLayout.addWidget(self.tabBar)
         self.vBoxLayout.addWidget(self.stackedWidget)
         self.vBoxLayout.setContentsMargins(0, 0, 0, 0)
@@ -651,40 +688,6 @@ class TabInterface(QWidget):
         self.tabBar.removeTab(index)
         widget.deleteLater()
         
-
-class AppDetailsWidget(QFrame):
-    def __init__(self, library: Library = None, app_info: AppInfo=None, parent=None):
-        super().__init__(parent=parent)
-
-        self.library = library
-        self.app_info = app_info
-
-        self.vBoxLayout = QVBoxLayout(self)
-
-        self.whatNewCard = WhatsNewCard(self.library, app_info)
-        self.galleryCard = GalleryCard(self.library, app_info)
-        self.descriptionCard = DescriptionCard(self.library, app_info)
-        self.systemCard = SystemRequirementCard()
-
-        self.lightBox = LightBox(self.library, app_info)
-        self.lightBox.hide()
-        # self.galleryCard.flipView.itemClicked.connect(self.showLightBox)
-
-        # self.setWidget(self.view)
-        # self.setWidgetResizable(True)
-        self.setObjectName("appInterface")
-
-        self.vBoxLayout.setSpacing(10)
-        self.vBoxLayout.setContentsMargins(0, 0, 10, 30)
-
-        self.vBoxLayout.addWidget(self.whatNewCard, 0, Qt.AlignTop)
-        self.vBoxLayout.addWidget(self.galleryCard, 0, Qt.AlignTop)
-        self.vBoxLayout.addWidget(self.descriptionCard, 0, Qt.AlignTop)
-        self.vBoxLayout.addWidget(self.systemCard, 0, Qt.AlignTop)
-
-        self.setStyleSheet("QScrollArea {border: none; background:transparent}")
-        # self.view.setStyleSheet('QWidget {background:transparent}')
-
 class AppInterface(SingleDirectionScrollArea):
 
     def __init__(self, library: Library = None, app_info: AppInfo=None, parent=None):
