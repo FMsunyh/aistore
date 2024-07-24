@@ -116,7 +116,7 @@
         <icon>:/gallery/images/app_icons/pytorch.png</icon>
         <typeId>5</typeId>
         <developerId>1</developerId>
-        <briefIntroduction>Pytorch, Cuda 11.8 Python 3.10</briefIntroduction>
+        <briefIntroduction>Pytorch 2.3.1, 2.2.2, 2.1.2, 1.13.1, Cuda 11.8 Python 3.10</briefIntroduction>
         <description>
         PyTorch是一个开源的Python机器学习库，基于Torch，用于自然语言，图像处理等应用程序。
         PyTorch is an open source Python machine learning library based on Torch for applications such as natural language, image processing, etc.

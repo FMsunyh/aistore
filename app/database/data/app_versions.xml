@@ -13,7 +13,7 @@
     <version>
         <id>2</id>
         <softwareId>1</softwareId>
-        <versionNumber>1.1</versionNumber>
+        <versionNumber>1.0.0</versionNumber>
         <releaseDate>2024-06-06</releaseDate>
         <changelog>
         * Continuously optimize to create the most amazing products and bring you a better user experience
@@ -37,6 +37,7 @@
         <versionNumber>2.6.0</versionNumber>
         <releaseDate>2024-07-02</releaseDate>
         <changelog>
+        * Update to FaceFusion 2.6.0
         * Continuously optimize to create the most amazing products and bring you a better user experience
         * New features added
         </changelog>
@@ -91,10 +92,11 @@
     <version>
         <id>9</id>
         <softwareId>6</softwareId>
-        <versionNumber>2.4.3</versionNumber>
+        <versionNumber>2.5.0</versionNumber>
         <softwareName>fooocus</softwareName>
         <releaseDate>2024-06-07</releaseDate>
         <changelog>
+        Update to 2.5.0
         Continuously optimize to create the most amazing products and bring you a better user experience.
         </changelog>
     </version>
@@ -111,11 +113,15 @@
     <version>
         <id>11</id>
         <softwareId>8</softwareId>
-        <versionNumber>1.13.0</versionNumber>
+        <versionNumber>1.13.1</versionNumber>
         <softwareName>Pytorch-Cuda11.8</softwareName>
         <releaseDate>2024-07-19</releaseDate>
         <changelog>
-        Continuously optimize to create the most amazing products and bring you a better user experience.
+        环境已经安装好的包：
+            - Python 3.10
+            - Pytorch 1.13.1
+            - Cuda 11.8
+            - jupyterlab 4.2.4
         </changelog>
     </version>
     <version>
@@ -125,7 +131,11 @@
         <softwareName>Pytorch-Cuda11.8</softwareName>
         <releaseDate>2024-07-19</releaseDate>
         <changelog>
-        Continuously optimize to create the most amazing products and bring you a better user experience.
+        环境已经安装好的包：
+            - Python 3.10
+            - Pytorch 2.1.2
+            - Cuda 11.8
+            - jupyterlab 4.2.4
         </changelog>
     </version>
     <version>
@@ -135,7 +145,11 @@
         <softwareName>Pytorch-Cuda11.8</softwareName>
         <releaseDate>2024-07-19</releaseDate>
         <changelog>
-        Continuously optimize to create the most amazing products and bring you a better user experience.
+        环境已经安装好的包：
+            - Python 3.10
+            - Pytorch 2.2.2
+            - Cuda 11.8
+            - jupyterlab 4.2.4
         </changelog>
     </version>
     <version>
@@ -145,7 +159,11 @@
         <softwareName>Pytorch-Cuda11.8</softwareName>
         <releaseDate>2024-07-19</releaseDate>
         <changelog>
-        Continuously optimize to create the most amazing products and bring you a better user experience.
+        环境已经安装好的包：
+            - Python 3.10
+            - Pytorch 2.3.1
+            - Cuda 11.8
+            - jupyterlab 4.2.4
         </changelog>
     </version>
 </app_versions>

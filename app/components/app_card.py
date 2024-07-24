@@ -105,7 +105,8 @@ class AppCard(SimpleCardWidget):
         self.vBoxLayout.addStretch(1)
 
     def on_button_clicked(self):
-        signalBus.software_installSig.emit(self)
+        app_version = self.library.app_versions_controller.get_last_app_version_by_app_id(self.app_info.id)
+        signalBus.software_installSig.emit(self, app_version)
 
     def on_button_uninstall_clicked(self):
         signalBus.software_uninstallSig.emit(self)
