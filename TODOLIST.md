@@ -2,7 +2,7 @@
  * @Author: Firmin.Sun fmsunyh@gmail.com
  * @Date: 2024-07-01 10:15:22
  * @LastEditors: Firmin.Sun fmsunyh@gmail.com
- * @LastEditTime: 2024-07-01 10:19:19
+ * @LastEditTime: 2024-07-26 11:49:07
  * @FilePath: \aistore\TODOLIST.md
  * @Description: 
 -->
@@ -20,6 +20,10 @@
 - 2024-07-01
     - 详情页添加安装和卸载，启动功能
 
-- 2024-07-01
+- 2024-07-02
     - 弹出更新下载的进度
-    - 
+     
+
+- 2024-07-26
+    - 添加指定版本下载功能
+    - 发布1.3.6
