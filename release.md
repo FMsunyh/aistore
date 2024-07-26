@@ -2,7 +2,7 @@
  * @Author: Firmin.Sun fmsunyh@gmail.com
  * @Date: 2024-07-01 10:56:29
  * @LastEditors: Firmin.Sun fmsunyh@gmail.com
- * @LastEditTime: 2024-07-26 16:33:15
+ * @LastEditTime: 2024-07-26 18:33:32
  * @FilePath: \aistore\Release.md
  * @Description: 发布版本
 -->
@@ -71,7 +71,7 @@ cd D:\aistore
 powershell -noexit -ExecutionPolicy Bypass -File .\release.ps1
 ```
 
-服务器
+ubuntu服务器
 ```vim
 aistore
 ip：120.233.206.35
@@ -79,7 +79,7 @@ user：ads
 pwd：unaigc2024
 ```
 
-测试机
+window服务器
 ```
 1697498519
 asd123456

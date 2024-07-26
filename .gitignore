@@ -168,3 +168,4 @@ config
 *.exe
 cache
 lookup
+release.md
