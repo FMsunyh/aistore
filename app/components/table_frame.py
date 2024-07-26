@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-07-15 16:38:51
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-19 18:18:48
+LastEditTime: 2024-07-26 18:07:15
 FilePath: \aistore\app\components\table_frame.py
 Description: 
 '''
@@ -10,6 +10,7 @@ Description:
 from PyQt5.QtWidgets import QTableWidgetItem
 from qfluentwidgets import TableWidget
 from qfluentwidgets.components.widgets.line_edit import SearchLineEdit
+from app.common.config import SERVER_IP, SERVER_PORT
 from app.database.entity.model_info import ModelInfo
 from app.common.logger import logger
 from app.database.library import Library
@@ -112,11 +113,12 @@ class TableFrame(TableWidget):
                     break
             return ""
 
-        save_folder = get_cell_text_by_row_label(self, row, wording.get('save_folder'))
-        download_url = get_cell_text_by_row_label(self, row, wording.get('download_url'))  
+        save_folder = get_cell_text_by_row_label(self, row, wording.get('table.save_folder'))
+        download_url = get_cell_text_by_row_label(self, row, wording.get('table.download_url'))  
 
+        download_url = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/{download_url}"
         signalBus.model_downloadSig.emit(save_folder, download_url)
-        button.setEnabled(False)
+        # button.setEnabled(False)
         
         logger.info(f"Downloading data for {save_folder}, {download_url}")
 

@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-07-18 14:23:17
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-19 18:20:10
+LastEditTime: 2024-07-26 17:20:06
 FilePath: \aistore\app\core\wording.py
 Description: 
 '''
@@ -21,7 +21,7 @@ WORDING_CN: Dict[str, Any] = \
 
     "table" : {
         "id": "序号",
-        "name": "名称",
+        "name": "模型名称",
         "author": "作者",
         "type_id": "类型ID",
         "download_url": "下载地址",

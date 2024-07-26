@@ -2,7 +2,7 @@
  * @Author: Firmin.Sun fmsunyh@gmail.com
  * @Date: 2024-07-01 10:56:29
  * @LastEditors: Firmin.Sun fmsunyh@gmail.com
- * @LastEditTime: 2024-07-22 14:23:09
+ * @LastEditTime: 2024-07-26 16:33:15
  * @FilePath: \aistore\Release.md
  * @Description: 发布版本
 -->
@@ -84,3 +84,12 @@ pwd：unaigc2024
 1697498519
 asd123456
 ```
+
+chfs
+```
+1 013 260 179
+11111
+```
+
+转移数据
+scp -r D:\ai_store\* ads@172.30.5.254:/mnt/ai_store
