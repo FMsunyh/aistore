@@ -2,12 +2,16 @@
  * @Author: Firmin.Sun fmsunyh@gmail.com
  * @Date: 2024-06-14 18:28:18
  * @LastEditors: Firmin.Sun fmsunyh@gmail.com
- * @LastEditTime: 2024-07-05 14:34:24
+ * @LastEditTime: 2024-07-26 11:34:58
  * @FilePath: \aistore\README.md
  * @Description: Content of readme
 -->
 # aistore
 Build a aistore for cloud
+
+Preview
+-------
+![Preview](Preview.PNG)
 
 ## Icon resource
 
@@ -40,17 +44,6 @@ OR
 pyinstaller aistore.spec --distpath .\.PyInstaller
 ```
 
-
-
-激活myenv
-```
-python -m venv myenv
-myenv\Scripts\activate  # On Windows
-source myenv/bin/activate  # On macOS/Linux
-pip install pyinstaller
-
-```
-
 ## 翻译
 ```sh
 lupdate .\aistore.pro
@@ -69,6 +62,19 @@ lrelease app/resource/i18n/gallery.zh_CN.ts
 ```
 pyrcc5 -o ./app/common/resource.py ./app/resource/resource.qrc
 ```
+
+##  激活myenv
+```
+python -m venv myenv
+myenv\Scripts\activate  # On Windows
+source myenv/bin/activate  # On macOS/Linux
+pip install pyinstaller
+
+```
+
+
+Documentation
+-------------
 
 需要下载QT的工具
 
