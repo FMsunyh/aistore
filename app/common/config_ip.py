@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-07-29 11:46:34
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-29 14:16:56
+LastEditTime: 2024-07-29 15:41:46
 FilePath: \aistore\app\common\config_ip.py
 Description: 
 '''
@@ -11,8 +11,12 @@ import socket
 import geoip2.database
 from app.common.logger import logger
 
-HONG_KONG_IP = '45.254.27.97'
-DOMESTIC_IP = '120.233.206.35'
+'''
+aistore.1pluslive.com  120.233.206.35
+aistorehk.1pluslive.com 45.254.27.97
+'''
+HONG_KONG_IP = 'aistorehk.1pluslive.com'
+DOMESTIC_IP = 'aistore.1pluslive.com'
 
 def get_external_ip():
     # Get the hostname

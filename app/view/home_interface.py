@@ -309,7 +309,8 @@ class HomeInterface(ScrollArea):
             url = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/{app_name}/{app_name}-{app_version.version_number}.zip"
             logger.info(f"{url}, {app_version.version_number}")
 
-            temp_directory_path = os.path.join(tempfile.gettempdir(), 'aistore', app_name)
+            # temp_directory_path = os.path.join(tempfile.gettempdir(), 'aistore', app_name)
+            temp_directory_path = f"{cfg.get(cfg.downloadFolder)}/{app_name}"
             Path(temp_directory_path).mkdir(parents = True, exist_ok = True)
             logger.info(f"download folder:{temp_directory_path}")
 
