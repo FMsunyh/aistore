@@ -2,7 +2,7 @@
  * @Author: Firmin.Sun fmsunyh@gmail.com
  * @Date: 2024-07-01 10:56:29
  * @LastEditors: Firmin.Sun fmsunyh@gmail.com
- * @LastEditTime: 2024-07-26 18:33:32
+ * @LastEditTime: 2024-07-29 11:03:16
  * @FilePath: \aistore\Release.md
  * @Description: 发布版本
 -->
@@ -81,11 +81,11 @@ pwd：unaigc2024
 
 window服务器
 ```
-1697498519
-asd123456
+1653503584
+密码：
 ```
 
-chfs
+chfs中转站
 ```
 1 013 260 179
 11111

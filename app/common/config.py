@@ -2,11 +2,12 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-14 18:28:18
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-26 18:17:59
+LastEditTime: 2024-07-29 11:56:55
 FilePath: \aistore\app\common\config.py
 Description: config for aistore
 '''
 # coding:utf-8
+from pathlib import Path
 import sys
 from enum import Enum
 
@@ -15,6 +16,7 @@ from qfluentwidgets import (qconfig, QConfig, ConfigItem, OptionsConfigItem, Boo
                             OptionsValidator, RangeConfigItem, RangeValidator,
                             FolderListValidator, Theme, FolderValidator, ConfigSerializer)
 
+from app.common.config_ip import CONFIG_IP
 from version import __author__, __version__
 class Language(Enum):
     """ Language enumeration """
@@ -82,14 +84,17 @@ ZH_SUPPORT_URL = "https://qfluentwidgets.com/zh/price/"
 EN_SUPPORT_URL = "https://qfluentwidgets.com/price/"
 
 REGISTY_PATH = r"Software\aistore"
-SERVER_IP = "120.233.206.35"
+
+cfg = Config()
+cfg.themeMode.value = Theme.AUTO
+qconfig.load('app/config/config.json', cfg)
+
+
+GeoLite2_database = str("app/cache/GeoLite2-City.mmdb")
+SERVER_IP = CONFIG_IP(GeoLite2_database)
 
 # SERVER_IP = "183.232.235.52"
 # SERVER_IP = "172.30.9.84" # local test
 SERVER_PORT = "7860"
 
 UPDATE_INFO_URL = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/latest_version_info.json"  # Replace with your URL
-
-cfg = Config()
-cfg.themeMode.value = Theme.AUTO
-qconfig.load('app/config/config.json', cfg)
