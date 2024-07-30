@@ -1,5 +1,5 @@
 {
-    "version": "1.4.0",
-    "download_url": "AIStoreInstaller_1.4.0.exe",
+    "version": "1.4.2",
+    "download_url": "http://aistore.1pluslive.com:7860/chfs/shared/aistore_installer/AIStoreInstaller_1.4.2.exe",
     "release_notes": "This update includes several bug fixes and performance improvements."
 }

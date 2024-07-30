@@ -38,9 +38,9 @@ class FileUploaderThread(QThread):
             response = requests.delete(f"{self.url}/rmfiles", params=payload)
 
             if response.status_code == 204:
-                self.delete_finished.emit(True, "File deleteed successfully!")
+                self.delete_finished.emit(True, f"File deleted successfully! {self.file_path}")
             else:
-                self.delete_finished.emit(False, f"Failed to delete file. Status code: {response.status_code}")
+                self.delete_finished.emit(False, f"Failed to delete file {self.file_path}. Status code: {response.status_code}")
         except Exception as e:
             self.delete_finished.emit(False, f"Exception occurred: {str(e)}")
 
@@ -48,7 +48,7 @@ class FileUploaderThread(QThread):
         # ptvsd.debug_this_thread()
         try:
             filename = os.path.basename(self.file_path)
-            logger.info(filename)
+            # logger.info(filename)
             with open(self.file_path, 'rb') as file:
                 data = file.read()
 
@@ -60,9 +60,9 @@ class FileUploaderThread(QThread):
             response = requests.post(f"{self.url}/upload", files=payload)
 
             if response.status_code == 201:
-                self.upload_finished.emit(True, "File uploaded successfully!")
+                self.upload_finished.emit(True, f"File uploaded successfully! {self.file_path}")
             else:
-                self.upload_finished.emit(False, f"Failed to upload file. Status code: {response.status_code}")
+                self.upload_finished.emit(False, f"Failed to upload file. {self.file_path}. Status code: {response.status_code}")
         except Exception as e:
             self.upload_finished.emit(False, f"Exception occurred: {str(e)}")
        
@@ -72,7 +72,8 @@ def rewrite_version(version_info_path):
         data = json.load(file)
         data['version'] = __version__
         data['download_url'] = f"AIStoreInstaller_{__version__}.exe"
-
+        # data['download_url'] = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/aistore_installer/AIStoreInstaller_{__version__}.exe"
+        print(data['download_url'])
     with open(version_info_path, 'w') as file:
         json.dump(data, file, indent=4)
 
@@ -102,7 +103,10 @@ def create_thread(file_path, url, folder):
 if __name__ == '__main__':
     app = QCoreApplication(sys.argv)
     url = f'http://{SERVER_IP}:{SERVER_PORT}/chfs'
+    # url = f'http://120.233.206.35:{SERVER_PORT}/chfs'
+    # url = f'http://45.254.27.97:{SERVER_PORT}/chfs'
 
+    print(url)
     file_path = f'.install/AIStoreInstaller_{__version__}.exe'
     version_info_path = f'.install/latest_version_info.json'
 

@@ -19,6 +19,8 @@ import requests
 from PyQt5.QtCore import Qt, QThread, pyqtSignal
 from qfluentwidgets import (MessageBoxBase,SubtitleLabel,ProgressBar,ProgressRing)
 from app.threads.download_thread import DownloadThread
+from urllib.parse import urlparse
+import re
 
 class UpdateChecker(QThread):
     update_found = pyqtSignal(dict)
@@ -120,7 +122,10 @@ class UpdateManager(QObject):
         # w.setContentCopyable(True)
         if w.exec():
             download_url = latest_version_info['download_url']
-            download_url = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/aistore_installer/{download_url}"
+
+            if not self.is_valid_url(download_url):
+                download_url = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/aistore_installer/{download_url}"
+
             self.start_download(download_url)
 
             # self.download_and_install_update(download_url, latest_version)
@@ -185,6 +190,22 @@ class UpdateManager(QObject):
         self.download_thread.start()
 
         self.progress_window.show()
+
+    def is_valid_url(self, url):
+        parsed = urlparse(url)
+        # 验证 scheme 和 netloc 是否存在
+        has_scheme_and_netloc = bool(parsed.netloc) and bool(parsed.scheme)
+
+        # 正则表达式验证URL格式
+        regex = re.compile(
+            r'^(?:http|ftp)s?://'  # http:// or https://
+            r'(?:(?:[A-Z0-9](?:[A-Z0-9-]{0,61}[A-Z0-9])?\.)+(?:[A-Z]{2,6}\.?|[A-Z0-9-]{2,}\.?)|'  # domain...
+            r'localhost|'  # localhost...
+            r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})'  # ...or ip
+            r'(?::\d+)?'  # optional port
+            r'(?:/?|[/?]\S+)$', re.IGNORECASE)
+
+        return re.match(regex, url) is not None and has_scheme_and_netloc
     
 class ProgressWindow(MessageBoxBase):
     def __init__(self, parent=None):
