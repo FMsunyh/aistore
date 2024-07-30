@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-24 14:14:17
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-09 10:55:22
+LastEditTime: 2024-07-30 10:45:56
 FilePath: \aistore\app\core\install_worker.py
 Description: install worker
 '''
@@ -41,6 +41,8 @@ class InstallWorker(QThread):
 
 	completed = pyqtSignal(str)  # 信号传递安装状态
 
+	error_occurred = pyqtSignal(str)
+
 	def __init__(self, name : str, version : str, download_directory_path : str, url : str, install_directory : str, parent=None):
 		super().__init__(parent)
 
@@ -61,40 +63,47 @@ class InstallWorker(QThread):
 		self._create_shortcut(output)
 		self._create_registry()
 		
-		self.completed.emit(self.name)
+		# self.completed.emit(self.name)
 
 	def _download_file(self):
 		# ptvsd.debug_this_thread()
 
 		log_level = 'error'
-		initial_size = get_file_size(self.download_file_path)
-		download_size = self._get_download_size(self.url)
-		if initial_size < download_size:
-			with tqdm(total = download_size, initial = initial_size, desc = 'downloading', unit = 'B', unit_scale = True, unit_divisor = 1024, ascii = ' =', disable = log_level in [ 'warn', 'error' ]) as progress:
-				command = ['curl', '--create-dirs', '--silent', '--insecure', '--location', '--continue-at', '-', '--output', self.download_file_path, self.url]
-				process = subprocess.Popen(command, creationflags=CREATE_NO_WINDOW)
-				logger.info(f'Run {command}, pid: {process.pid}')
 
-				# stdout, stderr = process.communicate()
-				current_size = initial_size
-				while current_size < download_size:
-					if is_file(self.download_file_path):
-						current_size = get_file_size(self.download_file_path)
-						progress.update(current_size - progress.n)
+		try:
+			initial_size = get_file_size(self.download_file_path)
+			download_size = self._get_download_size(self.url)
+			if initial_size < download_size:
+				with tqdm(total = download_size, initial = initial_size, desc = 'downloading', unit = 'B', unit_scale = True, unit_divisor = 1024, ascii = ' =', disable = log_level in [ 'warn', 'error' ]) as progress:
+					command = ['curl', '--create-dirs', '--silent', '--insecure', '--location', '--continue-at', '-', '--output', self.download_file_path, self.url]
+					process = subprocess.Popen(command, creationflags=CREATE_NO_WINDOW)
+					logger.info(f'Run {command}, pid: {process.pid}')
 
-						progress_percentage = int((current_size / download_size) * 50)
-						self.download_progress.emit(self.filename, progress_percentage)
+					# stdout, stderr = process.communicate()
+					current_size = initial_size
+					while current_size < download_size:
+						if is_file(self.download_file_path):
+							current_size = get_file_size(self.download_file_path)
+							progress.update(current_size - progress.n)
 
-		if download_size and not self._is_download_done(self.url, self.download_file_path):
-			os.remove(self.download_file_path)
-			self._download_file()
+							progress_percentage = int((current_size / download_size) * 50)
+							self.download_progress.emit(self.filename, progress_percentage)
 
+			if download_size and not self._is_download_done(self.url, self.download_file_path):
+				os.remove(self.download_file_path)
+				self._download_file()
+		except Exception as e:
+			error_info = f"An error occurred while downloading the file. Please check the network or URL link. {e}"
+			logger.error(error_info)
+			self.error_occurred.emit(error_info)
+			return
+	
 		self.download_progress.emit(self.filename, 50)
 		self.download_completed.emit(self.filename)
 
 	def _extract_file(self, zipfile_path, output):
-		logger.info(f"Start to unzip file, zipfile_path")
-		assert zipfile.is_zipfile(zipfile_path), 'The given file %s is corrupted!' %(zipfile_path)
+		logger.info(f"Unzip file: Starting, {zipfile_path}")
+		# assert zipfile.is_zipfile(zipfile_path), 'The given file %s is corrupted!' %(zipfile_path)
 
 		try:
 			with zipfile.ZipFile(zipfile_path, 'r') as zip_ref:
@@ -105,12 +114,15 @@ class InstallWorker(QThread):
 					progress_percentage = int((i + 1) / total_files * 100) + 50
 					self.unzip_progress.emit(self.filename, progress_percentage)
 
-			logger.info("Finished")		
+			logger.info("Unzip file: Finished")		
 			self.unzip_completed.emit(self.filename)
 
 		except zipfile.BadZipFile:
 			self.unzip_progress.emit(self.filename, -1)
-			logger.error("Not a zip file or a corrupted zip file")
+			error_info = f"An error occurred when decompressing the file. Please check whether the compressed package exists or is valid. {e}"
+			logger.error(error_info)
+			self.error_occurred.emit(error_info)
+			return None
 			# print('Not a zip file or a corrupted zip file')
 		
 		try:
@@ -122,12 +134,18 @@ class InstallWorker(QThread):
 			os.rename(os.path.join(output, f"{self.name}-{self.version}"), app_path)
 
 		except Exception as e:
-			logger.error(f"An unexpected error occurred: {e}")
+			error_info = f"An error occurred while deleting the old directory. Please check the directory path. {e}"
+			logger.error(error_info)
+			self.error_occurred.emit(error_info)
+			return None
 
 		return app_path
 
 	def _create_shortcut(self, target_path):
-		logger.info(f"Start to create shortcut")
+		if target_path==None or target_path=="":
+			return
+		
+		logger.info(f"Create shortcut: Starting")
 
 		# PowerShell脚本的路径
 		ps_script_path = os.path.join(target_path,"createshortcut.ps1") 
@@ -148,11 +166,11 @@ class InstallWorker(QThread):
 
 		# result = subprocess.run(command, capture_output=True, text=True, creationflags=subprocess.CREATE_NO_WINDOW)
 
-		logger.info(f"Finished")
+		logger.info(f"Create shortcut: Finished")
 
 
 	def _create_registry(self):
-		logger.info(f"Start to create registry info")
+		logger.info(f"Create registry: Starting")
 		software_name, software_version = os.path.basename(self.url).split('-')
 
 		reg_path = os.path.join(r"Software\aistore", software_name)
@@ -160,14 +178,17 @@ class InstallWorker(QThread):
 		installation_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 		write_install_info_to_registry(reg_path,software_name, software_version[:-4], software_publisher, installation_date)
 
-		logger.info(f"Finished")
+		logger.info(f"Create registry: finished")
 	
 	@lru_cache(maxsize = None)
 	def _get_download_size(self, url : str) -> int:
 		try:
 			response = urllib.request.urlopen(url, timeout = 10)
 			return int(response.getheader('Content-Length'))
-		except (OSError, ValueError):
+		except (OSError, ValueError) as e:
+			error_info = f"An error occurred when getting the file size. It may be that the URL cannot be linked. {e}"
+			logger.error(error_info)
+			self.error_occurred.emit(error_info)
 			return 0
 
 
@@ -184,9 +205,21 @@ class InstallWorker(QThread):
 			logger.error(f'Command failed with exit status {e.returncode}')
 			logger.error(f'Stdout: {e.stdout}')
 			logger.error(f'Stderr: {e.stderr}')
+			self.error_occurred.emit(str(e))
+			return
+		
 		except FileNotFoundError as e:
 			logger.error(f'Command not found: {e}')
+			self.error_occurred.emit(str(e))
+			return
+		
 		except subprocess.TimeoutExpired as e:
 			logger.error(f'Command timed out: {e}')
+			self.error_occurred.emit(str(e))
+			return
+		
 		except Exception as e:
-			logger.error(f'An unexpected error occurred: {e}')
+			error_info = f"An error occurred when executing the sp1 script. Please check the script. {e}"
+			logger.error(error_info)
+			self.error_occurred.emit(error_info)
+			return

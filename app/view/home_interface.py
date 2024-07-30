@@ -322,6 +322,8 @@ class HomeInterface(ScrollArea):
             # thread.completed.connect(self.update_unzip_status)
             
             thread.finished.connect(lambda t=thread, app_card=app_card: self.on_install_thread_finished(t, app_card))
+            thread.error_occurred.connect(lambda message, t=thread, app_card=app_card: self.on_install_thread_error(message, t, app_card))
+
             self.install_threads.append(thread)
             thread.start()
 
@@ -352,6 +354,9 @@ class HomeInterface(ScrollArea):
 
 
     def on_install_thread_finished(self, thread, app_card: AppCard):
+        if not thread in self.install_threads:
+            return
+        
         app_name = app_card.app_info.name
         app_title = app_card.app_info.title
 
@@ -372,6 +377,24 @@ class HomeInterface(ScrollArea):
             #     print("run")
        
             self.software_run(app_card)
+
+    def on_install_thread_error(self, error_message, thread, app_card: AppCard):
+        app_name = app_card.app_info.name
+        app_title = app_card.app_info.title
+        
+        self.install_threads.remove(thread)
+        thread.quit()
+        # thread = None
+
+        app_card.set_state('uninstall')
+        app_card.refreshSig.emit()
+
+        title = self.tr('Install Error')
+        content = f"{app_title}: " + f"{error_message}"
+
+        w = MessageBox(title, content, self.window())
+        w.hideCancelButton()
+        w.exec()    
 
 
     def on_uninstall_thread_finished(self, thread, app_card):

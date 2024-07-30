@@ -7,7 +7,7 @@ from PyQt5.QtCore import QThread, pyqtSignal, QObject
 from PyQt5.QtWidgets import QApplication
 from qfluentwidgets import MessageBox
 # import ptvsd
-from app.common.config import VERSION,UPDATE_INFO_URL
+from app.common.config import SERVER_IP, SERVER_PORT, VERSION,UPDATE_INFO_URL
 
 from app.common.logger import logger
 from packaging import version
@@ -114,14 +114,13 @@ class UpdateManager(QObject):
         title = self.tr('Update Available')
         content = self.tr('A new version')+f" {latest_version} " + self.tr('is available. Do you want to download this version? \n\n') + self.tr('Release notes:\n') + f"{release_notes}"
         
-        
         w = MessageBox(title, content, self.main_window)
         w.hideCancelButton()
 
         # w.setContentCopyable(True)
         if w.exec():
             download_url = latest_version_info['download_url']
-
+            download_url = f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/aistore_installer/{download_url}"
             self.start_download(download_url)
 
             # self.download_and_install_update(download_url, latest_version)
