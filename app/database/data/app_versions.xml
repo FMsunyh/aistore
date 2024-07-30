@@ -155,13 +155,13 @@
     <version>
         <id>14</id>
         <softwareId>8</softwareId>
-        <versionNumber>2.3.1</versionNumber>
+        <versionNumber>2.3.0</versionNumber>
         <softwareName>Pytorch-Cuda11.8</softwareName>
         <releaseDate>2024-07-19</releaseDate>
         <changelog>
         环境已经安装好的包：
             - Python 3.10
-            - Pytorch 2.3.1
+            - Pytorch 2.3.0
             - Cuda 11.8
             - jupyterlab 4.2.4
         </changelog>

@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-07-05 22:11:11
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-30 11:11:29
+LastEditTime: 2024-07-30 17:02:27
 FilePath: \aistore\version.py
 Description: 
 '''
