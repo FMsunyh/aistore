@@ -1,3 +1,11 @@
+'''
+Author: Firmin.Sun fmsunyh@gmail.com
+Date: 2024-07-10 14:45:07
+LastEditors: Firmin.Sun fmsunyh@gmail.com
+LastEditTime: 2024-07-31 12:38:08
+FilePath: \aistore\app\components\sample_card.py
+Description: 
+'''
 # coding:utf-8
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QFrame, QLabel, QVBoxLayout, QHBoxLayout

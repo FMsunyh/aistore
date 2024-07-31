@@ -632,8 +632,8 @@ class TabInterface(QWidget):
 
         StyleSheet.NAVIGATION_VIEW_INTERFACE.apply(self)
         self.connectSignalToSlot()
-        qrouter.setDefaultRouteKey(
-            self.stackedWidget, self.stackedWidget.widget(0).objectName())
+        # qrouter.setDefaultRouteKey(
+        #     self.stackedWidget, self.stackedWidget.widget(0).objectName())
 
     def __create_tab(self):
         app_versions = self.library.app_versions_controller.get_app_versions_by_app_id(self.app_info.id)
@@ -716,8 +716,10 @@ class TabInterface(QWidget):
         
         self.app_info = app_info
 
-        for _ in range(self.stackedWidget.count()):
-            self.removeTab(0)
+        count = self.stackedWidget.count()
+        for i in reversed(range(count)):
+            print(i)
+            self.removeTab(i)
 
         self.__create_tab()
 

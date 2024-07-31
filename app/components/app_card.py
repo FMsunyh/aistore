@@ -16,7 +16,7 @@ from qfluentwidgets import MessageBox
 
 from app.core.typing import AppState
 
-class AppCard(SimpleCardWidget):
+class AppCard(CardWidget):
     """ Sample card """
     refreshSig = pyqtSignal()
     stateChangedSig = pyqtSignal(object)
@@ -25,7 +25,7 @@ class AppCard(SimpleCardWidget):
         super().__init__(parent=parent)
         self.library = library
         self.app_info = app_info
-        self.process = None
+        # self.process = None
 
         self.index = index
         self.routeKey = routeKey
@@ -68,12 +68,15 @@ class AppCard(SimpleCardWidget):
         # self.vbuttonLayout.setContentsMargins(0, 20, 0, 20)
 
         self.setFixedSize(500, 120)
+        # self.setFixedSize(500, 90)
+
         self.iconWidget.setFixedSize(48, 48)
 
         self.initLayout()
         self.connectSignalToSlot()
 
         self.titleLabel.setObjectName('titleLabel')
+        # self.brief_introductionLabel.setObjectName('contentLabel')
         self.brief_introductionLabel.setObjectName('briefIntroduction')
 
         self.refresh()
@@ -172,8 +175,8 @@ class AppCard(SimpleCardWidget):
         for item in software_list:
             if item['DisplayName'] == self.app_info:
                 self.ring.setVisible(False)
-                self.button.setVisible(False)
                 self.button_run.setVisible(True)
+                self.button_stop.setVisible(False)
                 self.button_uninstall.setVisible(True)
             else:
                 pass
@@ -199,7 +202,7 @@ class AppCardView(QWidget):
         
         self.titleLabel = QLabel(title, self)
         self.vBoxLayout = QVBoxLayout(self)
-        self.flowLayout = FlowLayout(isTight=True)
+        self.flowLayout = FlowLayout()
 
         self.__initWidget()
 

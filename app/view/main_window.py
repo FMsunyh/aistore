@@ -2,7 +2,7 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-06-16 05:28:37
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-18 10:40:59
+LastEditTime: 2024-07-31 10:47:58
 FilePath: \aistore\app\view\main_window.py
 Description: main windows
 '''
@@ -202,7 +202,14 @@ class MainWindow(FluentWindow):
 
     def switchToAppInterface(self, app_card):
         self.appInterface.update_window(app_card)
+        def is_widget_in_stacked_widget(stacked_widget, widget):
+            for i in range(stacked_widget.count()):
+                if stacked_widget.widget(i) is widget:
+                    return True
+            return False
+        flag= is_widget_in_stacked_widget(self.stackedWidget, self.appInterface)
         self.stackedWidget.setCurrentWidget(self.appInterface, False)
+
     
 
     def connectSignalToSlot(self):

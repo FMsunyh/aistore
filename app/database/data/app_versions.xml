@@ -1,5 +1,5 @@
 <app_versions>
-    <version>
+    <!-- <version>
         <id>1</id>
         <softwareId>1</softwareId>
         <versionNumber>1.0</versionNumber>
@@ -9,8 +9,8 @@
         Initial release
         @Stable Diffusion WebUI
         </changelog>
-    </version>
-    <version>
+    </version> -->
+    <!-- <version>
         <id>2</id>
         <softwareId>1</softwareId>
         <versionNumber>1.0.0</versionNumber>
@@ -20,7 +20,7 @@
         * Bug fixes and improvements
         @Stable Diffusion WebUI
         </changelog>
-    </version>
+    </version> -->
     <version>
         <id>3</id>
         <softwareId>2</softwareId>
