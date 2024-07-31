@@ -16,11 +16,12 @@ class FileUploaderThread(QThread):
     upload_finished = pyqtSignal(bool, str)
     delete_finished = pyqtSignal(bool, str)
 
-    def __init__(self, file_path, url, folder):
+    def __init__(self, session, file_path, url, folder):
         super().__init__()
         self.file_path = file_path
         self.url = url
         self.folder = folder
+        self.session = session
 
     def run(self):
         # ptvsd.debug_this_thread()
@@ -35,7 +36,7 @@ class FileUploaderThread(QThread):
                 'filepath': os.path.join(self.folder, filename)
             }
         try:
-            response = requests.delete(f"{self.url}/rmfiles", params=payload)
+            response = self.session.delete(f"{self.url}/rmfiles", params=payload)
 
             if response.status_code == 204:
                 self.delete_finished.emit(True, f"File deleted successfully! {self.file_path}")
@@ -57,7 +58,7 @@ class FileUploaderThread(QThread):
                 'file': (filename, data)
             }
 
-            response = requests.post(f"{self.url}/upload", files=payload)
+            response = self.session.post(f"{self.url}/upload", files=payload)
 
             if response.status_code == 201:
                 self.upload_finished.emit(True, f"File uploaded successfully! {self.file_path}")
@@ -94,11 +95,33 @@ def on_upload_finished(success, message):
         logger.info(f"Error: {message}")
 
 
-def create_thread(file_path, url, folder):
-    thread = FileUploaderThread(file_path, url, folder)
+def create_thread(session, file_path, url, folder):
+    thread = FileUploaderThread(session, file_path, url, folder)
     thread.delete_finished.connect(on_delete_finished)
     thread.upload_finished.connect(on_upload_finished)
     return thread
+
+
+def login(url):
+    # 创建Session对象
+    s = requests.Session()
+    # 定义登录URL和登录参数
+    login_url = f"{url}/session"
+    login_data = {
+        'user': 'syh',
+        'pwd': 'zjai0301'
+    }
+
+    # 发送POST请求登录
+    response = s.post(login_url, data=login_data)
+
+    # 检查登录是否成功
+    if response.status_code == 201:
+        logger.info("Login successful.")
+    else:
+        logger.info(f"Failed to login: {response.status_code}")
+
+    return s
 
 if __name__ == '__main__':
     app = QCoreApplication(sys.argv)
@@ -111,10 +134,11 @@ if __name__ == '__main__':
     version_info_path = f'.install/latest_version_info.json'
 
     rewrite_version(version_info_path)
-    
+    session = login(url)
+
     threads = []
-    t1 = create_thread(file_path, url, '/aistore_installer')
-    t2 = create_thread(version_info_path, url, '/')
+    t1 = create_thread(session, file_path, url, '/aistore_installer')
+    t2 = create_thread(session, version_info_path, url, '/')
 
     threads.append(t1)
     threads.append(t2)
@@ -134,6 +158,7 @@ if __name__ == '__main__':
 
     for t in threads:
         t.start()
+
 
     logger.info(f"http://{SERVER_IP}:{SERVER_PORT}/chfs/shared/aistore_installer/AIStoreInstaller_{__version__}.exe")
     sys.exit(app.exec_())
