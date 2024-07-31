@@ -34,4 +34,11 @@
         <folder>models/hypernetworks</folder>
         <description></description>
     </model_folder>
+    <model_folder>
+        <id>6</id>
+        <softwareId>2</softwareId>
+        <modelTypeId>1</modelTypeId>
+        <folder>models</folder>
+        <description></description>
+    </model_folder>
 </model_folders>

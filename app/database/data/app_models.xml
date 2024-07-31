@@ -39,4 +39,14 @@
         <softwareId>4</softwareId>
         <modelId>8</modelId>
     </entry>
+    <entry>
+        <id>9</id>
+        <softwareId>2</softwareId>
+        <modelId>0</modelId>
+    </entry>
+    <entry>
+        <id>10</id>
+        <softwareId>2</softwareId>
+        <modelId>1</modelId>
+    </entry>
 </software_models>
