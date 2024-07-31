@@ -49,4 +49,19 @@
         <softwareId>2</softwareId>
         <modelId>1</modelId>
     </entry>
+    <entry>
+        <id>11</id>
+        <softwareId>6</softwareId>
+        <modelId>30</modelId>
+    </entry>
+    <entry>
+        <id>12</id>
+        <softwareId>6</softwareId>
+        <modelId>31</modelId>
+    </entry>
+    <entry>
+        <id>13</id>
+        <softwareId>6</softwareId>
+        <modelId>32</modelId>
+    </entry>
 </software_models>

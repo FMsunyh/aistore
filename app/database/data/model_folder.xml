@@ -41,4 +41,39 @@
         <folder>models</folder>
         <description></description>
     </model_folder>
+    <model_folder>
+        <id>7</id>
+        <softwareId>6</softwareId>
+        <modelTypeId>1</modelTypeId>
+        <folder>Fooocus/models/checkpoints</folder>
+        <description></description>
+    </model_folder>
+    <model_folder>
+        <id>8</id>
+        <softwareId>6</softwareId>
+        <modelTypeId>2</modelTypeId>
+        <folder>Fooocus/models/loras</folder>
+        <description></description>
+    </model_folder>
+    <model_folder>
+        <id>9</id>
+        <softwareId>6</softwareId>
+        <modelTypeId>3</modelTypeId>
+        <folder>Fooocus/models/vae</folder>
+        <description></description>
+    </model_folder>
+    <model_folder>
+        <id>10</id>
+        <softwareId>6</softwareId>
+        <modelTypeId>4</modelTypeId>
+        <folder>Fooocus/models/embeddings</folder>
+        <description></description>
+    </model_folder>
+    <model_folder>
+        <id>11</id>
+        <softwareId>6</softwareId>
+        <modelTypeId>5</modelTypeId>
+        <folder>Fooocus/models/hypernetworks</folder>
+        <description></description>
+    </model_folder>
 </model_folders>
