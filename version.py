@@ -2,9 +2,9 @@
 Author: Firmin.Sun fmsunyh@gmail.com
 Date: 2024-07-05 22:11:11
 LastEditors: Firmin.Sun fmsunyh@gmail.com
-LastEditTime: 2024-07-31 14:20:12
+LastEditTime: 2024-07-31 14:50:07
 FilePath: \aistore\version.py
 Description: 
 '''
-__version__ = "1.4.3"
+__version__ = "1.4.5"
 __author__ = "ZhongJu GPU Cloud"

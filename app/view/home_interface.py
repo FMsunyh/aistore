@@ -131,7 +131,6 @@ class HomeInterface(ScrollArea):
         
         self.__initWidget()
         self.loadApps3()
-        # self.loadSamples()
         self.__connectSignalToSlot()
 
     def __initWidget(self):
@@ -190,7 +189,7 @@ class HomeInterface(ScrollArea):
             self.vBoxLayout.addWidget(type_view)
             self.type_views.append(type_view)
 
-    def loadSamples(self):
+    
         """ load samples """
         # basic input samples
         basicInputView = SampleCardView(

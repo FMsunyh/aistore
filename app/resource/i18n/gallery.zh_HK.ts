@@ -27,37 +27,37 @@
 <context>
     <name>AppInfoCard</name>
     <message>
-        <location filename="../../view/app_interface.py" line="50"/>
+        <location filename="../../view/app_interface.py" line="64"/>
         <source>Install</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/app_interface.py" line="60"/>
+        <location filename="../../view/app_interface.py" line="74"/>
         <source>Run</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/app_interface.py" line="63"/>
+        <location filename="../../view/app_interface.py" line="77"/>
         <source>Stop</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/app_interface.py" line="66"/>
+        <location filename="../../view/app_interface.py" line="80"/>
         <source>Uninstall</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/app_interface.py" line="74"/>
+        <location filename="../../view/app_interface.py" line="88"/>
         <source>RATINGS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/app_interface.py" line="76"/>
+        <location filename="../../view/app_interface.py" line="90"/>
         <source>REVIEWS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/app_interface.py" line="81"/>
+        <location filename="../../view/app_interface.py" line="95"/>
         <source>Model Library</source>
         <translation type="unfinished"></translation>
     </message>
@@ -65,22 +65,22 @@
 <context>
     <name>BannerWidget</name>
     <message>
-        <location filename="../../view/home_interface.py" line="50"/>
+        <location filename="../../view/home_interface.py" line="51"/>
         <source>Getting started</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="57"/>
+        <location filename="../../view/home_interface.py" line="58"/>
         <source>GPU Lab</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="51"/>
+        <location filename="../../view/home_interface.py" line="52"/>
         <source>Scientific computing, large model training, image rendering.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="58"/>
+        <location filename="../../view/home_interface.py" line="59"/>
         <source>GPU rental, GPU computing center.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -311,27 +311,27 @@
         <translation type="vanished">打開</translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="438"/>
+        <location filename="../../view/home_interface.py" line="831"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="437"/>
+        <location filename="../../view/home_interface.py" line="830"/>
         <source>Install</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="445"/>
+        <location filename="../../view/home_interface.py" line="838"/>
         <source>Select Installation Path:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="456"/>
+        <location filename="../../view/home_interface.py" line="849"/>
         <source>Browse</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="462"/>
+        <location filename="../../view/home_interface.py" line="855"/>
         <source>Create Desktop Shortcut</source>
         <translation type="unfinished"></translation>
     </message>
@@ -370,17 +370,17 @@
 <context>
     <name>DescriptionCard</name>
     <message>
-        <location filename="../../view/app_interface.py" line="319"/>
+        <location filename="../../view/app_interface.py" line="343"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/app_interface.py" line="322"/>
+        <location filename="../../view/app_interface.py" line="346"/>
         <source>{self.description}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/app_interface.py" line="326"/>
+        <location filename="../../view/app_interface.py" line="350"/>
         <source>{self.title}</source>
         <translation type="unfinished"></translation>
     </message>
@@ -483,7 +483,7 @@ In that case, I would accept it no matter which side the ball falls on.</source>
 <context>
     <name>GalleryCard</name>
     <message>
-        <location filename="../../view/app_interface.py" line="243"/>
+        <location filename="../../view/app_interface.py" line="263"/>
         <source>Screenshots</source>
         <translation type="unfinished"></translation>
     </message>
@@ -491,58 +491,316 @@ In that case, I would accept it no matter which side the ball falls on.</source>
 <context>
     <name>HomeInterface</name>
     <message>
-        <location filename="../../view/home_interface.py" line="129"/>
+        <location filename="../../view/home_interface.py" line="130"/>
         <source>Installed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="148"/>
+        <location filename="../../view/home_interface.py" line="150"/>
         <source>Search application</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="242"/>
-        <source>Running {app_card.app_info.title}</source>
+        <location filename="../../view/home_interface.py" line="196"/>
+        <source>Basic input samples</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="243"/>
-        <source>It takes some time to start the application, please be patient and wait for a moment.</source>
+        <location filename="../../view/home_interface.py" line="201"/>
+        <source>A control that responds to user input and emit clicked signal.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="286"/>
-        <source>Stopping {app_card.app_info.title}</source>
+        <location filename="../../view/home_interface.py" line="208"/>
+        <source>A control that a user can select or clear.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="287"/>
-        <source>It takes some time to stop the application, please be patient and wait for a moment.</source>
+        <location filename="../../view/home_interface.py" line="216"/>
+        <source>A drop-down list of items a user can select from.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="224"/>
+        <source>A button that displays a flyout of choices when clicked.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="232"/>
+        <source>A button that appears as hyperlink text, and can navigate to a URI or handle a Click event.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="240"/>
+        <source>A control that allows a user to select a single option from a group of options.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="248"/>
+        <source>A control that lets the user select from a range of values by moving a Thumb control along a track.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="256"/>
+        <source>A two-part button that displays a flyout when its secondary part is clicked.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="264"/>
+        <source>A switch that can be toggled between 2 states.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="272"/>
+        <source>A button that can be switched between two states like a CheckBox.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="279"/>
+        <source>Date &amp; time samples</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="283"/>
+        <source>A control that lets a user pick a date value using a calendar.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="290"/>
+        <source>A control that lets a user pick a date value.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="298"/>
+        <source>A configurable control that lets a user pick a time value.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="305"/>
+        <source>Dialog samples</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="309"/>
+        <source>A frameless message dialog.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/home_interface.py" line="316"/>
+        <source>A message dialog with mask.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="323"/>
+        <source>A dialog that allows user to select color.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="330"/>
+        <source>Shows contextual information and enables user interaction.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="337"/>
+        <source>A content-rich flyout for guiding users and enabling teaching moments.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="344"/>
+        <source>Layout samples</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="349"/>
+        <source>A layout arranges components in a left-to-right flow, wrapping to the next row when the current row is full.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="356"/>
+        <source>Material samples</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="361"/>
+        <source>A translucent material recommended for panel background.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="368"/>
+        <source>Menu &amp; toolbars samples</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="373"/>
+        <location filename="../../view/home_interface.py" line="381"/>
+        <source>Shows a contextual list of simple commands or options.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="389"/>
+        <source>A mini-toolbar displaying proactive commands, and an optional menu of commands.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="396"/>
+        <source>Navigation</source>
+        <translation type="unfinished">導航</translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="401"/>
+        <source>Shows the trail of navigation taken to the current location.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="409"/>
+        <location filename="../../view/home_interface.py" line="417"/>
+        <source>Presents information from different sources in a tabbed view.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="424"/>
+        <source>Scrolling samples</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="429"/>
+        <source>A container control that lets the user pan and zoom its content smoothly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="437"/>
+        <source>A control to let the user navigate through a paginated collection when the page numbers do not need to be visually known.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="444"/>
+        <source>Status &amp; info samples</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="449"/>
+        <source>Shows the apps progress on a task, or that the app is performing ongoing work that does block user interaction.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="457"/>
+        <source>An non-intrusive Ul to display notifications or bring focus to an area.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="465"/>
+        <source>An inline message to display app-wide status change information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="473"/>
+        <location filename="../../view/home_interface.py" line="481"/>
+        <source>Shows the apps progress on a task, or that the app is performing ongoing work that doesn&apos;t block user interaction.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="489"/>
+        <source>Displays information for an element in a pop-up window.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="496"/>
+        <source>Text samples</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="500"/>
+        <source>A single-line plain text field.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="507"/>
+        <source>A control for entering passwords.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="515"/>
+        <source>A text control used for numeric input and evaluation of algebraic equations.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="523"/>
+        <source>A rich text editing control that supports formatted text, hyperlinks, and other rich content.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="530"/>
+        <source>View samples</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="535"/>
+        <source>A control that presents a collection of items in a vertical list.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="543"/>
+        <source>The DataGrid control provides a flexible way to display a collection of data in rows and columns.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="551"/>
+        <source>The TreeView control is a hierarchical list pattern with expanding and collapsing nodes that contain nested items.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="559"/>
+        <source>Presents a collection of items that the user can flip through,one item at a time.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="619"/>
+        <source>Running {app_card.app_info.title}</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="620"/>
+        <source>It takes some time to start the application, please be patient and wait for a moment.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="663"/>
+        <source>Stopping {app_card.app_info.title}</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="664"/>
+        <source>It takes some time to stop the application, please be patient and wait for a moment.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="680"/>
         <source>Install </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="348"/>
+        <location filename="../../view/home_interface.py" line="715"/>
         <source>Do you want to uninstall </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="348"/>
+        <location filename="../../view/home_interface.py" line="715"/>
         <source>Uninstall</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="374"/>
+        <location filename="../../view/home_interface.py" line="744"/>
         <source>Successful installation </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/home_interface.py" line="375"/>
+        <location filename="../../view/home_interface.py" line="745"/>
         <source>Do you want to run </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/home_interface.py" line="769"/>
+        <source>Install Error</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -618,12 +876,12 @@ In that case, I would accept it no matter which side the ball falls on.</source>
 <context>
     <name>LightBox</name>
     <message>
-        <location filename="../../view/app_interface.py" line="387"/>
+        <location filename="../../view/app_interface.py" line="412"/>
         <source>Screenshots 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/app_interface.py" line="414"/>
+        <location filename="../../view/app_interface.py" line="441"/>
         <source>Screenshots</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1081,7 +1339,7 @@ In that case, I would accept it no matter which side the ball falls on.</source>
 <context>
     <name>ProgressWindow</name>
     <message>
-        <location filename="../../core/update.py" line="194"/>
+        <location filename="../../core/update.py" line="214"/>
         <source>Downloading</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1508,17 +1766,17 @@ In that case, I would accept it no matter which side the ball falls on.</source>
 <context>
     <name>SystemRequirementCard</name>
     <message>
-        <location filename="../../view/app_interface.py" line="342"/>
+        <location filename="../../view/app_interface.py" line="366"/>
         <source>System Requirements</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/app_interface.py" line="343"/>
+        <location filename="../../view/app_interface.py" line="367"/>
         <source>windows 10</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/app_interface.py" line="345"/>
+        <location filename="../../view/app_interface.py" line="369"/>
         <source>Details</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1526,17 +1784,17 @@ In that case, I would accept it no matter which side the ball falls on.</source>
 <context>
     <name>TabInterface</name>
     <message>
-        <location filename="../../view/model_library_interface/sd_model_interface.py" line="218"/>
+        <location filename="../../view/model_library_interface/sd_model_interface.py" line="214"/>
         <source>IsTabMovable</source>
         <translation>啟用標籤拖拽</translation>
     </message>
     <message>
-        <location filename="../../view/model_library_interface/sd_model_interface.py" line="219"/>
+        <location filename="../../view/model_library_interface/sd_model_interface.py" line="215"/>
         <source>IsTabScrollable</source>
         <translation>啟用標籤滾動</translation>
     </message>
     <message>
-        <location filename="../../view/model_library_interface/sd_model_interface.py" line="240"/>
+        <location filename="../../view/model_library_interface/sd_model_interface.py" line="236"/>
         <source>{model_type.name}</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1569,14 +1827,19 @@ In that case, I would accept it no matter which side the ball falls on.</source>
         <translation type="vanished">歌手</translation>
     </message>
     <message>
-        <location filename="../../view/model_library_interface/sd_model_interface.py" line="220"/>
+        <location filename="../../view/model_library_interface/sd_model_interface.py" line="216"/>
         <source>IsTabShadowEnabled</source>
         <translation>啟用標籤陰影</translation>
     </message>
     <message>
-        <location filename="../../view/model_library_interface/sd_model_interface.py" line="221"/>
+        <location filename="../../view/model_library_interface/sd_model_interface.py" line="217"/>
         <source>TabMaximumWidth</source>
         <translation>標籤最大寬度</translation>
+    </message>
+    <message>
+        <location filename="../../view/app_interface.py" line="644"/>
+        <source>{app_version.version_number}</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1602,8 +1865,8 @@ In that case, I would accept it no matter which side the ball falls on.</source>
         <translation type="vanished">時長</translation>
     </message>
     <message>
-        <location filename="../../components/table_frame.py" line="75"/>
-        <location filename="../../components/table_frame.py" line="89"/>
+        <location filename="../../components/table_frame.py" line="76"/>
+        <location filename="../../components/table_frame.py" line="90"/>
         <source>Download</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1782,50 +2045,50 @@ In that case, I would accept it no matter which side the ball falls on.</source>
 <context>
     <name>UpdateManager</name>
     <message>
-        <location filename="../../core/update.py" line="115"/>
+        <location filename="../../core/update.py" line="117"/>
         <source>Update Available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/update.py" line="115"/>
+        <location filename="../../core/update.py" line="117"/>
         <source>A new version</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/update.py" line="115"/>
+        <location filename="../../core/update.py" line="117"/>
         <source>is available. Do you want to download this version? 
 
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/update.py" line="115"/>
+        <location filename="../../core/update.py" line="117"/>
         <source>Release notes:
 </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/update.py" line="136"/>
+        <location filename="../../core/update.py" line="140"/>
         <source>No Update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/update.py" line="136"/>
+        <location filename="../../core/update.py" line="140"/>
         <source>You are using the latest version </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/update.py" line="146"/>
+        <location filename="../../core/update.py" line="150"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/update.py" line="158"/>
+        <location filename="../../core/update.py" line="162"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/update.py" line="159"/>
+        <location filename="../../core/update.py" line="163"/>
         <source>Ready to start installing the program. The program will be closed and restarted during the installation process. Please save your data.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1856,24 +2119,26 @@ In that case, I would accept it no matter which side the ball falls on.</source>
 <context>
     <name>WhatsNewCard</name>
     <message>
-        <location filename="../../view/app_interface.py" line="284"/>
+        <location filename="../../view/app_interface.py" line="310"/>
         <source>What&apos;s New</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/app_interface.py" line="285"/>
-        <location filename="../../view/app_interface.py" line="307"/>
-        <source>Version</source>
-        <translation type="unfinished">當前版本</translation>
+        <location filename="../../view/app_interface.py" line="311"/>
+        <source>{self.app_version.change_log}</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/app_interface.py" line="287"/>
-        <location filename="../../view/app_interface.py" line="308"/>
+        <source>Version</source>
+        <translation type="obsolete">當前版本</translation>
+    </message>
+    <message>
+        <location filename="../../view/app_interface.py" line="332"/>
         <source>{app_version.change_log}</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/app_interface.py" line="295"/>
+        <location filename="../../view/app_interface.py" line="319"/>
         <source>{self.title}</source>
         <translation type="unfinished"></translation>
     </message>
