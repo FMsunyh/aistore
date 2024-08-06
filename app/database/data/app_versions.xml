@@ -166,4 +166,17 @@
             - jupyterlab 4.2.4
         </changelog>
     </version>
+    <version>
+        <id>15</id>
+        <softwareId>4</softwareId>
+        <softwareName>comfyui</softwareName>
+        <versionNumber>1.0.1</versionNumber>
+        <releaseDate>2024-08-05</releaseDate>
+        <changelog>
+        Add Flux1.0
+        The builds in this release will always be relatively up to date with the latest code.
+        pytorch 2.4 cu121
+        @ComfyUI
+        </changelog>
+    </version>
 </app_versions>

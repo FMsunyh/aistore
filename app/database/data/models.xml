@@ -4,7 +4,7 @@
     <id>0</id>
     <name>sdXL_v10VAEFix</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\sdXL_v10VAEFix.safetensors</downloadURL>
     <file_name>sdXL_v10VAEFix.safetensors</file_name>
     <description/>
@@ -14,7 +14,7 @@
     <id>1</id>
     <name>v1-5-pruned-emaonly</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\v1-5-pruned-emaonly.safetensors</downloadURL>
     <file_name>v1-5-pruned-emaonly.safetensors</file_name>
     <description/>
@@ -24,7 +24,7 @@
     <id>2</id>
     <name>ponyDiffusionV6XL_v6StartWithThisOne</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\Pony\ponyDiffusionV6XL_v6StartWithThisOne.safetensors</downloadURL>
     <file_name>ponyDiffusionV6XL_v6StartWithThisOne.safetensors</file_name>
     <description/>
@@ -34,7 +34,7 @@
     <id>3</id>
     <name>revAnimated_v2Rebirth</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\二次元2.5D_SD1.5\revAnimated_v2Rebirth.safetensors</downloadURL>
     <file_name>revAnimated_v2Rebirth.safetensors</file_name>
     <description/>
@@ -44,7 +44,7 @@
     <id>4</id>
     <name>anyloraCheckpoint_bakedvaeBlessedFp16</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\二次元插画_SD1.5\anyloraCheckpoint_bakedvaeBlessedFp16.safetensors</downloadURL>
     <file_name>anyloraCheckpoint_bakedvaeBlessedFp16.safetensors</file_name>
     <description/>
@@ -54,7 +54,7 @@
     <id>5</id>
     <name>AnythingXL_inkBase</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\二次元插画_SD1.5\AnythingXL_inkBase.safetensors</downloadURL>
     <file_name>AnythingXL_inkBase.safetensors</file_name>
     <description/>
@@ -64,7 +64,7 @@
     <id>6</id>
     <name>AnythingXL_v50</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\二次元插画_SD1.5\AnythingXL_v50.safetensors</downloadURL>
     <file_name>AnythingXL_v50.safetensors</file_name>
     <description/>
@@ -74,7 +74,7 @@
     <id>7</id>
     <name>AWPainting_v1.0</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\二次元插画_SD1.5\AWPainting_v1.0.safetensors</downloadURL>
     <file_name>AWPainting_v1.0.safetensors</file_name>
     <description/>
@@ -84,7 +84,7 @@
     <id>8</id>
     <name>AWPainting_v1.1</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\二次元插画_SD1.5\AWPainting_v1.1.safetensors</downloadURL>
     <file_name>AWPainting_v1.1.safetensors</file_name>
     <description/>
@@ -94,7 +94,7 @@
     <id>9</id>
     <name>AWPainting_v1.2</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\二次元插画_SD1.5\AWPainting_v1.2.safetensors</downloadURL>
     <file_name>AWPainting_v1.2.safetensors</file_name>
     <description/>
@@ -104,7 +104,7 @@
     <id>10</id>
     <name>AWPainting_v1.3</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\二次元插画_SD1.5\AWPainting_v1.3.safetensors</downloadURL>
     <file_name>AWPainting_v1.3.safetensors</file_name>
     <description/>
@@ -114,7 +114,7 @@
     <id>11</id>
     <name>AWPainting_v1.4</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\二次元插画_SD1.5\AWPainting_v1.4.safetensors</downloadURL>
     <file_name>AWPainting_v1.4.safetensors</file_name>
     <description/>
@@ -124,7 +124,7 @@
     <id>12</id>
     <name>counterfeitV30_v30</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\二次元插画_SD1.5\counterfeitV30_v30.safetensors</downloadURL>
     <file_name>counterfeitV30_v30.safetensors</file_name>
     <description/>
@@ -134,7 +134,7 @@
     <id>13</id>
     <name>GhostMix鬼混_V2.0</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\二次元插画_SD1.5\GhostMix鬼混_V2.0.safetensors</downloadURL>
     <file_name>GhostMix鬼混_V2.0.safetensors</file_name>
     <description/>
@@ -144,7 +144,7 @@
     <id>14</id>
     <name>meinahentai_v4</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\二次元插画_SD1.5\meinahentai_v4.safetensors</downloadURL>
     <file_name>meinahentai_v4.safetensors</file_name>
     <description/>
@@ -154,7 +154,7 @@
     <id>15</id>
     <name>meinamix_meinaV11</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\二次元插画_SD1.5\meinamix_meinaV11.safetensors</downloadURL>
     <file_name>meinamix_meinaV11.safetensors</file_name>
     <description/>
@@ -164,7 +164,7 @@
     <id>16</id>
     <name>AnythingXL_xl</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\二次元插画_SDXL\AnythingXL_xl.safetensors</downloadURL>
     <file_name>AnythingXL_xl.safetensors</file_name>
     <description/>
@@ -174,7 +174,7 @@
     <id>17</id>
     <name>absolutereality_v181</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\真人写实_SD1.5\absolutereality_v181.safetensors</downloadURL>
     <file_name>absolutereality_v181.safetensors</file_name>
     <description/>
@@ -184,7 +184,7 @@
     <id>18</id>
     <name>AWPortrait_v1.1.1</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\真人写实_SD1.5\AWPortrait_v1.1.1.safetensors</downloadURL>
     <file_name>AWPortrait_v1.1.1.safetensors</file_name>
     <description/>
@@ -194,7 +194,7 @@
     <id>19</id>
     <name>AWPortrait_v1.2</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\真人写实_SD1.5\AWPortrait_v1.2.safetensors</downloadURL>
     <file_name>AWPortrait_v1.2.safetensors</file_name>
     <description/>
@@ -204,7 +204,7 @@
     <id>20</id>
     <name>AWPortrait_v1.3</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\真人写实_SD1.5\AWPortrait_v1.3.safetensors</downloadURL>
     <file_name>AWPortrait_v1.3.safetensors</file_name>
     <description/>
@@ -214,7 +214,7 @@
     <id>21</id>
     <name>dreamshaper_8</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\真人写实_SD1.5\dreamshaper_8.safetensors</downloadURL>
     <file_name>dreamshaper_8.safetensors</file_name>
     <description/>
@@ -224,7 +224,7 @@
     <id>22</id>
     <name>majicMIX realistic 麦橘写实_v2威力加强典藏版</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\真人写实_SD1.5\majicMIX realistic 麦橘写实_v2威力加强典藏版.safetensors</downloadURL>
     <file_name>majicMIX realistic 麦橘写实_v2威力加强典藏版.safetensors</file_name>
     <description/>
@@ -234,7 +234,7 @@
     <id>23</id>
     <name>majicMIX realistic 麦橘写实_v7</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\真人写实_SD1.5\majicMIX realistic 麦橘写实_v7.safetensors</downloadURL>
     <file_name>majicMIX realistic 麦橘写实_v7.safetensors</file_name>
     <description/>
@@ -244,7 +244,7 @@
     <id>24</id>
     <name>majicmixRealistic_betterV2V25</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\真人写实_SD1.5\majicmixRealistic_betterV2V25.safetensors</downloadURL>
     <file_name>majicmixRealistic_betterV2V25.safetensors</file_name>
     <description/>
@@ -254,7 +254,7 @@
     <id>25</id>
     <name>realisticVisionV60B1_v51VAE</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\真人写实_SD1.5\realisticVisionV60B1_v51VAE.safetensors</downloadURL>
     <file_name>realisticVisionV60B1_v51VAE.safetensors</file_name>
     <description/>
@@ -264,7 +264,7 @@
     <id>26</id>
     <name>xxmix9realistic_v40</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\真人写实_SD1.5\xxmix9realistic_v40.safetensors</downloadURL>
     <file_name>xxmix9realistic_v40.safetensors</file_name>
     <description/>
@@ -274,7 +274,7 @@
     <id>27</id>
     <name>墨幽人造人_v1060修复</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\真人写实_SD1.5\墨幽人造人_v1060修复.safetensors</downloadURL>
     <file_name>墨幽人造人_v1060修复.safetensors</file_name>
     <description/>
@@ -284,7 +284,7 @@
     <id>28</id>
     <name>墨幽人造人_v1080-none</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\真人写实_SD1.5\墨幽人造人_v1080-none.safetensors</downloadURL>
     <file_name>墨幽人造人_v1080-none.safetensors</file_name>
     <description/>
@@ -294,7 +294,7 @@
     <id>29</id>
     <name>dreamshaperXL10_alpha2Xl10</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\真人写实_SDXL\dreamshaperXL10_alpha2Xl10.safetensors</downloadURL>
     <file_name>dreamshaperXL10_alpha2Xl10.safetensors</file_name>
     <description/>
@@ -304,7 +304,7 @@
     <id>30</id>
     <name>juggernautXL_juggernautX</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\真人写实_SDXL\juggernautXL_juggernautX.safetensors</downloadURL>
     <file_name>juggernautXL_juggernautX.safetensors</file_name>
     <description/>
@@ -314,7 +314,7 @@
     <id>31</id>
     <name>juggernautXL_v9Rdphoto2Lightning</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\真人写实_SDXL\juggernautXL_v9Rdphoto2Lightning.safetensors</downloadURL>
     <file_name>juggernautXL_v9Rdphoto2Lightning.safetensors</file_name>
     <description/>
@@ -324,7 +324,7 @@
     <id>32</id>
     <name>juggernautXL_v9Rundiffusionphoto2</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\真人写实_SDXL\juggernautXL_v9Rundiffusionphoto2.safetensors</downloadURL>
     <file_name>juggernautXL_v9Rundiffusionphoto2.safetensors</file_name>
     <description/>
@@ -334,7 +334,7 @@
     <id>33</id>
     <name>LEOSAM HelloWorld 新世界 _ SDXL真实感大模型_v6.0</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\真人写实_SDXL\LEOSAM HelloWorld 新世界 _ SDXL真实感大模型_v6.0.safetensors</downloadURL>
     <file_name>LEOSAM HelloWorld 新世界 _ SDXL真实感大模型_v6.0.safetensors</file_name>
     <description/>
@@ -344,7 +344,7 @@
     <id>34</id>
     <name>XXMix_9realisticSDXL_v1</name>
     <typeId>1</typeId>
-    <author>Firmin.Sun</author>
+    <author>None.AI</author>
     <downloadURL>models\Stable-diffusion\真人写实_SDXL\XXMix_9realisticSDXL_v1.safetensors</downloadURL>
     <file_name>XXMix_9realisticSDXL_v1.safetensors</file_name>
     <description/>
