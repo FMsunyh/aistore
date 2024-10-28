@@ -52,10 +52,15 @@ def is_hong_kong(ip_address,database):
         logger.info(f"City: {response.city.name}")
     return hong_kong
 
+# def CONFIG_IP(GeoLite2_database):
+#     ip_address = get_external_ip()
+#     hong_kong = is_hong_kong(ip_address,GeoLite2_database)
+#     if hong_kong:
+#         return HONG_KONG_IP
+#     else:
+#         return DOMESTIC_IP
+
+# 配置内网IP，之前的公网不要了
+# Add 2024.10.28
 def CONFIG_IP(GeoLite2_database):
-    ip_address = get_external_ip()
-    hong_kong = is_hong_kong(ip_address,GeoLite2_database)
-    if hong_kong:
-        return HONG_KONG_IP
-    else:
-        return DOMESTIC_IP
+    return "172.30.5.254"
